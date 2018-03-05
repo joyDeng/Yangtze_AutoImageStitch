@@ -1,1 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/c++   -Wall -Wextra -Wno-unused-parameter -Wno-ignored-attributes -Wno-gnu-anonymous-struct -Wno-c99-extensions -Wno-nested-anon-types -Wno-deprecated-register -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/yangtze.dir/src/main.cpp.o  -o yangtze libcommon_lib.a 

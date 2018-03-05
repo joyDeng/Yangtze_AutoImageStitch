@@ -1,2 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/ar qc libcommon_lib.a  CMakeFiles/common_lib.dir/src/floatimage.cpp.o
-/Library/Developer/CommandLineTools/usr/bin/ranlib libcommon_lib.a
