@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+        <script src="raphael-min.js"></script>
+
+<script>
+
+imagewidth=400
+imageheight=400
+path1='left.png'
+path2='right.png'
+// path1='square.png'
+// path2='square.png'
+
+var paper = Raphael(0, 0, imagewidth * 2, imageheight);
+
+lastx1=0
+lasty1=0
+
+count1=0
+lastx2=0
+lasty2=0
+
+count2=0
+
+cornerx1=10
+cornery=10
+cornerx2= imagewidth + cornerx1
+
+function doSomething1(e) {
+	var posx = 0;
+	var posy = 0;
+	if (!e) var e = window.event;
+	if (e.pageX || e.pageY) 	{
+		posx = e.pageX;
+		posy = e.pageY;
+	}
+	else if (e.clientX || e.clientY) 	{
+		posx = e.clientX + document.body.scrollLeft
+			+ document.documentElement.scrollLeft;
+		posy = e.clientY + document.body.scrollTop
+			+ document.documentElement.scrollTop;
+	}
+	// posx and posy contain the mouse position relative to the document
+	// Do something with this information
+	var ci=paper.circle(posx,posy, 5).attr({fill: "#000"});
+	S=document.getElementById("seg1").innerHTML;
+	S2=S+"ref1.push_back({" + posx + "," + posy +"}); <br />"
+	document.getElementById("seg1").innerHTML=S2
+
+
+// if (count1%2>0){
+//   var L=paper.path("M"+lastx1+" "+lasty1+" L"+posx+" "+posy);
+//   S=document.getElementById("seg1").innerHTML
+//   // if (count1>1) S=S.substring(0, S.length-2)+", "
+//   S2=S+"segsBefore.push_back(Segment("+(lastx1-cornerx1)+", "+(lasty1-cornery)+", "+(posx-cornerx1)+
+//       ", "+(posy-cornery)+")); <br />"
+//   document.getElementById("seg1").innerHTML=S2
+
+// };
+// lastx1=posx;
+// lasty1=posy;
+//count1=count1+1;
+}
+function doSomething2(e) {
+	var posx = 0;
+	var posy = 0;
+	if (!e) var e = window.event;
+	if (e.pageX || e.pageY) 	{
+		posx = e.pageX;
+		posy = e.pageY;
+	}
+	else if (e.clientX || e.clientY) 	{
+		posx = e.clientX + document.body.scrollLeft
+			+ document.documentElement.scrollLeft;
+		posy = e.clientY + document.body.scrollTop
+			+ document.documentElement.scrollTop;
+	}
+	// posx and posy contain the mouse position relative to the document
+	// Do something with this information
+// var ci=paper.circle(posx,posy, 2).attr({fill: "#000"});
+
+var ci=paper.circle(posx,posy, 5).attr({fill: "#000"});
+	S=document.getElementById("seg2").innerHTML;
+	S2=S+"ref2.push_back({" + posx + "," + posy +"}); <br />"
+	document.getElementById("seg2").innerHTML=S2
+
+
+// if (count2%2>0){
+//   var L=paper.path("M"+lastx2+" "+lasty2+" L"+posx+" "+posy);
+//   S=document.getElementById("seg2").innerHTML
+//   // if (count2>1) S=S.substring(0, S.length-2)+", "
+//   S2=S+"segsAfter.push_back(Segment("+(lastx2-cornerx2)+", "+(lasty2-cornery)+", "+(posx-cornerx2)+
+//       ", "+(posy-cornery)+")); <br />"
+//   document.getElementById("seg2").innerHTML=S2
+// };
+// lastx2=posx;
+// lasty2=posy;
+// count2=count2+1;
+}
+
+var bfg=paper.image(path1, cornerx1, cornery, imagewidth, imageheight)
+bfg.click(doSomething1);
+var bfg2=paper.image(path2, cornerx2, cornery, imagewidth, imageheight)
+bfg2.click(doSomething2);
+
+
+</script>
+
+<table width="800" border="0">
+  <tr >
+    <td height ="500" >&nbsp;</td>
+    <td height ="300" >&nbsp;</td>
+  </tr>
+  <tr>
+    <td width = "500"><p id="seg1">vector&lt;vector&lt;int&gt;&gt; ref1;<br /> </p></td>
+    <td width = "400"><p id="seg2">vector&lt;vector&lt;int&gt;&gt; ref2;<br /> </p></td>
+  </tr>
+</table>
+
+<p id="debug"></p>
+
+</body>
+</html>
