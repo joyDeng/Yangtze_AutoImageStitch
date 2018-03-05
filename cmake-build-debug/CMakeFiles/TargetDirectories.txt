@@ -1,0 +1,6 @@
+/Users/zhenliwu/Desktop/Yangtze_AutoImageStitch/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/zhenliwu/Desktop/Yangtze_AutoImageStitch/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/zhenliwu/Desktop/Yangtze_AutoImageStitch/cmake-build-debug/CMakeFiles/yangtze.dir
+/Users/zhenliwu/Desktop/Yangtze_AutoImageStitch/cmake-build-debug/CMakeFiles/common_lib.dir
+/Users/zhenliwu/Desktop/Yangtze_AutoImageStitch/cmake-build-debug/ext/CMakeFiles/rebuild_cache.dir
+/Users/zhenliwu/Desktop/Yangtze_AutoImageStitch/cmake-build-debug/ext/CMakeFiles/edit_cache.dir
