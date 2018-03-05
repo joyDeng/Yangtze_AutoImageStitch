@@ -49,10 +49,11 @@ SOURCE_GROUP("ext\\stb" FILES ${ext_stb_srcs})
 add_executable(yangtze
 
   # Header files
-
+  include/stiches.hpp
 
   # Source code files
   src/main.cpp
+  src/stiches.cpp
 )
 
 

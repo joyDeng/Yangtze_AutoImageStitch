@@ -12,6 +12,6 @@
 int main(){
     FloatImage im(DATA_DIR "/input/testread.jpeg");
     im.write(DATA_DIR "/output/testwrite.png");
-    
-    return true;
+
+    return 0;
 }
