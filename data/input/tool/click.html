@@ -10,10 +10,10 @@
 
 <script>
 
-imagewidth=400
-imageheight=400
-path1='left.png'
-path2='right.png'
+imagewidth=588
+imageheight=444
+path1='../left.png'
+path2='../right.png'
 // path1='square.png'
 // path2='square.png'
 
@@ -50,7 +50,7 @@ function doSomething1(e) {
 	// Do something with this information
 	var ci=paper.circle(posx,posy, 5).attr({fill: "#000"});
 	S=document.getElementById("seg1").innerHTML;
-	S2=S+"ref1.push_back({" + posx + "," + posy +"}); <br />"
+	S2=S+"ref1.push_back({" + (posx - cornerx1) + "," + (posy - cornery) +"}); <br />"
 	document.getElementById("seg1").innerHTML=S2
 
 
@@ -87,7 +87,7 @@ function doSomething2(e) {
 
 var ci=paper.circle(posx,posy, 5).attr({fill: "#000"});
 	S=document.getElementById("seg2").innerHTML;
-	S2=S+"ref2.push_back({" + posx + "," + posy +"}); <br />"
+	S2=S+"ref2.push_back({" + (posx - cornerx2) + "," + (posy - cornery) +"}); <br />"
 	document.getElementById("seg2").innerHTML=S2
 
 
