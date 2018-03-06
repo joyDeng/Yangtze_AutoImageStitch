@@ -13,19 +13,31 @@ FloatImage Pano::cat2images(const FloatImage &im1, const FloatImage &im2, std::v
     
     // construct Ax = b homogenous equation systems
     MatrixXf A;
-    A.resize(8,9);
+    A.resize(9,9);
     for(int i = 0; i < 4 ; i++){
-        float x = ref1[i].x();
-        float y = ref1[i].y();
-        float x1 = ref2[i].x();
-        float y1 = ref2[i].y();
-        A.row(i * 2) << y, x, 1, 0, 0, 0, -y1 * y1, -y1 * x, -y1;
-        A.row(i * 2 + 1) << 0, 0, 0, y, x, 1, -x1 * y, -x1 * x, -x1;
+        float x1 = ref1[i].x();
+        float y1 = ref1[i].y();
+        float x = ref2[i].x();
+        float y = ref2[i].y();
+        A.row(i * 2) << x, y, 1, 0, 0, 0, -x * x1, -y * x1, -x1;
+        A.row(i * 2 + 1) << 0, 0, 0, x, y, 1, -x * y1, -y1 * y, -y1;
     }
+    A.row(8) << 0,0,0,0,0,0,0,0,1;
     
     // solve by svd
+//    Mat3f homo;
+//    homo = solveHomo(A);
+//    Mat3f homo_inverse = homo.inverse();
+    Vecxf b;
+    b.resize(9);
+    b << 0,0,0,0,0,0,0,0,1;
+    Vecxf rs = A.inverse() * b;
+    
     Mat3f homo;
-    homo = solveHomo(A);
+    homo.row(0) << rs[0], rs[1], rs[2];
+    homo.row(1) << rs[3], rs[4], rs[5];
+    homo.row(2) << rs[6], rs[7], rs[8];
+    
     Mat3f homo_inverse = homo.inverse();
     
     // calculate canvas of output image
@@ -40,12 +52,13 @@ FloatImage Pano::cat2images(const FloatImage &im1, const FloatImage &im2, std::v
         for(int j = 0 ; j < im1.sizeY() ; j++){
             int nx  = i - canv.offset.x();
             int ny = j - canv.offset.y();
-            for(int c = 0 ; c < im1.channels() ; c++)
-                output(nx, ny, c) = im1(i, j, c);
+            if(nx >= 0 && ny >= 0 && nx < canv.length && ny < canv.height)
+                for(int c = 0 ; c < im1.channels() ; c++)
+                    output(nx, ny, c) = im1(i, j, c);
         }
     
     //query image2 and map onto canvas
-    Vec2i offsetImage2 = Vec2i(floor(im2bound.topleft.x()), floor(im2bound.btnright.y())) - canv.offset;
+    Vec2i offsetImage2 = Vec2i(floor(im2bound.topleft.x()), floor(im2bound.topleft.y())) - canv.offset;
     Vec2f sizeTransedImage2 = im2bound.btnright - im2bound.topleft;
     
     for(int i = 0 ; i < sizeTransedImage2.x(); i++){
@@ -73,20 +86,16 @@ Mat3f Pano::solveHomo(MatrixXf m){
     x.resize(9);
     b << 0, 0, 0, 0, 0, 0, 0, 0;
     MatrixXf t,s;
-    t = svd.matrixV();
-//    for(int i = 0 ; i < 9 ; i++)
-//        for(int j = 0 ; j < 8 ; j++)
-//            std::cout<<t(i,j)<<std::endl;
     x = (svd.matrixV()).col(8);
     
-    MatrixXf a;
-    a.resize(2,3);
-    a.row(0) << 1,0,0;
-    a.row(1) << 0,1,0;
-    
-    SvdXf ss(a, Eigen::ComputeFullU | Eigen::ComputeFullV);
-    s = ss.matrixV();
-    Vec3f res = ss.matrixV().col(2);
+//    MatrixXf a;
+//    a.resize(2,3);
+//    a.row(0) << 1,0,0;
+//    a.row(1) << 0,1,0;
+//    
+//    SvdXf ss(a, Eigen::ComputeFullU | Eigen::ComputeFullV);
+//    s = ss.matrixV();
+//    Vec3f res = ss.matrixV().col(2);
     
 
 //    t = svd.matrixV();
@@ -173,8 +182,8 @@ ImageBound::imagebound(){
 
 void ImageBound::grow(Vec3f point){
     Vec2f v1, v2;
-    v1 << std::min(topleft.x(), point.x()),std::min(topleft.y(), point.y());
-    v2 << std::max(btnright.x(),point.x()),std::max(btnright.y(), point.y());
+    v1 << std::min(topleft.x(), point.x()), std::min(topleft.y(), point.y());
+    v2 << std::max(btnright.x(),point.x()), std::max(btnright.y(), point.y());
     topleft = v1;
     btnright = v2;
 }

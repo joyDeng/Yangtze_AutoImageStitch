@@ -1,0 +1,935 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		75539D293D5C4CCE8737CBAB /* ZERO_CHECK */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = D0385C6DFA1E4988981DE93D /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */;
+			buildPhases = (
+				2C8F64849DF44310AEC6CD9E /* CMake Rules */,
+			);
+			dependencies = (
+			);
+			name = ZERO_CHECK;
+			productName = ZERO_CHECK;
+		};
+		E084943DF27847628A0ED91C /* ALL_BUILD */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 4FB1AF02D3D64733A6A9D15D /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */;
+			buildPhases = (
+				AF14C0C2D0E0409985582C45 /* CMake Rules */,
+			);
+			dependencies = (
+				979D36135B9745C8B31C1906 /* PBXTargetDependency */,
+				9E98B5338F9043628C8B2273 /* PBXTargetDependency */,
+				F07EA89ECA7D4B9EA5FA4B36 /* PBXTargetDependency */,
+			);
+			name = ALL_BUILD;
+			productName = ALL_BUILD;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		1A0DF93D75F54BB7906A849A /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src/stiches.cpp */ = {isa = PBXBuildFile; fileRef = C696CA76C30446D5AAA0A311 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src/stiches.cpp */; };
+		1CC52C4E97684B20904C50FD /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/array3D.h */ = {isa = PBXBuildFile; fileRef = 895E057783D4469C9968C0A6 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/array3D.h */; };
+		2B32CC9AA75641249AEAE968 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/floatimage.h */ = {isa = PBXBuildFile; fileRef = 519AA2A674964FAFAB72BF24 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/floatimage.h */; };
+		4F8C69C09C2B4B839D13EDCC /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/exceptions.h */ = {isa = PBXBuildFile; fileRef = 0E67E96670084761AFEA299C /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/exceptions.h */; };
+		52BBE12D0832406BA0308401 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src/main.cpp */ = {isa = PBXBuildFile; fileRef = 92A513F9487542D096E00B46 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src/main.cpp */; };
+		5510E6E800BD4CE4928B8B1E /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/CMakeLists.txt */ = {isa = PBXBuildFile; fileRef = A439BFAEEA2249228A6D6029 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/CMakeLists.txt */; };
+		6007A054C2AD4CCEA9100D37 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/stiches.hpp */ = {isa = PBXBuildFile; fileRef = C4F8D80C4D3248DEB126D679 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/stiches.hpp */; };
+		73C593B86558428EB3B9E21A /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/common.h */ = {isa = PBXBuildFile; fileRef = 65767412FE0C4564A14F0ED0 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/common.h */; };
+		8CB7971258DF47CB9D9B018C /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb/stb_image_write.h */ = {isa = PBXBuildFile; fileRef = 27A2DEEBF5514DBA95F9525C /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb/stb_image_write.h */; };
+		9BCE6E17A4D24848AD24EA15 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/CMakeLists.txt */ = {isa = PBXBuildFile; fileRef = 2FB52C5762414A658A344852 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/CMakeLists.txt */; };
+		9F0C59B93DC9413F99CFA313 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/utils.h */ = {isa = PBXBuildFile; fileRef = 9CEB3AB248A844E2B6E1544E /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/utils.h */; };
+		AB14FD63D2664A8F924E3137 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb/stb_image.h */ = {isa = PBXBuildFile; fileRef = 411DC72FB2E440F9A42F92DD /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb/stb_image.h */; };
+		B86EF0C2E72544BDBD541DF7 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src/floatimage.cpp */ = {isa = PBXBuildFile; fileRef = 06B42ABCBFD644839B70B9B4 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src/floatimage.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildStyle section */
+		6EF635A49D0541449D072797 /* RelWithDebInfo */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = RelWithDebInfo;
+		};
+		781EF12B43FA433F8259DEFF /* Debug */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Debug;
+		};
+		90E9561BA8B5492C9536B1FB /* MinSizeRel */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = MinSizeRel;
+		};
+		F736B3039F9542DE9C7292D3 /* Release */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Release;
+		};
+/* End PBXBuildStyle section */
+
+/* Begin PBXContainerItemProxy section */
+		2CEBF42545634A8BA68B7184 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 39B40FC3CBA74A028AD828FD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DD8B0589052F401EB54FC792;
+			remoteInfo = common_lib;
+		};
+		5005F2C9150E41F4AAF0D565 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 39B40FC3CBA74A028AD828FD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DD8B0589052F401EB54FC792;
+			remoteInfo = common_lib;
+		};
+		5F10BD5453644B48B58D3313 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 39B40FC3CBA74A028AD828FD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 46A2C6E05F3F454599E7AAF9;
+			remoteInfo = yangtze;
+		};
+		CE3841486BFA4C29B0EEB271 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 39B40FC3CBA74A028AD828FD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 75539D293D5C4CCE8737CBAB;
+			remoteInfo = ZERO_CHECK;
+		};
+		E549B81482334A7186644720 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 39B40FC3CBA74A028AD828FD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 75539D293D5C4CCE8737CBAB;
+			remoteInfo = ZERO_CHECK;
+		};
+		E96D6F6922604BBEB007C574 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 39B40FC3CBA74A028AD828FD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 75539D293D5C4CCE8737CBAB;
+			remoteInfo = ZERO_CHECK;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		06B42ABCBFD644839B70B9B4 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src/floatimage.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = floatimage.cpp; path = src/floatimage.cpp; sourceTree = SOURCE_ROOT; };
+		0E67E96670084761AFEA299C /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/exceptions.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = exceptions.h; path = include/exceptions.h; sourceTree = SOURCE_ROOT; };
+		10496C21234A457C8D980E0F /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		27A2DEEBF5514DBA95F9525C /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb/stb_image_write.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = stb_image_write.h; path = ext/stb/stb_image_write.h; sourceTree = SOURCE_ROOT; };
+		2FB52C5762414A658A344852 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		411DC72FB2E440F9A42F92DD /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb/stb_image.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = stb_image.h; path = ext/stb/stb_image.h; sourceTree = SOURCE_ROOT; };
+		519AA2A674964FAFAB72BF24 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/floatimage.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = floatimage.h; path = include/floatimage.h; sourceTree = SOURCE_ROOT; };
+		65767412FE0C4564A14F0ED0 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/common.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = common.h; path = include/common.h; sourceTree = SOURCE_ROOT; };
+		895E057783D4469C9968C0A6 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/array3D.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = array3D.h; path = include/array3D.h; sourceTree = SOURCE_ROOT; };
+		92A513F9487542D096E00B46 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src/main.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
+		9CEB3AB248A844E2B6E1544E /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/utils.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = utils.h; path = include/utils.h; sourceTree = SOURCE_ROOT; };
+		A439BFAEEA2249228A6D6029 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		B8B16791719F493DA3D8BB71 /* yangtze */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = yangtze; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4F8D80C4D3248DEB126D679 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/stiches.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = stiches.hpp; path = include/stiches.hpp; sourceTree = SOURCE_ROOT; };
+		C696CA76C30446D5AAA0A311 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src/stiches.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = stiches.cpp; path = src/stiches.cpp; sourceTree = SOURCE_ROOT; };
+		E2ED2AE1A65540D1A277A595 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		FCFFE2F1519740768636A6E3 /* common_lib */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libcommon_lib.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		05125D2EC99E4E799809BB4D /* Source Files */ = {
+			isa = PBXGroup;
+			children = (
+				06B42ABCBFD644839B70B9B4 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src/floatimage.cpp */,
+			);
+			name = "Source Files";
+			sourceTree = "<group>";
+		};
+		0C46A73650B04DF1977F3FCA = {
+			isa = PBXGroup;
+			children = (
+				D510647071054A03A28D753B /* yangtze */,
+				30C9F78FE4FA430CAB58099E /* common_lib */,
+				C3C064A2CD52459686F1F346 /* ALL_BUILD */,
+				3AE86107161A4F5085980A77 /* ZERO_CHECK */,
+				16E9DDE37356406AB4C3BD9C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		16E9DDE37356406AB4C3BD9C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FCFFE2F1519740768636A6E3 /* common_lib */,
+				B8B16791719F493DA3D8BB71 /* yangtze */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		30C9F78FE4FA430CAB58099E /* common_lib */ = {
+			isa = PBXGroup;
+			children = (
+				5F162203E1AF4C66828AA6BC /* Header Files */,
+				05125D2EC99E4E799809BB4D /* Source Files */,
+				54F28A299A1D499CB30C0128 /* ext */,
+				2FB52C5762414A658A344852 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/CMakeLists.txt */,
+			);
+			name = common_lib;
+			sourceTree = "<group>";
+		};
+		3AE86107161A4F5085980A77 /* ZERO_CHECK */ = {
+			isa = PBXGroup;
+			children = (
+				C52D5D4078ED4F759E3DA08B /* CMake Rules */,
+				E2ED2AE1A65540D1A277A595 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/CMakeLists.txt */,
+			);
+			name = ZERO_CHECK;
+			sourceTree = "<group>";
+		};
+		46292FB3DE034B31861F98AB /* Source Files */ = {
+			isa = PBXGroup;
+			children = (
+				92A513F9487542D096E00B46 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src/main.cpp */,
+				C696CA76C30446D5AAA0A311 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src/stiches.cpp */,
+			);
+			name = "Source Files";
+			sourceTree = "<group>";
+		};
+		54F28A299A1D499CB30C0128 /* ext */ = {
+			isa = PBXGroup;
+			children = (
+				D0AB465A073F4EFA82C8E74A /* stb */,
+			);
+			name = ext;
+			sourceTree = "<group>";
+		};
+		5F162203E1AF4C66828AA6BC /* Header Files */ = {
+			isa = PBXGroup;
+			children = (
+				895E057783D4469C9968C0A6 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/array3D.h */,
+				65767412FE0C4564A14F0ED0 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/common.h */,
+				0E67E96670084761AFEA299C /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/exceptions.h */,
+				519AA2A674964FAFAB72BF24 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/floatimage.h */,
+				9CEB3AB248A844E2B6E1544E /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/utils.h */,
+			);
+			name = "Header Files";
+			sourceTree = "<group>";
+		};
+		BAD6F13329A044999C016792 /* Header Files */ = {
+			isa = PBXGroup;
+			children = (
+				C4F8D80C4D3248DEB126D679 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include/stiches.hpp */,
+			);
+			name = "Header Files";
+			sourceTree = "<group>";
+		};
+		C3C064A2CD52459686F1F346 /* ALL_BUILD */ = {
+			isa = PBXGroup;
+			children = (
+				C65AD99BDE094BFFBA83D6AE /* CMake Rules */,
+				10496C21234A457C8D980E0F /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/CMakeLists.txt */,
+			);
+			name = ALL_BUILD;
+			sourceTree = "<group>";
+		};
+		C52D5D4078ED4F759E3DA08B /* CMake Rules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "CMake Rules";
+			sourceTree = "<group>";
+		};
+		C65AD99BDE094BFFBA83D6AE /* CMake Rules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "CMake Rules";
+			sourceTree = "<group>";
+		};
+		D0AB465A073F4EFA82C8E74A /* stb */ = {
+			isa = PBXGroup;
+			children = (
+				411DC72FB2E440F9A42F92DD /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb/stb_image.h */,
+				27A2DEEBF5514DBA95F9525C /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb/stb_image_write.h */,
+			);
+			name = stb;
+			sourceTree = "<group>";
+		};
+		D510647071054A03A28D753B /* yangtze */ = {
+			isa = PBXGroup;
+			children = (
+				BAD6F13329A044999C016792 /* Header Files */,
+				46292FB3DE034B31861F98AB /* Source Files */,
+				A439BFAEEA2249228A6D6029 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/CMakeLists.txt */,
+			);
+			name = yangtze;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		46A2C6E05F3F454599E7AAF9 /* yangtze */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2495E740DEAF4D659D2E770B /* Build configuration list for PBXNativeTarget "yangtze" */;
+			buildPhases = (
+				3F46BC2BF7DA40E0AC8389F7 /* Sources */,
+				FA4BC297446A443184B97EF1 /* CMake PostBuild Rules */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A89A403D8E014C868A1B064A /* PBXTargetDependency */,
+				4D853B5A0CBB452BA86F586C /* PBXTargetDependency */,
+			);
+			name = yangtze;
+			productName = yangtze;
+			productReference = B8B16791719F493DA3D8BB71 /* yangtze */;
+			productType = "com.apple.product-type.tool";
+		};
+		DD8B0589052F401EB54FC792 /* common_lib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9B26AE3A3E114BF2ABD4CD6B /* Build configuration list for PBXNativeTarget "common_lib" */;
+			buildPhases = (
+				824BECBD903B43BBA9420580 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4C51A0764EA440FF8515FCCE /* PBXTargetDependency */,
+			);
+			name = common_lib;
+			productName = common_lib;
+			productReference = FCFFE2F1519740768636A6E3 /* common_lib */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		39B40FC3CBA74A028AD828FD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 0820;
+			};
+			buildConfigurationList = 1F27D3E9E4054D7D8E448276 /* Build configuration list for PBXProject "Yangtze" */;
+			buildSettings = {
+			};
+			buildStyles = (
+				781EF12B43FA433F8259DEFF /* Debug */,
+				F736B3039F9542DE9C7292D3 /* Release */,
+				90E9561BA8B5492C9536B1FB /* MinSizeRel */,
+				6EF635A49D0541449D072797 /* RelWithDebInfo */,
+			);
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 0;
+			mainGroup = 0C46A73650B04DF1977F3FCA;
+			projectDirPath = ../;
+			projectRoot = "";
+			targets = (
+				E084943DF27847628A0ED91C /* ALL_BUILD */,
+				75539D293D5C4CCE8737CBAB /* ZERO_CHECK */,
+				DD8B0589052F401EB54FC792 /* common_lib */,
+				46A2C6E05F3F454599E7AAF9 /* yangtze */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		055D0539E3DC45849D0BF1A8 = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# shell script goes here
+exit 0";
+			showEnvVarsInLog = 0;
+		};
+		2C8F64849DF44310AEC6CD9E /* CMake Rules */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			name = "CMake Rules";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "make -C /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build -f /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build/CMakeScripts/ZERO_CHECK_cmakeRulesBuildPhase.make$CONFIGURATION all";
+			showEnvVarsInLog = 0;
+		};
+		764F071B1DD640FA8696885A = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# shell script goes here
+exit 0";
+			showEnvVarsInLog = 0;
+		};
+		AF14C0C2D0E0409985582C45 /* CMake Rules */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			name = "CMake Rules";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "make -C /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build -f /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build/CMakeScripts/ALL_BUILD_cmakeRulesBuildPhase.make$CONFIGURATION all";
+			showEnvVarsInLog = 0;
+		};
+		FA4BC297446A443184B97EF1 /* CMake PostBuild Rules */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			name = "CMake PostBuild Rules";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "make -C /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build -f /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build/CMakeScripts/yangtze_postBuildPhase.make$CONFIGURATION all";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3F46BC2BF7DA40E0AC8389F7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52BBE12D0832406BA0308401 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src/main.cpp */,
+				1A0DF93D75F54BB7906A849A /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src/stiches.cpp */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		824BECBD903B43BBA9420580 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B86EF0C2E72544BDBD541DF7 /* /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src/floatimage.cpp */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4C51A0764EA440FF8515FCCE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 75539D293D5C4CCE8737CBAB /* ZERO_CHECK */;
+			targetProxy = E96D6F6922604BBEB007C574 /* PBXContainerItemProxy */;
+		};
+		4D853B5A0CBB452BA86F586C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 75539D293D5C4CCE8737CBAB /* ZERO_CHECK */;
+			targetProxy = E549B81482334A7186644720 /* PBXContainerItemProxy */;
+		};
+		979D36135B9745C8B31C1906 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DD8B0589052F401EB54FC792 /* common_lib */;
+			targetProxy = 2CEBF42545634A8BA68B7184 /* PBXContainerItemProxy */;
+		};
+		9E98B5338F9043628C8B2273 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 46A2C6E05F3F454599E7AAF9 /* yangtze */;
+			targetProxy = 5F10BD5453644B48B58D3313 /* PBXContainerItemProxy */;
+		};
+		A89A403D8E014C868A1B064A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DD8B0589052F401EB54FC792 /* common_lib */;
+			targetProxy = 5005F2C9150E41F4AAF0D565 /* PBXContainerItemProxy */;
+		};
+		F07EA89ECA7D4B9EA5FA4B36 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 75539D293D5C4CCE8737CBAB /* ZERO_CHECK */;
+			targetProxy = CE3841486BFA4C29B0EEB271 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0E5EDA6D75D84FD280243219 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb);
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " ";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("-Wmost","-Wno-four-char-constants","-Wno-unknown-pragmas","$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		13ECE8C4CBD14725840CBEDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb);
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " ";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("-Wmost","-Wno-four-char-constants","-Wno-unknown-pragmas","$(inherited)");
+			};
+			name = Release;
+		};
+		155C781528174C5CACF51945 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","'DATA_DIR=R\"(/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/data)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb);
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CPLUSPLUSFLAGS = " -Wall -Wextra -Wno-unused-parameter -Wno-ignored-attributes -Wno-gnu-anonymous-struct -Wno-c99-extensions -Wno-nested-anon-types -Wno-deprecated-register    '-std=c++11' -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb   ";
+				OTHER_LIBTOOLFLAGS = " ";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = common_lib;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("-Wmost","-Wno-four-char-constants","-Wno-unknown-pragmas","$(inherited)");
+			};
+			name = Debug;
+		};
+		1785686C47E04834977748CA /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","'DATA_DIR=R\"(/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/data)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb);
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CPLUSPLUSFLAGS = " -Wall -Wextra -Wno-unused-parameter -Wno-ignored-attributes -Wno-gnu-anonymous-struct -Wno-c99-extensions -Wno-nested-anon-types -Wno-deprecated-register        -DNDEBUG '-std=c++11' -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb   ";
+				OTHER_LIBTOOLFLAGS = " ";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = common_lib;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("-Wmost","-Wno-four-char-constants","-Wno-unknown-pragmas","$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		345853A98F1D4E518ED158DD /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk;
+				SYMROOT = /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build/build;
+			};
+			name = RelWithDebInfo;
+		};
+		3831A661780947E2979A9007 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb);
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " ";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("-Wmost","-Wno-four-char-constants","-Wno-unknown-pragmas","$(inherited)");
+			};
+			name = Debug;
+		};
+		3F6F1C1200B3482CB170FB47 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb);
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " ";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("-Wmost","-Wno-four-char-constants","-Wno-unknown-pragmas","$(inherited)");
+			};
+			name = Debug;
+		};
+		43AF01E9374941E48A6C4018 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk;
+				SYMROOT = /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build/build;
+			};
+			name = MinSizeRel;
+		};
+		43C8EA23CAA34C80B9ADE84F /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb);
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " ";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("-Wmost","-Wno-four-char-constants","-Wno-unknown-pragmas","$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		6E27C1C141F344C8AA093CCB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","'DATA_DIR=R\"(/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/data)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb);
+				INSTALL_PATH = "";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CPLUSPLUSFLAGS = " -Wall -Wextra -Wno-unused-parameter -Wno-ignored-attributes -Wno-gnu-anonymous-struct -Wno-c99-extensions -Wno-nested-anon-types -Wno-deprecated-register    '-std=c++11' -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb   ";
+				OTHER_LDFLAGS = " -Wl,-search_paths_first -Wl,-headerpad_max_install_names  /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build/Debug/libcommon_lib.a";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = yangtze;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("-Wmost","-Wno-four-char-constants","-Wno-unknown-pragmas","$(inherited)");
+			};
+			name = Debug;
+		};
+		7CC1EAA3BBB242278A7BECE8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb);
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " ";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("-Wmost","-Wno-four-char-constants","-Wno-unknown-pragmas","$(inherited)");
+			};
+			name = Release;
+		};
+		7CE7D4F9FD894363856CAEA3 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb);
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " ";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("-Wmost","-Wno-four-char-constants","-Wno-unknown-pragmas","$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		7E5B81F5BF10426D978FAE56 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb);
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " ";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("-Wmost","-Wno-four-char-constants","-Wno-unknown-pragmas","$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		A2B7948B272F4D4B9597B154 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk;
+				SYMROOT = /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build/build;
+			};
+			name = Release;
+		};
+		A584FB844E5B41A0893088AE /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","'DATA_DIR=R\"(/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/data)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb);
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CPLUSPLUSFLAGS = " -Wall -Wextra -Wno-unused-parameter -Wno-ignored-attributes -Wno-gnu-anonymous-struct -Wno-c99-extensions -Wno-nested-anon-types -Wno-deprecated-register     -DNDEBUG '-std=c++11' -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb   ";
+				OTHER_LIBTOOLFLAGS = " ";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = common_lib;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("-Wmost","-Wno-four-char-constants","-Wno-unknown-pragmas","$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		A94E5AE8813F4FEAB1C0DB0C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk;
+				SYMROOT = /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build/build;
+			};
+			name = Debug;
+		};
+		C7222337F503472394942A87 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","'DATA_DIR=R\"(/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/data)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb);
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CPLUSPLUSFLAGS = " -Wall -Wextra -Wno-unused-parameter -Wno-ignored-attributes -Wno-gnu-anonymous-struct -Wno-c99-extensions -Wno-nested-anon-types -Wno-deprecated-register     -DNDEBUG '-std=c++11' -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb   ";
+				OTHER_LIBTOOLFLAGS = " ";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = common_lib;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("-Wmost","-Wno-four-char-constants","-Wno-unknown-pragmas","$(inherited)");
+			};
+			name = Release;
+		};
+		CDD10C2AF86349EE93714267 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","'DATA_DIR=R\"(/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/data)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb);
+				INSTALL_PATH = "";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CPLUSPLUSFLAGS = " -Wall -Wextra -Wno-unused-parameter -Wno-ignored-attributes -Wno-gnu-anonymous-struct -Wno-c99-extensions -Wno-nested-anon-types -Wno-deprecated-register     -DNDEBUG '-std=c++11' -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb   ";
+				OTHER_LDFLAGS = " -Wl,-search_paths_first -Wl,-headerpad_max_install_names  /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build/MinSizeRel/libcommon_lib.a";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = yangtze;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("-Wmost","-Wno-four-char-constants","-Wno-unknown-pragmas","$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		D4B786ABC94E42189BE4566D /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","'DATA_DIR=R\"(/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/data)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb);
+				INSTALL_PATH = "";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CPLUSPLUSFLAGS = " -Wall -Wextra -Wno-unused-parameter -Wno-ignored-attributes -Wno-gnu-anonymous-struct -Wno-c99-extensions -Wno-nested-anon-types -Wno-deprecated-register        -DNDEBUG '-std=c++11' -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb   ";
+				OTHER_LDFLAGS = " -Wl,-search_paths_first -Wl,-headerpad_max_install_names  /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build/RelWithDebInfo/libcommon_lib.a";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = yangtze;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("-Wmost","-Wno-four-char-constants","-Wno-unknown-pragmas","$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		E05CD4472F024355B9F1E632 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","'DATA_DIR=R\"(/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/data)\"'");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext,/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb);
+				INSTALL_PATH = "";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CPLUSPLUSFLAGS = " -Wall -Wextra -Wno-unused-parameter -Wno-ignored-attributes -Wno-gnu-anonymous-struct -Wno-c99-extensions -Wno-nested-anon-types -Wno-deprecated-register     -DNDEBUG '-std=c++11' -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/include -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/eigen -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/src -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext -I/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/ext/stb   ";
+				OTHER_LDFLAGS = " -Wl,-search_paths_first -Wl,-headerpad_max_install_names  /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build/Release/libcommon_lib.a";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = yangtze;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("-Wmost","-Wno-four-char-constants","-Wno-unknown-pragmas","$(inherited)");
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1F27D3E9E4054D7D8E448276 /* Build configuration list for PBXProject "Yangtze" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A94E5AE8813F4FEAB1C0DB0C /* Debug */,
+				A2B7948B272F4D4B9597B154 /* Release */,
+				43AF01E9374941E48A6C4018 /* MinSizeRel */,
+				345853A98F1D4E518ED158DD /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		2495E740DEAF4D659D2E770B /* Build configuration list for PBXNativeTarget "yangtze" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6E27C1C141F344C8AA093CCB /* Debug */,
+				E05CD4472F024355B9F1E632 /* Release */,
+				CDD10C2AF86349EE93714267 /* MinSizeRel */,
+				D4B786ABC94E42189BE4566D /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		4FB1AF02D3D64733A6A9D15D /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3831A661780947E2979A9007 /* Debug */,
+				7CC1EAA3BBB242278A7BECE8 /* Release */,
+				7CE7D4F9FD894363856CAEA3 /* MinSizeRel */,
+				7E5B81F5BF10426D978FAE56 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		9B26AE3A3E114BF2ABD4CD6B /* Build configuration list for PBXNativeTarget "common_lib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				155C781528174C5CACF51945 /* Debug */,
+				C7222337F503472394942A87 /* Release */,
+				A584FB844E5B41A0893088AE /* MinSizeRel */,
+				1785686C47E04834977748CA /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D0385C6DFA1E4988981DE93D /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3F6F1C1200B3482CB170FB47 /* Debug */,
+				13ECE8C4CBD14725840CBEDE /* Release */,
+				43C8EA23CAA34C80B9ADE84F /* MinSizeRel */,
+				0E5EDA6D75D84FD280243219 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 39B40FC3CBA74A028AD828FD /* Project object */;
+}
