@@ -13,7 +13,7 @@ FloatImage Pano::cat2images(const FloatImage &im1, const FloatImage &im2, std::v
     
     // construct Ax = b homogenous equation systems
     MatrixXf A;
-    A.resize(9,9);
+    A.resize(8,9);
     for(int i = 0; i < 4 ; i++){
         float x1 = ref1[i].x();
         float y1 = ref1[i].y();
@@ -22,23 +22,12 @@ FloatImage Pano::cat2images(const FloatImage &im1, const FloatImage &im2, std::v
         A.row(i * 2) << x, y, 1, 0, 0, 0, -x * x1, -y * x1, -x1;
         A.row(i * 2 + 1) << 0, 0, 0, x, y, 1, -x * y1, -y1 * y, -y1;
     }
-    A.row(8) << 0,0,0,0,0,0,0,0,1;
     
-    // solve by svd
-//    Mat3f homo;
-//    homo = solveHomo(A);
-//    Mat3f homo_inverse = homo.inverse();
-    Vecxf b;
-    b.resize(9);
-    b << 0,0,0,0,0,0,0,0,1;
-    Vecxf rs = A.inverse() * b;
-    
+//     solve by svd
     Mat3f homo;
-    homo.row(0) << rs[0], rs[1], rs[2];
-    homo.row(1) << rs[3], rs[4], rs[5];
-    homo.row(2) << rs[6], rs[7], rs[8];
-    
+    homo = solveHomo(A);
     Mat3f homo_inverse = homo.inverse();
+
     
     // calculate canvas of output image
     ImageBound im1bound = boundBox(im1);
@@ -46,7 +35,7 @@ FloatImage Pano::cat2images(const FloatImage &im1, const FloatImage &im2, std::v
     Canvas canv = calculateCanvas(im1bound, im2bound);
     
     
-//    //paste image1 onto canvas
+   //paste image1 onto canvas
     FloatImage output(canv.length, canv.height, im1.channels());
     for(int i = 0 ; i < im1.sizeX() ; i++)
         for(int j = 0 ; j < im1.sizeY() ; j++){
@@ -65,7 +54,7 @@ FloatImage Pano::cat2images(const FloatImage &im1, const FloatImage &im2, std::v
         for(int j = 0 ; j < sizeTransedImage2.y() ; j++){
             Vec2f transed_pos = im2bound.topleft + Vec2f(i,j);
             Vec3f pos_f = homo_inverse * Vec3f(transed_pos.x(), transed_pos.y(), 1);
-            Vec2i pos(floor(pos_f.x()), floor(pos_f.y()));
+            Vec2i pos(floor(pos_f.x()/pos_f.z()), floor(pos_f.y()/pos_f.z()));
             if(pos.x() >= 0 && pos.y() >= 0 && pos.x() < im2.sizeX() && pos.y() < im2.sizeY()){
                 Vec2i canvas_pos = offsetImage2 + Vec2i(i,j);
                 if(canvas_pos.x() > 0 && canvas_pos.y() > 0 && canvas_pos.y() < canv.height && canvas_pos.x() < canv.length)
@@ -85,26 +74,18 @@ Mat3f Pano::solveHomo(MatrixXf m){
     b.resize(8);
     x.resize(9);
     b << 0, 0, 0, 0, 0, 0, 0, 0;
+   
+    // Then the solution x is the eigenvector corresponding to the only zero
+    // eigenvalue of ATA which corresponds to the right most column of V
     MatrixXf t,s;
     x = (svd.matrixV()).col(8);
-    
-//    MatrixXf a;
-//    a.resize(2,3);
-//    a.row(0) << 1,0,0;
-//    a.row(1) << 0,1,0;
-//    
-//    SvdXf ss(a, Eigen::ComputeFullU | Eigen::ComputeFullV);
-//    s = ss.matrixV();
-//    Vec3f res = ss.matrixV().col(2);
-    
 
-//    t = svd.matrixV();
     Mat3f H;
     float k = 1.0 / x[8];
     H.row(0) <<  k * x[0], k * x[1],k * x[2];
     H.row(1) <<  k * x[3], k * x[4],k * x[5];
     H.row(2) << k * x[6], k * x[7], k * x[8];
-//
+
     return H;
 }
 
@@ -114,9 +95,10 @@ ImageBound Pano::boundBox(const FloatImage &im){
     
     Vec3f tl,tr,bl,br;
     tl << 0,  0, 1;
-    tr << 0, im.sizeX(), 1;
-    bl << im.sizeY(), 0, 1;
-    br << im.sizeY(), im.sizeX(), 1;
+    tr << im.sizeX(), 0, 1;
+    bl << 0, im.sizeY(), 1;
+    br << im.sizeX(), im.sizeY(), 1;
+    
     
     hb.grow(tl);
     hb.grow(tr);
@@ -132,16 +114,20 @@ ImageBound Pano::boundBoxHomo(const FloatImage &im, Mat3f homo){
     
     Vec3f tl,tr,bl,br;
     tl << 0,  0, 1;
-    tr << 0, im.sizeX(), 1;
-    bl << im.sizeY(), 0, 1;
-    br << im.sizeY(), im.sizeX(), 1;
+    tr << im.sizeX(), 0, 1;
+    bl << 0, im.sizeY(), 1;
+    br << im.sizeX(), im.sizeY(), 1;
     
     tl = homo * tl;
     tr = homo * tr;
     bl = homo * bl;
     br = homo * br;
     
-    
+    tl = tl / tl.z();
+    tr = tr / tr.z();
+    bl = bl / bl.z();
+    br = br / br.z();
+
     hb.grow(tl);
     hb.grow(tr);
     hb.grow(bl);
