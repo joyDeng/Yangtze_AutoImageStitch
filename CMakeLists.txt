@@ -35,6 +35,7 @@ set(common_srcs
     src/floatimage.cpp
     include/floatimage.h
     include/utils.h
+    include/common.h
 )
 
 # Compile common library

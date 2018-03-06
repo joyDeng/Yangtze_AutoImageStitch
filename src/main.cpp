@@ -6,26 +6,32 @@
 
 #include <iostream>
 #include <Eigen/Geometry>
+#include "common.h"
 #include "floatimage.h"
+#include "stiches.hpp"
 #include "utils.h"
 
 using namespace std;
 
 int main(){
-    FloatImage im(DATA_DIR "/input/testread.jpeg");
-    im.write(DATA_DIR "/output/testwrite.png");
+    FloatImage im1(DATA_DIR "/input/left.png");
+    FloatImage im2(DATA_DIR "/input/right.png");
+    Pano pano;
 
-    vector<vector<int>> ref1;
-    ref1.push_back({351,224});
-    ref1.push_back({301,384});
-    ref1.push_back({388,397});
-    ref1.push_back({385,227});
 
-    vector<vector<int>> ref2;
-    ref2.push_back({465,226});
-    ref2.push_back({420,397});
-    ref2.push_back({507,389});
-    ref2.push_back({499,225});
+    vector<Vec2f> ref1,ref2;
+    ref1.push_back(Vec2f(457,99));
+    ref1.push_back(Vec2f(451,417));
+    ref1.push_back(Vec2f(543,426));
+    ref1.push_back(Vec2f(545,95));
+
+    ref2.push_back(Vec2f(34,95));
+    ref2.push_back(Vec2f(38,429));
+    ref2.push_back(Vec2f(135,419));
+    ref2.push_back(Vec2f(124,99));
+    
+    FloatImage cat = pano.cat2images(im1, im2, ref1, ref2);
+    cat.write(DATA_DIR "/output/left_right.png");
 
     return 0;
 }
