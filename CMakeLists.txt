@@ -35,6 +35,7 @@ set(common_srcs
     src/floatimage.cpp
     include/floatimage.h
     include/utils.h
+    include/common.h
 )
 
 # Compile common library
@@ -49,10 +50,11 @@ SOURCE_GROUP("ext\\stb" FILES ${ext_stb_srcs})
 add_executable(yangtze
 
   # Header files
-
+  include/stiches.hpp
 
   # Source code files
   src/main.cpp
+  src/stiches.cpp
 )
 
 
