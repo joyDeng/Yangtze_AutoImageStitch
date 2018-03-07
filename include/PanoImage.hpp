@@ -25,7 +25,7 @@ public:
     Vec2i getFeaturePoint(int i){return m_featurePoints[i];}
     
     // corner detector
-    FloatImage horrisCornerDetector(int window, float threshold);
+    FloatImage harrisCornerDetector(int window, float threshold);
     
     // feature descriptor
     void calculatePatches(float sigma);

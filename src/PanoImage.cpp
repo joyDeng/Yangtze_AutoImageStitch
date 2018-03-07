@@ -53,7 +53,7 @@ void PanoImage::calculatePatches(float sigma) {
 }
 
 
-FloatImage PanoImage::horrisCornerDetector(int k, float threshold){
+FloatImage PanoImage::harrisCornerDetector(int k, float threshold){
     float emk = 0.05;// range from 0.04 ~ 0.06
     // initialize sliding window
     MatrixXf window;

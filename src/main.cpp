@@ -23,7 +23,7 @@ int main(){
     Pano pano;
     
     PanoImage pim(im1);
-    FloatImage detected = pim.horrisCornerDetector(9, 0.02);
+    FloatImage detected = pim.harrisCornerDetector(9, 0.02);
     detected.write(DATA_DIR "/output/leftRthreshold.png");
 
 //
