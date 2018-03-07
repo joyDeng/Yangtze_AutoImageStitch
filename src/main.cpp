@@ -9,7 +9,7 @@
 #include "common.h"
 #include "floatimage.h"
 
-#include "stiches.hpp"
+#include "stitches.hpp"
 #include "utils.h"
 
 //using namespace std;

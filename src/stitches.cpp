@@ -6,7 +6,7 @@
 //
 //
 #include <iostream>
-#include "stiches.hpp"
+#include "stitches.hpp"
 #include <Eigen/SVD>
 
 FloatImage Pano::cat2images(const FloatImage &im1, const FloatImage &im2, std::vector<Vec2f> ref1, std::vector<Vec2f> ref2){
