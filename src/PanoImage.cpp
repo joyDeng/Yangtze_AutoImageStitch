@@ -9,3 +9,20 @@
 #include "PanoImage.hpp"
 
 
+
+void PanoImage::horrisCornerDetector(){
+    
+}
+
+void PanoImage::calculatePatches(){
+    
+}
+
+//constructor calculate
+PanoImage::PanoImage(const std::string & filename, const int patchsize){
+    
+}
+
+PanoImage::PanoImage(const FloatImage &other, const int patchsize){
+    
+}
