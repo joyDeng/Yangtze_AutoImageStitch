@@ -23,7 +23,7 @@ int main(){
 //    std::cout<<" "<<rng.nextFloat()<<endl;
 
     int window = 9;
-    float harris_th = 0.2f, sigma = 2.0f, match_th = 0.6f, pwindow = 21;
+    float harris_th = 0.2f, sigma = 2.0f, match_th = 0.6f, pwindow = 21, por = 0.6;
 
     FloatImage im1(DATA_DIR "/input/lily1.jpg");
     FloatImage im2(DATA_DIR "/input/lily2.jpg");
@@ -71,8 +71,8 @@ int main(){
 //    FloatImage cat = pano.mancat2images(im1, im2, pairs);
 //    cat.write(DATA_DIR "/output/left_right.png");
 
-    FloatImage autocat = pano.autocat2images(pim, pim2, window, harris_th, match_th, sigma, pwindow);
-    autocat.write(DATA_DIR "/output/auto_lily_left_right.png");
+    FloatImage autocat = pano.autocat2images(pim, pim2, window, harris_th, match_th, sigma, pwindow, por);
+    autocat.write(DATA_DIR "/output/auto_left_right.png");
 
     return 0;
 }
