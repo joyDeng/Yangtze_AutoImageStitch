@@ -188,8 +188,10 @@ void ImageBound::grow(Vec3f point){
     btnright = v2;
 }
 
-vector<vector<Vec2f>> Pano::matchDescriptors(PanoImage &pim1, PanoImage &pim2, float threshold){
-    vector<vector<Vec2f>> output;
+
+std::vector<std::vector<Vec2i>> Pano::matchDescriptors(PanoImage &pim1, PanoImage &pim2, float threshold){
+    std::vector<std::vector<Vec2i>> output;
+
 
     // how to init these min?
     float min, smin, dist = 0, ratio = 0;
@@ -201,12 +203,13 @@ vector<vector<Vec2f>> Pano::matchDescriptors(PanoImage &pim1, PanoImage &pim2, f
         // by 2-NN test
         min = pim1.getPatchSize();
         smin = min;
+        min_index = -1, smin_index = -1;
         for (int j = 0; j < pim2.getPointCount(); ++j) {
             d = pim1.getPatches(i) - pim2.getPatches(j);
             dist = d.squaredNorm();
             if(dist < min){
-                min_index = j;
                 smin_index = min_index;
+                min_index = j;
                 smin = min;
                 min = dist;
             }else if(dist < smin && dist != min){
@@ -217,10 +220,14 @@ vector<vector<Vec2f>> Pano::matchDescriptors(PanoImage &pim1, PanoImage &pim2, f
         ratio = min / smin;
         if(ratio < threshold){
             // good match
-            std::vector<Vec2f> refs;
-            Vec2f ref1, ref2;
+            std::vector<Vec2i> refs;
+            Vec2i ref1, ref2;
             ref1 << pim1.getFeaturePoint(i).x(), pim1.getFeaturePoint(i).y();
             ref2 << pim2.getFeaturePoint(min_index).x(), pim2.getFeaturePoint(min_index).y();
+            printf("Match: (%d, %d) to (%d, %d)\n", ref1.x(), ref1.y(), ref2.x(), ref2.y());
+            printf("min_index is: %d, min_index y is: %d\n", min_index, pim2.getFeaturePoint(min_index).y());
+
+
             refs.push_back(ref1);
             refs.push_back(ref2);
             output.push_back(refs);
@@ -233,7 +240,7 @@ vector<vector<Vec2f>> Pano::matchDescriptors(PanoImage &pim1, PanoImage &pim2, f
 Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float portion, float accuBound){
     Mat3f H;
 
-    vector<vector<Vec2f>> pairs = matchDescriptors(pim1, pim2);
+    vector<vector<Vec2i>> pairs = matchDescriptors(pim1, pim2);
     vector<vector<Vec2f>> Largest_inliers;
     Mat3f Homo;
     float Prob = 1;
@@ -250,8 +257,15 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float portion, float accuBo
         vector<vector<Vec2f>> inliers;
         //select four feature pairs(at random)
         vector<vector<Vec2f>> ranPairs;
-        for(int i = 0 ; i < 4 ; i++)
-            ranPairs.push_back(pairs[rng.nextUInt(rndBound)]);
+        for(int i = 0 ; i < 4 ; i++){
+            std::vector<Vec2i> p = pairs[rng.nextUInt(rndBound)];
+            Vec2f p0 = Vec2f(p[0].x(), p[0].y());
+            Vec2f p1 = Vec2f(p[1].x(), p[1].y());
+            vector<Vec2f> pair;
+            pair.push_back(p0);
+            pair.push_back(p1);
+            ranPairs.push_back(pair);
+        }
         
         //compute homography
         Mat3f H = computeHomo(ranPairs);
@@ -261,8 +275,15 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float portion, float accuBo
             Vec3f hp = H * Vec3f(pairs[i][1].x(),pairs[i][1].x(),1);
             hp = hp / hp.z();
             Vec3f ep =  hp - Vec3f(pairs[i][0].x(),pairs[i][0].x(),1);
-            if(ep.norm() < __FLT_EPSILON__)
-                inliers.push_back(pairs[i]);
+            if(ep.norm() < __FLT_EPSILON__){
+                std::vector<Vec2i> p = pairs[i];
+                Vec2f p0 = Vec2f(p[0].x(), p[0].y());
+                Vec2f p1 = Vec2f(p[1].x(), p[1].y());
+                vector<Vec2f> pair;
+                pair.push_back(p0);
+                pair.push_back(p1);
+                inliers.push_back(pair);
+            }
         }
         
         //update the stop point
@@ -280,7 +301,7 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float portion, float accuBo
     }
     
     //Re-compute least-squares H estimate on all of the inliers
-    Mat3f updatedHomo = recomputeHomoByInliners(Largest_inliers);
+//    Mat3f updatedHomo = recomputeHomoByInliners(Largest_inliers);
     
     return Homo;
 }
@@ -312,6 +333,37 @@ Mat3f Pano::recomputeHomoByInliners(std::vector<std::vector<Vec2f>> pairs){
     homo.row(2) = ghi;
     
     return homo;
+}
+
+FloatImage Pano::vizMatches(PanoImage &pim1, PanoImage &pim2, std::vector<std::vector<Vec2i>> matches){
+    FloatImage im1 = pim1.getImage(), im2 = pim2.getImage();
+    FloatImage output(im1.sizeX() + im2.sizeX(), std::max(im1.sizeY(), im2.sizeY()),
+                      im1.channels());
+    int offsetX = im1.sizeX();
+
+    for (int i = 0; i < im1.sizeX(); ++i) {
+        for (int j = 0; j < im1.sizeY(); ++j) {
+            for (int k = 0; k < im1.channels(); ++k) {
+                output(i, j, k) = im1(i, j, k);
+            }
+        }
+    }
+
+    for (int i = 0; i < im2.sizeX(); ++i) {
+        for (int j = 0; j < im2.sizeY(); ++j) {
+            for (int k = 0; k < im2.channels(); ++k) {
+                output(i + offsetX, j, k) = im2(i, j, k);
+            }
+        }
+    }
+
+    for (int i = 0; i < matches.size(); ++i) {
+        output.drawLine(matches[i][0].x(), matches[i][0].y(), matches[i][1].x() + offsetX, matches[i][1].y());
+    }
+
+    return output;
+
+
 }
 
 

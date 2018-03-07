@@ -16,7 +16,7 @@
 
 class PanoImage{
 public:
-    PanoImage(const FloatImage &other, const int patchsize = 3);
+    PanoImage(const FloatImage &other, const int patchsize = 9);
     
     FloatImage getImage(){return FloatImage(m_image);}
     int getPatchSize(){return m_patchSize;}
@@ -28,7 +28,7 @@ public:
     FloatImage harrisCornerDetector(int window, float threshold);
     
     // feature descriptor
-    void calculatePatches(float sigma);
+    void calculatePatches(float sigma = 2.f, int size = 9, bool blur = true, bool norm = true);
 
     
     

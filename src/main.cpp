@@ -22,13 +22,31 @@ int main(){
     pcg32 rng;
     std::cout<<" "<<rng.nextFloat()<<endl;
 
+    int window = 9;
+    float harris_th = 0.5f, sigma = 2.0f, patch_th = 0.3f;
+
     FloatImage im1(DATA_DIR "/input/left.png");
     FloatImage im2(DATA_DIR "/input/right.png");
     Pano pano;
     
     PanoImage pim(im1);
-    FloatImage detected = pim.harrisCornerDetector(9, 0.02);
+    FloatImage detected = pim.harrisCornerDetector(window, harris_th);
     detected.write(DATA_DIR "/output/leftRthreshold.png");
+    pim.calculatePatches(sigma, 21);
+
+    PanoImage pim2(im2);
+    FloatImage detected2 = pim2.harrisCornerDetector(window, harris_th);
+    detected2.write(DATA_DIR "/output/rightRthreshold.png");
+    pim2.calculatePatches(sigma, 21);
+
+    std::vector<std::vector<Vec2i>> matches = pano.matchDescriptors(pim, pim2, patch_th);
+    std::cout << matches.size() << endl;
+    for (int i = 0; i < matches.size(); ++i) {
+        printf("Match: (%d, %d) to (%d, %d)\n", matches[i][0].x(), matches[i][0].y(), matches[i][1].x(), matches[i][0].y());
+    }
+
+    FloatImage matchesImage = pano.vizMatches(pim, pim2, matches);
+    matchesImage.write(DATA_DIR "/output/matchesImage.png");
 
 //
 //    std::vector<Vec2f> ref1,ref2;

@@ -83,6 +83,9 @@ public:
     bool debugWrite() const; // Writes image to Output directory with automatically chosen name
     //@}
 
+    // Helper functions for validation
+    void drawLine(int a, int b, int c, int d);
+
 private:
     static int s_debugWriteNumber; // Image number for debug write
 };
