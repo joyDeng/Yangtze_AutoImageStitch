@@ -51,6 +51,7 @@ typedef Eigen::Matrix4f Mat4f;
 typedef Eigen::Matrix2f Mat2f;
 typedef Eigen::VectorXf Vecxf;
 typedef Eigen::JacobiSVD<MatrixXf> SvdXf;
+typedef Eigen::BDCSVD<MatrixXf> BDCSvdXf;
 
 
 template <typename _Scalar, int _Dimension> struct TVector : public Eigen::Matrix<_Scalar, _Dimension, 1> {

@@ -322,7 +322,10 @@ Mat3f Pano::recomputeHomoByInliners(std::vector<std::vector<Vec2f>> pairs){
         Z.row(i) << 1;
     }
     
-    SvdXf svd(A,Eigen::ComputeFullU | Eigen::ComputeFullV);
+    BDCSvdXf svd(A,Eigen::ComputeFullU | Eigen::ComputeFullV);
+    MatrixXf u = svd.matrixV();
+    MatrixXf v = svd.matrixU();
+    
     Vec3f abc = svd.solve(X);
     Vec3f def = svd.solve(Y);
     Vec3f ghi = svd.solve(Z);
