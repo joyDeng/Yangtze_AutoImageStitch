@@ -483,3 +483,17 @@ bool FloatImage::debugWrite() const
 	return write(filename);
 }
 
+void FloatImage::drawLine(int a, int b, int c, int d){
+    if (a < 0 || a >= width() || b < 0 || b >= height() || c < 0 || c >= width() || d < 0 || d >= height())
+        throw OutOfBoundsException();
+
+    float k1 = (b - d)/(float)(a - c), k2 = b - (k1 * a);
+    float res = 0;
+    for (int i = a; i <= c; ++i) {
+        res = k1 * i + k2;
+        for (int j = 0; j < channels(); ++j) {
+            operator()(i, (int)res , j) = 1.f;
+        }
+    }
+}
+

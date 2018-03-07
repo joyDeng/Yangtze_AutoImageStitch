@@ -51,7 +51,8 @@ public:
     // calculate the shift offset when conbining two images
     Canvas calculateCanvas(ImageBound a, ImageBound b);
 
-    std::vector<std::vector<Vec2f>> matchDescriptors(PanoImage &pim1, PanoImage &pim2, float threshold=0.8);
+    std::vector<std::vector<Vec2i>> matchDescriptors(PanoImage &pim1, PanoImage &pim2, float threshold=0.8);
+    FloatImage vizMatches(PanoImage &pim1, PanoImage &pim2, std::vector<std::vector<Vec2i>> matches);
     Mat3f RANSAC(PanoImage &pim1, PanoImage &pim2);
 
 };

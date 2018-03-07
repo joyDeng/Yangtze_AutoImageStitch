@@ -22,33 +22,41 @@ PanoImage::PanoImage(const FloatImage &other, const int patchsize){
     m_patchSize = patchsize;
 }
 
-void PanoImage::calculatePatches(float sigma) {
+void PanoImage::calculatePatches(float sigma, int size, bool blur, bool norm) {
     // 0. clear patches
     // 1. use luminance value
     // 2. blur image a little bit
     // 3. calculate base on patch size
     // and correct for brightness/contrast
-
+    m_patchSize = size;
     m_patches.clear();
+    int s = size/2;
 
 
-    FloatImage lumi, blurred, image;
+    FloatImage image;
     std::vector<FloatImage> lc = lumiChromi(m_image);
-    lumi = lc[0];
-    blurred = gaussianBlur_seperable(lumi, sigma);
-    image = normalizeBySD(blurred);
+    image = lc[0];
+    if(blur){
+        image = gaussianBlur_seperable(image, sigma);
+    }
+    if(norm){
+        image = normalizeBySD(image);
+    }
 
 
     for (int p = 0; p < m_featurePoints.size(); ++p) {
-        Vecxf patch(m_patchSize, m_patchSize);
-        for (int i = 0; i < m_patchSize; ++i) {
-            for (int j = 0; j < m_patchSize; ++j) {
-                patch(i * m_patchSize + j) = image.smartAccessor(m_featurePoints[p].x() + i,
+        Vecxf patch(m_patchSize * m_patchSize);
+        for (int i = -s; i <= s; ++i) {
+            for (int j = -s; j <= s; ++j) {
+                patch((i+s) * m_patchSize + (j+s)) = image.smartAccessor(m_featurePoints[p].x() + i,
                                                                  m_featurePoints[p].y() + j, 0);
             }
         }
         m_patches.push_back(patch);
+        //std::cout << patch << std::endl << std::endl;
     }
+
+
 
 }
 
@@ -89,6 +97,8 @@ FloatImage PanoImage::harrisCornerDetector(int k, float threshold){
             R(i,j,0) = lamda.x() * lamda.y() - emk * (traceM) * (traceM);
         }
     }
+
+
     
     // Find points with large corner response function R
     // Take the points of locally maximum R as the detected feature points
@@ -121,7 +131,9 @@ FloatImage PanoImage::harrisCornerDetector(int k, float threshold){
             }
                 
         }
-            
+
+    m_pointCount = m_featurePoints.size();
+
     return output;
 }
 

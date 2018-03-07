@@ -172,8 +172,8 @@ void ImageBound::grow(Vec3f point){
     btnright = v2;
 }
 
-std::vector<std::vector<Vec2f>> Pano::matchDescriptors(PanoImage &pim1, PanoImage &pim2, float threshold){
-    std::vector<std::vector<Vec2f>> output;
+std::vector<std::vector<Vec2i>> Pano::matchDescriptors(PanoImage &pim1, PanoImage &pim2, float threshold){
+    std::vector<std::vector<Vec2i>> output;
 
     // how to init these min?
     float min, smin, dist = 0, ratio = 0;
@@ -185,12 +185,13 @@ std::vector<std::vector<Vec2f>> Pano::matchDescriptors(PanoImage &pim1, PanoImag
         // by 2-NN test
         min = pim1.getPatchSize();
         smin = min;
+        min_index = -1, smin_index = -1;
         for (int j = 0; j < pim2.getPointCount(); ++j) {
             d = pim1.getPatches(i) - pim2.getPatches(j);
             dist = d.squaredNorm();
             if(dist < min){
-                min_index = j;
                 smin_index = min_index;
+                min_index = j;
                 smin = min;
                 min = dist;
             }else if(dist < smin && dist != min){
@@ -201,10 +202,14 @@ std::vector<std::vector<Vec2f>> Pano::matchDescriptors(PanoImage &pim1, PanoImag
         ratio = min / smin;
         if(ratio < threshold){
             // good match
-            std::vector<Vec2f> refs;
-            Vec2f ref1, ref2;
+            std::vector<Vec2i> refs;
+            Vec2i ref1, ref2;
             ref1 << pim1.getFeaturePoint(i).x(), pim1.getFeaturePoint(i).y();
             ref2 << pim2.getFeaturePoint(min_index).x(), pim2.getFeaturePoint(min_index).y();
+            printf("Match: (%d, %d) to (%d, %d)\n", ref1.x(), ref1.y(), ref2.x(), ref2.y());
+            printf("min_index is: %d, min_index y is: %d\n", min_index, pim2.getFeaturePoint(min_index).y());
+
+
             refs.push_back(ref1);
             refs.push_back(ref2);
             output.push_back(refs);
@@ -216,6 +221,37 @@ std::vector<std::vector<Vec2f>> Pano::matchDescriptors(PanoImage &pim1, PanoImag
 Mat3f Pano::RANSAC(PanoImage &pim1, PanoImage &pim2){
     Mat3f H;
     return H;
+}
+
+FloatImage Pano::vizMatches(PanoImage &pim1, PanoImage &pim2, std::vector<std::vector<Vec2i>> matches){
+    FloatImage im1 = pim1.getImage(), im2 = pim2.getImage();
+    FloatImage output(im1.sizeX() + im2.sizeX(), std::max(im1.sizeY(), im2.sizeY()),
+                      im1.channels());
+    int offsetX = im1.sizeX();
+
+    for (int i = 0; i < im1.sizeX(); ++i) {
+        for (int j = 0; j < im1.sizeY(); ++j) {
+            for (int k = 0; k < im1.channels(); ++k) {
+                output(i, j, k) = im1(i, j, k);
+            }
+        }
+    }
+
+    for (int i = 0; i < im2.sizeX(); ++i) {
+        for (int j = 0; j < im2.sizeY(); ++j) {
+            for (int k = 0; k < im2.channels(); ++k) {
+                output(i + offsetX, j, k) = im2(i, j, k);
+            }
+        }
+    }
+
+    for (int i = 0; i < matches.size(); ++i) {
+        output.drawLine(matches[i][0].x(), matches[i][0].y(), matches[i][1].x() + offsetX, matches[i][1].y());
+    }
+
+    return output;
+
+
 }
 
 
