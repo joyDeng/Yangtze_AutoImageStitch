@@ -17,6 +17,10 @@
 //using namespace Eigen;
 
 int main(){
+    
+    //test generate a random float number in (0-1)
+    pcg32 rng;
+    std::cout<<" "<<rng.nextFloat()<<endl;
 
     FloatImage im1(DATA_DIR "/input/left.png");
     FloatImage im2(DATA_DIR "/input/right.png");

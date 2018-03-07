@@ -49,9 +49,7 @@ void PanoImage::calculatePatches(float sigma) {
         }
         m_patches.push_back(patch);
     }
-
 }
-
 
 FloatImage PanoImage::harrisCornerDetector(int k, float threshold){
     float emk = 0.05;// range from 0.04 ~ 0.06
