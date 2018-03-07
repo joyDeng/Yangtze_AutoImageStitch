@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include "common.h"
 #include "floatimage.h"
+#include "filtering.h"
 
 class PanoImage{
 public:
@@ -27,7 +28,8 @@ public:
     void horrisCornerDetector(int window, Vec2i step);
     
     // feature descriptor
-    void calculatePatches();
+    void calculatePatches(float sigma);
+
     
     
 private:

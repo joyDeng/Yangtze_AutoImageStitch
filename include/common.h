@@ -117,6 +117,9 @@ std::vector<FloatImage> spanish(const FloatImage &im);
 // White Balance
 FloatImage grayworld(const FloatImage & in);
 
+// Helper functions
+FloatImage normalizeBySD(const FloatImage &lumi);
+
 
 // Histogram manipulations
 

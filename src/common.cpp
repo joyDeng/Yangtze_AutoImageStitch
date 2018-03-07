@@ -309,4 +309,22 @@ FloatImage matchRGBHistograms(const FloatImage &F1, const FloatImage &F2)
     return output;
 }
 
+// Normalize a luminance image by standard deviation
+FloatImage normalizeBySD(const FloatImage &lumi){
+    FloatImage output(lumi.sizeX(), lumi.sizeY(), 1);
+    float sum = 0, mean, sd = 0;
+    for (int i = 0; i < lumi.size(); ++i) {
+        sum += lumi(i);
+    }
+    mean = sum / lumi.size();
+    for (int i = 0; i < lumi.size(); ++i) {
+        sd += std::powf((lumi(i) - mean), 2);
+    }
+    sd = std::sqrtf(sd / lumi.size());
+    for (int i = 0; i < lumi.size(); ++i) {
+        output(i) = lumi(i) / sd;
+    }
+    return output;
+}
+
 

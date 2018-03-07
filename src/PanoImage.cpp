@@ -16,14 +16,37 @@ PanoImage::PanoImage(const FloatImage &other, const int patchsize){
 }
 
 
-void PanoImage::calculatePatches() {
+void PanoImage::calculatePatches(float sigma) {
+    // 0. clear patches
     // 1. use luminance value
     // 2. blur image a little bit
     // 3. calculate base on patch size
     // and correct for brightness/contrast
 
+    m_patches.clear();
+
+
+    FloatImage lumi, blurred, image;
+    std::vector<FloatImage> lc = lumiChromi(m_image);
+    lumi = lc[0];
+    blurred = gaussianBlur_seperable(lumi, sigma);
+    image = normalizeBySD(blurred);
+
+
+    for (int p = 0; p < m_featurePoints.size(); ++p) {
+        Vecxf patch(m_patchSize, m_patchSize);
+        for (int i = 0; i < m_patchSize; ++i) {
+            for (int j = 0; j < m_patchSize; ++j) {
+                patch(i * m_patchSize + j) = image.smartAccessor(m_featurePoints[p].x() + i,
+                                                                 m_featurePoints[p].y() + j, 0);
+            }
+        }
+        m_patches.push_back(patch);
+    }
 
 }
+
+
 void PanoImage::horrisCornerDetector(int k, Vec2i step){
     // initialize sliding window
     MatrixXf window;
