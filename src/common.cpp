@@ -155,6 +155,7 @@ FloatImage yuv2rgb(const FloatImage &im)
     return output;
 }
 
+
 FloatImage saturate(const FloatImage &im, float factor)
 {
     // Create output image of appropriate size

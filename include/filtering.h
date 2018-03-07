@@ -57,6 +57,7 @@ FloatImage boxBlur_filterClass(const FloatImage &im, const int &k, bool clamp=tr
 
 // Gradient Filter
 FloatImage gradientMagnitude(const FloatImage &im, bool clamp=true);
+FloatImage gradientXY(const FloatImage &im, bool X, bool clamp);
 
 // Gaussian Blurring
 vector<float> gauss1DFilterValues(float sigma, float truncate);

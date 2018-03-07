@@ -110,6 +110,40 @@ FloatImage gradientMagnitude(const FloatImage &im, bool clamp)
 	return magnitude;
 }
 
+FloatImage gradientXY(const FloatImage &im, bool X, bool clamp){
+    if(X){
+        // sobel filtering in x direction
+        Filter sobelX(3, 3);
+        sobelX(0, 0) = -1.0;
+        sobelX(1, 0) = 0.0;
+        sobelX(2, 0) = 1.0;
+        sobelX(0, 1) = -2.0;
+        sobelX(1, 1) = 0.0;
+        sobelX(2, 1) = 2.0;
+        sobelX(0, 2) = -1.0;
+        sobelX(1, 2) = 0.0;
+        sobelX(2, 2) = 1.0;
+        
+        FloatImage imSobelX = sobelX.Convolve(im, clamp);
+        return imSobelX;
+    }else{
+        // sobel filtering in y direction
+        Filter sobelY(3, 3);
+        sobelY(0, 0) = -1.0;
+        sobelY(1, 0) = -2.0;
+        sobelY(2, 0) = -1.0;
+        sobelY(0, 1) = 0.0;
+        sobelY(1, 1) = 0.0;
+        sobelY(2, 1) = 0.0;
+        sobelY(0, 2) = 1.0;
+        sobelY(1, 2) = 2.0;
+        sobelY(2, 2) = 1.0;
+        
+        FloatImage imSobelY = sobelY.Convolve(im, clamp);
+        return imSobelY;
+    }
+}
+
 // create a vector containing the normalized values in a 1D Gaussian filter
 vector<float> gauss1DFilterValues(float sigma, float truncate)
 {

@@ -11,6 +11,7 @@
 
 #include <Eigen/Core>
 #include <Eigen/LU>
+#include <Eigen/Eigenvalues>
 #include <vector>
 #include <floatimage.h>
 
@@ -46,8 +47,10 @@ typedef TVector<int, 3>         Vec3i;
 typedef TVector<int, 4>         Vec4i;
 typedef Eigen::Matrix3f Mat3f;
 typedef Eigen::Matrix4f Mat4f;
+typedef Eigen::Matrix2f Mat2f;
 typedef Eigen::VectorXf Vecxf;
 typedef Eigen::JacobiSVD<MatrixXf> SvdXf;
+
 
 template <typename _Scalar, int _Dimension> struct TVector : public Eigen::Matrix<_Scalar, _Dimension, 1> {
 public:
