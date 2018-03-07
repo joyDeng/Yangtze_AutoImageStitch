@@ -68,8 +68,8 @@ int main(){
 
 
 
-    FloatImage cat = pano.mancat2images(im1, im2, pairs);
-    cat.write(DATA_DIR "/output/left_right.png");
+//    FloatImage cat = pano.mancat2images(im1, im2, pairs);
+//    cat.write(DATA_DIR "/output/left_right.png");
 
     FloatImage autocat = pano.autocat2images(pim, pim2, window, harris_th, match_th, sigma, pwindow);
     autocat.write(DATA_DIR "/output/auto_left_right.png");

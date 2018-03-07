@@ -35,9 +35,10 @@ FloatImage Pano::autocat2images(PanoImage &pim1, PanoImage &pim2, int window,
     pim1.calculatePatches(sigma, pwindow);
     pim2.calculatePatches(sigma, pwindow);
 
-    Mat3f homo = RANSAC(pim1, pim2);
+    Mat3f homo = RANSAC(pim1, pim2, match_th);
 
-    cat2images(im1, im2, homo);
+    return cat2images(im1, im2, homo);
+
 
 }
 
@@ -246,7 +247,7 @@ std::vector<std::vector<Vec2i>> Pano::matchDescriptors(PanoImage &pim1, PanoImag
 }
 
 //RANSAC for estimatimating homography
-Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float portion, float accuBound, float match_th){
+Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float portion, float accuBound){
     Mat3f H;
 
     vector<vector<Vec2i>> pairs = matchDescriptors(pim1, pim2, match_th);
