@@ -1,4 +1,0 @@
-/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build/CMakeFiles/yangtze.dir
-/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build/CMakeFiles/common_lib.dir
-/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build/CMakeFiles/ALL_BUILD.dir
-/Users/dengxi/Desktop/cp/Yangtze_AutoImageStitch/build/CMakeFiles/ZERO_CHECK.dir
