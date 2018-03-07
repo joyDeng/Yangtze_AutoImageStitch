@@ -13,12 +13,16 @@ add_definitions(-DDATA_DIR=R\"\(${PROJECT_SOURCE_DIR}/data\)\")
 
 set(EIGEN_INCLUDE_DIR
   ${CMAKE_CURRENT_SOURCE_DIR}/ext/eigen)
+set(PCG32_INCLUDE_DIR
+  ${CMAKE_CURRENT_SOURCE_DIR}/ext/pcg32)
 
 include_directories(
   # Yangtze include files
   ${CMAKE_CURRENT_SOURCE_DIR}/include
   # Eigen linear algebra library
   ${EIGEN_INCLUDE_DIR}
+  # Pseudorandom number generator
+  ${PCG32_INCLUDE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/src
   ${CMAKE_CURRENT_SOURCE_DIR}/ext
   ${CMAKE_CURRENT_SOURCE_DIR}/ext/stb

@@ -56,10 +56,7 @@ void PanoImage::calculatePatches(float sigma, int size, bool blur, bool norm) {
         //std::cout << patch << std::endl << std::endl;
     }
 
-
-
 }
-
 
 FloatImage PanoImage::harrisCornerDetector(int k, float threshold){
     float emk = 0.05;// range from 0.04 ~ 0.06

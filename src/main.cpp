@@ -17,6 +17,10 @@
 //using namespace Eigen;
 
 int main(){
+    
+    //test generate a random float number in (0-1)
+    pcg32 rng;
+    std::cout<<" "<<rng.nextFloat()<<endl;
 
     int window = 9;
     float harris_th = 0.5f, sigma = 2.0f, patch_th = 0.3f;

@@ -66,8 +66,6 @@ FloatImage Pano::cat2images(const FloatImage &im1, const FloatImage &im2, std::v
     return output;
 }
 
-
-
 Mat3f Pano::solveHomo(MatrixXf m){
     SvdXf svd(m, Eigen::ComputeFullU | Eigen::ComputeFullV);
     Vecxf b, x;
