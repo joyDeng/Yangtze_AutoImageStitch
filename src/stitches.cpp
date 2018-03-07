@@ -8,6 +8,7 @@
 #include <iostream>
 #include "stitches.hpp"
 #include <Eigen/SVD>
+#include <set>
 
 using std::vector;
 
@@ -28,14 +29,14 @@ Mat3f Pano::computeHomo(std::vector<std::vector<Vec2f>> pairs){
 }
 
 FloatImage Pano::autocat2images(PanoImage &pim1, PanoImage &pim2, int window,
-                                float harris_th, float match_th, float sigma, int pwindow){
+                                float harris_th, float match_th, float sigma, int pwindow, float portion){
     FloatImage im1 = pim1.getImage(), im2 = pim2.getImage();
     pim1.harrisCornerDetector(window, harris_th);
     pim2.harrisCornerDetector(window, harris_th);
     pim1.calculatePatches(sigma, pwindow);
     pim2.calculatePatches(sigma, pwindow);
 
-    Mat3f homo = RANSAC(pim1, pim2, match_th, 0.4);
+    Mat3f homo = RANSAC(pim1, pim2, match_th, portion);
 
 
 
@@ -247,7 +248,7 @@ std::vector<std::vector<Vec2i>> Pano::matchDescriptors(PanoImage &pim1, PanoImag
 //RANSAC for estimatimating homography
 Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float portion, float accuBound){
     Mat3f H;
-
+    // need to make sure pairs > 4s
     vector<vector<Vec2i>> pairs = matchDescriptors(pim1, pim2, match_th);
 
     FloatImage matchesImage = vizMatches(pim1, pim2, pairs);
@@ -267,12 +268,18 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
     //Ransac loop: stop when the failure probability
     //of finding the correct H is low
     while(Prob > accuBound){
-        std::cout<<"prob: "<<Prob<<std::endl;
+//        std::cout<<"prob: "<<Prob<<std::endl;
         vector<vector<Vec2f>> inliers;
         //select four feature pairs(at random)
         vector<vector<Vec2f>> ranPairs;
+        std::set<int> has;
+        std::set<int>::iterator it;
         for(int i = 0 ; i < 4 ; i++){
-            std::vector<Vec2i> p = pairs[rng.nextUInt(rndBound)];
+            int index = rng.nextUInt(rndBound);
+            while(has.find(index) != has.end())
+                index = rng.nextUInt(rndBound);
+            has.insert(index);
+            std::vector<Vec2i> p = pairs[index];
             Vec2f p0 = Vec2f(p[0].x(), p[0].y());
             Vec2f p1 = Vec2f(p[1].x(), p[1].y());
             vector<Vec2f> pair;
@@ -280,7 +287,10 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
             pair.push_back(p1);
             ranPairs.push_back(pair);
         }
-        
+//        std::cout<<endl;
+//        std::cout<<"rand set:";
+//        for(it = has.begin();it != has.end();it++)
+//            std::cout<<*it<<" ";
         //compute homography
         Mat3f H = computeHomo(ranPairs);
         
@@ -290,7 +300,7 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
             hp = hp / hp.z();
             Vec3f ep =  hp - Vec3f(pairs[i][0].x(),pairs[i][0].y(),1);
 //            std::cout<<"ep: "<<ep.norm()<<std::endl;
-            if(ep.norm() < 1){
+            if(ep.norm() < 3){
                 std::vector<Vec2i> p = pairs[i];
                 Vec2f p0 = Vec2f(p[0].x(), p[0].y());
                 Vec2f p1 = Vec2f(p[1].x(), p[1].y());
@@ -308,21 +318,23 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
         if(beginIterate && ratio >= portion) Prob *= failProb;
         
         //Keep largest set of inliers
-        if(inliers.size() > maxInlinerSize){
+        if(inliers.size() + 4 > maxInlinerSize){
             Homo = H;
             Largest_inliers.clear();
             Largest_inliers = inliers;
-            maxInlinerSize = inliers.size();
+            for(int i = 0 ; i < 4 ; i++)
+                Largest_inliers.push_back(ranPairs[i]);
+            maxInlinerSize = inliers.size() + 4;
         }
     }
     
     //Re-compute least-squares H estimate on all of the inliers
-//    Mat3f updatedHomo = recomputeHomoByInliners(Largest_inliers);
+    Mat3f updatedHomo = recomputeHomoByInliners(Largest_inliers, Homo);
     
-    return Homo;
+    return updatedHomo;
 }
 
-Mat3f Pano::recomputeHomoByInliners(std::vector<std::vector<Vec2f>> pairs){
+Mat3f Pano::recomputeHomoByInliners(std::vector<std::vector<Vec2f>> pairs, Mat3f H){
     uint32_t rowsize = pairs.size();
     MatrixXf A;
     MatrixXf X,Y,Z;
@@ -332,6 +344,7 @@ Mat3f Pano::recomputeHomoByInliners(std::vector<std::vector<Vec2f>> pairs){
     Z.resize(rowsize,1);
     
     for(int i = 0 ; i < (int)rowsize ; i++){
+        Vec3f hp = H * Vec3f(pairs[i][1].x(), pairs[i][1].y(), 1);
         A.row(i) << pairs[i][1].x(), pairs[i][1].y(), 1;
         X.row(i) << pairs[i][0].x();
         Y.row(i) << pairs[i][0].y();
@@ -345,11 +358,14 @@ Mat3f Pano::recomputeHomoByInliners(std::vector<std::vector<Vec2f>> pairs){
     Vec3f abc = svd.solve(X);
     Vec3f def = svd.solve(Y);
     Vec3f ghi = svd.solve(Z);
+    std::cout<<"abc: "<<abc<<std::endl;
+    std::cout<<"def: "<<def<<std::endl;
+    std::cout<<"ghi: "<<ghi<<std::endl;
     
     Mat3f homo;
-    homo.row(0) = abc;
-    homo.row(1) = def;
-    homo.row(2) = ghi;
+    homo.row(0) = abc / ghi.z();
+    homo.row(1) = def / ghi.z();
+    homo.row(2) = ghi / ghi.z();
     
     return homo;
 }
@@ -376,9 +392,8 @@ FloatImage Pano::vizMatches(PanoImage &pim1, PanoImage &pim2, std::vector<std::v
         }
     }
 
-    for (int i = 0; i < matches.size(); ++i) {
+    for (int i = 0; i < matches.size(); ++i)
         output.drawLine(matches[i][0].x(), matches[i][0].y(), matches[i][1].x() + offsetX, matches[i][1].y());
-    }
 
     return output;
 

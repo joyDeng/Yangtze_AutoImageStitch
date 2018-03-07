@@ -42,7 +42,7 @@ public:
     FloatImage cat2images(const FloatImage &im1, const FloatImage &im2, Mat3f homo);
     FloatImage mancat2images(const FloatImage &im1, const FloatImage &im2, std::vector<std::vector<Vec2f>> pairs);
     FloatImage autocat2images(PanoImage &pim1, PanoImage &pim2, int window,
-                                    float harris_th, float match_th, float sigma, int pwindow);
+                                    float harris_th, float match_th, float sigma, int pwindow, float portion);
 
     
     // solve Ax = 0 with svd
@@ -63,7 +63,7 @@ public:
 
     
     Mat3f computeHomo(std::vector<std::vector<Vec2f>> pairs);
-    Mat3f recomputeHomoByInliners(std::vector<std::vector<Vec2f>> pairs);
+    Mat3f recomputeHomoByInliners(std::vector<std::vector<Vec2f>> pairs, Mat3f Homo);
 
     std::vector<std::vector<Vec2i>> matchDescriptors(PanoImage &pim1, PanoImage &pim2, float threshold=0.5);
     FloatImage vizMatches(PanoImage &pim1, PanoImage &pim2, std::vector<std::vector<Vec2i>> matches);
