@@ -23,48 +23,48 @@ int main(){
 //    std::cout<<" "<<rng.nextFloat()<<endl;
 
     int window = 9;
-    float harris_th = 0.2f, sigma = 2.0f, match_th = 0.6f, pwindow = 21;
+    float harris_th = 0.4f, sigma = 3.0f, match_th = 0.3f, pwindow = 17;
 
-    FloatImage im1(DATA_DIR "/input/lily1.jpg");
-    FloatImage im2(DATA_DIR "/input/lily2.jpg");
+    FloatImage im1(DATA_DIR "/input/table2.jpg");
+    FloatImage im2(DATA_DIR "/input/table1.jpg");
     Pano pano;
     
     PanoImage pim(im1);
-    FloatImage detected = pim.harrisCornerDetector(window, harris_th);
-    detected.write(DATA_DIR "/output/leftRthreshold.png");
-    pim.calculatePatches(sigma, 21);
-
-    PanoImage pim2(im2);
-    FloatImage detected2 = pim2.harrisCornerDetector(window, harris_th);
-    detected2.write(DATA_DIR "/output/rightRthreshold.png");
-    pim2.calculatePatches(sigma, 21);
-
-    std::vector<std::vector<Vec2i>> matches = pano.matchDescriptors(pim, pim2, match_th);
-    std::cout << matches.size() << endl;
-    for (int i = 0; i < matches.size(); ++i) {
-        printf("Match: (%d, %d) to (%d, %d)\n", matches[i][0].x(), matches[i][0].y(), matches[i][1].x(), matches[i][0].y());
-    }
+//    FloatImage detected = pim.harrisCornerDetector(window, harris_th);
+//    detected.write(DATA_DIR "/output/leftRthreshold.png");
+//    pim.calculatePatches(sigma, 21);
 //
-    FloatImage matchesImage = pano.vizMatches(pim, pim2, matches);
-    matchesImage.write(DATA_DIR "/output/matchesImage.png");
+    PanoImage pim2(im2);
+//    FloatImage detected2 = pim2.harrisCornerDetector(window, harris_th);
+//    detected2.write(DATA_DIR "/output/rightRthreshold.png");
+//    pim2.calculatePatches(sigma, 21);
+//
+//    std::vector<std::vector<Vec2i>> matches = pano.matchDescriptors(pim, pim2, match_th);
+//    std::cout << matches.size() << endl;
+//    for (int i = 0; i < matches.size(); ++i) {
+//        printf("Match: (%d, %d) to (%d, %d)\n", matches[i][0].x(), matches[i][0].y(), matches[i][1].x(), matches[i][0].y());
+//    }
+//
+//    FloatImage matchesImage = pano.vizMatches(pim, pim2, matches);
+//    matchesImage.write(DATA_DIR "/output/matchesImage.png");
 
 
-    std::vector<std::vector<Vec2f>> pairs;
-    std::vector<Vec2f> ref1,ref2,ref3,ref4;
-    ref1.push_back(Vec2f(457,99));
-    ref2.push_back(Vec2f(451,417));
-    ref3.push_back(Vec2f(543,426));
-    ref4.push_back(Vec2f(545,95));
-
-    ref1.push_back(Vec2f(34,95));
-    ref2.push_back(Vec2f(38,429));
-    ref3.push_back(Vec2f(135,419));
-    ref4.push_back(Vec2f(124,99));
-
-    pairs.push_back(ref1);
-    pairs.push_back(ref2);
-    pairs.push_back(ref3);
-    pairs.push_back(ref4);
+//    std::vector<std::vector<Vec2f>> pairs;
+//    std::vector<Vec2f> ref1,ref2,ref3,ref4;
+//    ref1.push_back(Vec2f(457,99));
+//    ref2.push_back(Vec2f(451,417));
+//    ref3.push_back(Vec2f(543,426));
+//    ref4.push_back(Vec2f(545,95));
+//
+//    ref1.push_back(Vec2f(34,95));
+//    ref2.push_back(Vec2f(38,429));
+//    ref3.push_back(Vec2f(135,419));
+//    ref4.push_back(Vec2f(124,99));
+//
+//    pairs.push_back(ref1);
+//    pairs.push_back(ref2);
+//    pairs.push_back(ref3);
+//    pairs.push_back(ref4);
 
 
 
@@ -72,7 +72,7 @@ int main(){
 //    cat.write(DATA_DIR "/output/left_right.png");
 
     FloatImage autocat = pano.autocat2images(pim, pim2, window, harris_th, match_th, sigma, pwindow);
-    autocat.write(DATA_DIR "/output/auto_lily_left_right.png");
+    autocat.write(DATA_DIR "/output/auto_table_left_right.png");
 
     return 0;
 }

@@ -35,7 +35,7 @@ FloatImage Pano::autocat2images(PanoImage &pim1, PanoImage &pim2, int window,
     pim1.calculatePatches(sigma, pwindow);
     pim2.calculatePatches(sigma, pwindow);
 
-    Mat3f homo = RANSAC(pim1, pim2, match_th, 0.5);
+    Mat3f homo = RANSAC(pim1, pim2, match_th, 0.4);
 
 
 
@@ -249,6 +249,11 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
     Mat3f H;
 
     vector<vector<Vec2i>> pairs = matchDescriptors(pim1, pim2, match_th);
+
+    FloatImage matchesImage = vizMatches(pim1, pim2, pairs);
+    matchesImage.write(DATA_DIR "/output/matchesImage.png");
+
+
     vector<vector<Vec2f>> Largest_inliers;
     Mat3f Homo;
     float Prob = 1;
