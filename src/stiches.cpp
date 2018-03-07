@@ -106,7 +106,6 @@ ImageBound Pano::boundBox(const FloatImage &im){
     hb.grow(br);
     
     return hb;
-    
 }
 
 ImageBound Pano::boundBoxHomo(const FloatImage &im, Mat3f homo){
@@ -138,9 +137,8 @@ ImageBound Pano::boundBoxHomo(const FloatImage &im, Mat3f homo){
 }
 
 Canvas Pano::calculateCanvas(ImageBound a, ImageBound b){
+    
     ImageBound ab;
-    
-    
     ab.grow(Vec3f(a.topleft.x(),  a.topleft.y(), 1));
     ab.grow(Vec3f(a.btnright.x(), a.btnright.y(),1));
     ab.grow(Vec3f(b.topleft.x(),  b.topleft.y(), 1));

@@ -51,10 +51,12 @@ add_executable(yangtze
 
   # Header files
   include/stiches.hpp
+  include/PanoImage.hpp
 
   # Source code files
   src/main.cpp
   src/stiches.cpp
+  src/PanoImage.cpp
 )
 
 
