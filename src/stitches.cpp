@@ -37,13 +37,9 @@ FloatImage Pano::autocat2images(PanoImage &pim1, PanoImage &pim2, int window,
 
     Mat3f homo = RANSAC(pim1, pim2);
 
-    cat2images(im1, im2, homo);
+    return cat2images(im1, im2, homo);
 
 }
-
-
-
-
 
 FloatImage Pano::cat2images(const FloatImage &im1, const FloatImage &im2, Mat3f homo) {
     Mat3f homo_inverse = homo.inverse();
@@ -263,6 +259,7 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float portion, float accuBo
     //Ransac loop: stop when the failure probability
     //of finding the correct H is low
     while(Prob > accuBound){
+        std::cout<<"prob: "<<Prob<<std::endl;
         vector<vector<Vec2f>> inliers;
         //select four feature pairs(at random)
         vector<vector<Vec2f>> ranPairs;
@@ -281,10 +278,11 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float portion, float accuBo
         
         //compute inliers where ||pi, Hpi|| < epsillon
         for(int i = 0 ; i < (int)rndBound ; i++){
-            Vec3f hp = H * Vec3f(pairs[i][1].x(),pairs[i][1].x(),1);
+            Vec3f hp = H * Vec3f(pairs[i][1].x(),pairs[i][1].y(),1);
             hp = hp / hp.z();
-            Vec3f ep =  hp - Vec3f(pairs[i][0].x(),pairs[i][0].x(),1);
-            if(ep.norm() < __FLT_EPSILON__){
+            Vec3f ep =  hp - Vec3f(pairs[i][0].x(),pairs[i][0].y(),1);
+//            std::cout<<"ep: "<<ep.norm()<<std::endl;
+            if(ep.norm() < 1){
                 std::vector<Vec2i> p = pairs[i];
                 Vec2f p0 = Vec2f(p[0].x(), p[0].y());
                 Vec2f p1 = Vec2f(p[1].x(), p[1].y());
@@ -297,6 +295,7 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float portion, float accuBo
         
         //update the stop point
         float ratio = (float)inliers.size() / (float)rndBound;
+//        std::cout<<"ratio: "<<ratio<<std::endl;
         if(ratio >= portion && !beginIterate) beginIterate = true;
         if(beginIterate) Prob *= failProb;
         
