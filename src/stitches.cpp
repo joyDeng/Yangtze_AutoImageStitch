@@ -17,8 +17,9 @@ using std::endl;
 Mat3f Pano::computeHomo(std::vector<std::vector<Vec2f>> pairs){
     // construct Ax = b homogenous equation systems
     MatrixXf A;
-    A.resize(8,9);
-    for(int i = 0; i < 4 ; i++){
+    int rowsize = pairs.size() * 2;
+    A.resize(rowsize,9);
+    for(int i = 0; i < pairs.size() ; i++){
         float x1 = pairs[i][0].x();
         float y1 = pairs[i][0].y();
         float x = pairs[i][1].x();
@@ -109,10 +110,10 @@ FloatImage Pano::mancat2images(const FloatImage &im1, const FloatImage &im2, std
 
 Mat3f Pano::solveHomo(MatrixXf m){
     SvdXf svd(m, Eigen::ComputeFullU | Eigen::ComputeFullV);
-    Vecxf b, x;
-    b.resize(8);
+    Vecxf  x;
+//    b.resize(8);
     x.resize(9);
-    b << 0, 0, 0, 0, 0, 0, 0, 0;
+//    b << 0, 0, 0, 0, 0, 0, 0, 0;
    
     // Then the solution x is the eigenvector corresponding to the only zero
     // eigenvalue of ATA which corresponds to the right most column of V
@@ -366,11 +367,15 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
     }
     
     //Re-compute least-squares H estimate on all of the inliers
+
     //Mat3f updatedHomo = recomputeHomoByInliners(Largest_inliers, Homo);
 
     // visualize
     FloatImage viz = vizMatches(pim1, pim2, bestPairs);
     viz.debugWrite();
+
+    Mat3f updatedHomo = computeHomo(Largest_inliers);
+
     
     return Homo;
 }
