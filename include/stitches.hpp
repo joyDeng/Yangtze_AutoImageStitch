@@ -52,6 +52,7 @@ public:
     Canvas calculateCanvas(ImageBound a, ImageBound b);
 
     std::vector<std::vector<Vec2f>> matchDescriptors(PanoImage &pim1, PanoImage &pim2, float threshold=0.8);
+    Mat3f RANSAC(PanoImage &pim1, PanoImage &pim2);
 
 };
 

@@ -213,6 +213,11 @@ std::vector<std::vector<Vec2f>> Pano::matchDescriptors(PanoImage &pim1, PanoImag
     return output;
 }
 
+Mat3f Pano::RANSAC(PanoImage &pim1, PanoImage &pim2){
+    Mat3f H;
+    return H;
+}
+
 
 
 
