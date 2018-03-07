@@ -2,8 +2,8 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true" buildAllGenerated="true">
     <generated>
-      <config projectName="Yangtze" targetName="common_lib" />
       <config projectName="Yangtze" targetName="yangtze" />
+      <config projectName="Yangtze" targetName="common_lib" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -13,9 +13,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="72a43945-6345-4e22-97e9-af7ffe6ee6f5" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/data/output/auto_left_right.png" />
+      <change beforePath="$PROJECT_DIR$/include/common.h" afterPath="$PROJECT_DIR$/include/common.h" />
       <change beforePath="$PROJECT_DIR$/include/stitches.hpp" afterPath="$PROJECT_DIR$/include/stitches.hpp" />
-      <change beforePath="$PROJECT_DIR$/src/main.cpp" afterPath="$PROJECT_DIR$/src/main.cpp" />
       <change beforePath="$PROJECT_DIR$/src/stitches.cpp" afterPath="$PROJECT_DIR$/src/stitches.cpp" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -39,11 +39,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stitches.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="stitches.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/stitches.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2899">
-              <caret line="39" column="11" lean-forward="false" selection-start-line="39" selection-start-column="11" selection-end-line="39" selection-end-column="11" />
+            <state relative-caret-position="15">
+              <caret line="1" column="10" lean-forward="false" selection-start-line="1" selection-start-column="8" selection-end-line="1" selection-end-column="10" />
               <folding>
                 <element signature="e#74#93#0" expanded="true" />
               </folding>
@@ -76,7 +76,7 @@
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
+            <state relative-caret-position="235">
               <caret line="74" column="31" lean-forward="false" selection-start-line="74" selection-start-column="31" selection-end-line="74" selection-end-column="31" />
               <folding />
             </state>
@@ -93,11 +93,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stitches.hpp" pinned="false" current-in-tab="false">
+      <file leaf-file-name="stitches.hpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/include/stitches.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="58" column="72" lean-forward="false" selection-start-line="58" selection-start-column="72" selection-end-line="58" selection-end-column="72" />
+            <state relative-caret-position="179">
+              <caret line="66" column="24" lean-forward="false" selection-start-line="66" selection-start-column="24" selection-end-line="66" selection-end-column="24" />
               <folding>
                 <element signature="e#116#134#0" expanded="true" />
               </folding>
@@ -123,6 +123,7 @@
       <find>matchDescriptors</find>
       <find>2i</find>
       <find>RANSAC</find>
+      <find>HEAD</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -243,12 +244,12 @@
       <workItem from="1520313924226" duration="1809000" />
       <workItem from="1520354783899" duration="1514000" />
       <workItem from="1520391802349" duration="16811000" />
-      <workItem from="1520411334904" duration="1005000" />
+      <workItem from="1520411334904" duration="1257000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34618000" />
+    <option name="totallyTimeSpent" value="34870000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="797" extended-state="0" />
@@ -638,28 +639,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/stitches.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="58" column="72" lean-forward="false" selection-start-line="58" selection-start-column="72" selection-end-line="58" selection-end-column="72" />
-          <folding>
-            <element signature="e#116#134#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/include/array3D.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="86" column="0" lean-forward="false" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="74" column="31" lean-forward="false" selection-start-line="74" selection-start-column="31" selection-end-line="74" selection-end-column="31" />
           <folding />
         </state>
       </provider>
@@ -682,12 +665,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="74" column="31" lean-forward="false" selection-start-line="74" selection-start-column="31" selection-end-line="74" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/stitches.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2899">
-          <caret line="39" column="11" lean-forward="false" selection-start-line="39" selection-start-column="11" selection-end-line="39" selection-end-column="11" />
+        <state relative-caret-position="15">
+          <caret line="1" column="10" lean-forward="false" selection-start-line="1" selection-start-column="8" selection-end-line="1" selection-end-column="10" />
           <folding>
             <element signature="e#74#93#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/stitches.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="66" column="24" lean-forward="false" selection-start-line="66" selection-start-column="24" selection-end-line="66" selection-end-column="24" />
+          <folding>
+            <element signature="e#116#134#0" expanded="true" />
           </folding>
         </state>
       </provider>

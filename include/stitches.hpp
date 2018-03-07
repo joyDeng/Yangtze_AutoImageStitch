@@ -56,7 +56,9 @@ public:
     Canvas calculateCanvas(ImageBound a, ImageBound b);
 
 
+
     Mat3f RANSAC( PanoImage &pim1, PanoImage &pim2, float match_th = 0.5, float portion = 0.5, float accuracy = 0.01);
+
     
     Mat3f computeHomo(std::vector<std::vector<Vec2f>> pairs);
     Mat3f recomputeHomoByInliners(std::vector<std::vector<Vec2f>> pairs);
