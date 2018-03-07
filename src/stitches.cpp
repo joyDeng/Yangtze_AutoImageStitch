@@ -251,6 +251,11 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
     Mat3f H;
     // need to make sure pairs > 4s
     vector<vector<Vec2i>> pairs = matchDescriptors(pim1, pim2, match_th);
+
+    FloatImage matchesImage = vizMatches(pim1, pim2, pairs);
+    matchesImage.write(DATA_DIR "/output/matchesImage.png");
+
+
     vector<vector<Vec2f>> Largest_inliers;
     Mat3f Homo;
     float Prob = 1;
