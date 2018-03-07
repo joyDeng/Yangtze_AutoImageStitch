@@ -35,7 +35,10 @@ FloatImage Pano::autocat2images(PanoImage &pim1, PanoImage &pim2, int window,
     pim1.calculatePatches(sigma, pwindow);
     pim2.calculatePatches(sigma, pwindow);
 
-    Mat3f homo = RANSAC(pim1, pim2);
+    Mat3f homo = RANSAC(pim1, pim2, match_th, 0.5);
+
+
+
 
     return cat2images(im1, im2, homo);
 
@@ -242,7 +245,7 @@ std::vector<std::vector<Vec2i>> Pano::matchDescriptors(PanoImage &pim1, PanoImag
 }
 
 //RANSAC for estimatimating homography
-Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float portion, float accuBound, float match_th){
+Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float portion, float accuBound){
     Mat3f H;
 
     vector<vector<Vec2i>> pairs = matchDescriptors(pim1, pim2, match_th);
@@ -296,8 +299,8 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float portion, float accuBo
         //update the stop point
         float ratio = (float)inliers.size() / (float)rndBound;
 //        std::cout<<"ratio: "<<ratio<<std::endl;
-        if(ratio >= portion && !beginIterate) beginIterate = true;
-        if(beginIterate) Prob *= failProb;
+        if(ratio >= portion && !beginIterate)beginIterate = true;
+        if(beginIterate && ratio >= portion) Prob *= failProb;
         
         //Keep largest set of inliers
         if(inliers.size() > maxInlinerSize){
