@@ -17,7 +17,7 @@
 // Assignment 4
 
 #include "filtering.h"
-#include "a2.h"
+#include "common.h"
 #include <math.h>
 
 using namespace std;
