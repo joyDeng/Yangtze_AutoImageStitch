@@ -32,10 +32,13 @@ set(ext_stb_srcs
 set(common_srcs
     include/array3D.h
     include/exceptions.h
-    src/floatimage.cpp
     include/floatimage.h
     include/utils.h
     include/common.h
+    include/filtering.h
+    src/floatimage.cpp
+    src/common.cpp
+    src/filtering.cpp
 )
 
 # Compile common library

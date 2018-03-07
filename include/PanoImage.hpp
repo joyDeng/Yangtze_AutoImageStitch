@@ -15,8 +15,6 @@
 
 class PanoImage{
 public:
-    //constructor calculate
-    PanoImage(const std::string & filename, const int patchsize = 3);
     PanoImage(const FloatImage &other, const int patchsize = 3);
     
     FloatImage getImage(){return FloatImage(m_image);}
@@ -26,7 +24,7 @@ public:
     Vec2i getFeaturePoint(int i){return m_featurePoints[i];}
     
     // corner detector
-    void horrisCornerDetector();
+    void horrisCornerDetector(int window, Vec2i step);
     
     // feature descriptor
     void calculatePatches();
