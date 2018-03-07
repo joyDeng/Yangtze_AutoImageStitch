@@ -27,33 +27,33 @@ Mat3f Pano::computeHomo(std::vector<std::vector<Vec2f>> pairs){
     return solveHomo(A);
 }
 
-FloatImage Pano::cat2images(const FloatImage &im1, const FloatImage &im2, std::vector<Vec2f> ref1, std::vector<Vec2f> ref2){
-    
-    // construct Ax = b homogenous equation systems
-    MatrixXf A;
-    A.resize(8,9);
-    for(int i = 0; i < 4 ; i++){
-        float x1 = ref1[i].x();
-        float y1 = ref1[i].y();
-        float x = ref2[i].x();
-        float y = ref2[i].y();
-        A.row(i * 2) << x, y, 1, 0, 0, 0, -x * x1, -y * x1, -x1;
-        A.row(i * 2 + 1) << 0, 0, 0, x, y, 1, -x * y1, -y1 * y, -y1;
-    }
-    
-//     solve by svd
-    Mat3f homo;
-    homo = solveHomo(A);
-    Mat3f homo_inverse = homo.inverse();
+FloatImage Pano::autocat2images(PanoImage &pim1, PanoImage &pim2, int window,
+                                float harris_th, float match_th, float sigma, int pwindow){
+    FloatImage im1 = pim1.getImage(), im2 = pim2.getImage();
+    pim1.harrisCornerDetector(window, harris_th);
+    pim2.harrisCornerDetector(window, harris_th);
+    pim1.calculatePatches(sigma, pwindow);
+    pim2.calculatePatches(sigma, pwindow);
 
-    
+    Mat3f homo = RANSAC(pim1, pim2);
+
+    cat2images(im1, im2, homo);
+
+}
+
+
+
+
+
+FloatImage Pano::cat2images(const FloatImage &im1, const FloatImage &im2, Mat3f homo) {
+    Mat3f homo_inverse = homo.inverse();
     // calculate canvas of output image
     ImageBound im1bound = boundBox(im1);
     ImageBound im2bound = boundBoxHomo(im2, homo);
     Canvas canv = calculateCanvas(im1bound, im2bound);
-    
-    
-   //paste image1 onto canvas
+
+
+    //paste image1 onto canvas
     FloatImage output(canv.length, canv.height, im1.channels());
     for(int i = 0 ; i < im1.sizeX() ; i++)
         for(int j = 0 ; j < im1.sizeY() ; j++){
@@ -63,11 +63,11 @@ FloatImage Pano::cat2images(const FloatImage &im1, const FloatImage &im2, std::v
                 for(int c = 0 ; c < im1.channels() ; c++)
                     output(nx, ny, c) = im1(i, j, c);
         }
-    
+
     //query image2 and map onto canvas
     Vec2i offsetImage2 = Vec2i(floor(im2bound.topleft.x()), floor(im2bound.topleft.y())) - canv.offset;
     Vec2f sizeTransedImage2 = im2bound.btnright - im2bound.topleft;
-    
+
     for(int i = 0 ; i < sizeTransedImage2.x(); i++){
         for(int j = 0 ; j < sizeTransedImage2.y() ; j++){
             Vec2f transed_pos = im2bound.topleft + Vec2f(i,j);
@@ -76,12 +76,21 @@ FloatImage Pano::cat2images(const FloatImage &im1, const FloatImage &im2, std::v
             if(pos.x() >= 0 && pos.y() >= 0 && pos.x() < im2.sizeX() && pos.y() < im2.sizeY()){
                 Vec2i canvas_pos = offsetImage2 + Vec2i(i,j);
                 if(canvas_pos.x() > 0 && canvas_pos.y() > 0 && canvas_pos.y() < canv.height && canvas_pos.x() < canv.length)
-                 for(int c = 0 ; c < im2.channels() ; c++)
-                    output(canvas_pos.x(), canvas_pos.y(), c) = im2(pos.x(), pos.y(),c);
+                    for(int c = 0 ; c < im2.channels() ; c++)
+                        output(canvas_pos.x(), canvas_pos.y(), c) = im2(pos.x(), pos.y(),c);
             }
         }
     }
     return output;
+}
+
+FloatImage Pano::mancat2images(const FloatImage &im1, const FloatImage &im2, std::vector<std::vector<Vec2f>> pairs){
+
+    // construct Ax = b homogenous equation systems
+    Mat3f homo = computeHomo(pairs);
+    return cat2images(im1, im2, homo);
+
+
 }
 
 Mat3f Pano::solveHomo(MatrixXf m){
@@ -237,10 +246,10 @@ std::vector<std::vector<Vec2i>> Pano::matchDescriptors(PanoImage &pim1, PanoImag
 }
 
 //RANSAC for estimatimating homography
-Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float portion, float accuBound){
+Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float portion, float accuBound, float match_th){
     Mat3f H;
 
-    vector<vector<Vec2i>> pairs = matchDescriptors(pim1, pim2);
+    vector<vector<Vec2i>> pairs = matchDescriptors(pim1, pim2, match_th);
     vector<vector<Vec2f>> Largest_inliers;
     Mat3f Homo;
     float Prob = 1;

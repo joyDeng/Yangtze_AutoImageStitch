@@ -18,7 +18,7 @@ class PanoImage{
 public:
     PanoImage(const FloatImage &other, const int patchsize = 9);
     
-    FloatImage getImage(){return FloatImage(m_image);}
+    const FloatImage getImage(){return FloatImage(m_image);}
     int getPatchSize(){return m_patchSize;}
     int getPointCount(){return m_pointCount;}
     Vecxf getPatches(int i){return m_patches[i];}

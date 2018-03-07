@@ -39,7 +39,11 @@ class Pano{
 public:
     
     // cat 2 image given corresponding poin sets
-    FloatImage cat2images(const FloatImage &im1, const FloatImage &im2, std::vector<Vec2f> ref1, std::vector<Vec2f> ref2);
+    FloatImage cat2images(const FloatImage &im1, const FloatImage &im2, Mat3f homo);
+    FloatImage mancat2images(const FloatImage &im1, const FloatImage &im2, std::vector<std::vector<Vec2f>> pairs);
+    FloatImage autocat2images(PanoImage &pim1, PanoImage &pim2, int window,
+                                    float harris_th, float match_th, float sigma, int pwindow);
+
     
     // solve Ax = 0 with svd
     Mat3f solveHomo(MatrixXf);
@@ -52,14 +56,13 @@ public:
     Canvas calculateCanvas(ImageBound a, ImageBound b);
 
 
-    Mat3f RANSAC( PanoImage &pim1, PanoImage &pim2, float portion = 0.5, float accuracy = 0.01);
+    Mat3f RANSAC( PanoImage &pim1, PanoImage &pim2, float portion = 0.5, float accuracy = 0.01, float match_th=0.5);
     
     Mat3f computeHomo(std::vector<std::vector<Vec2f>> pairs);
     Mat3f recomputeHomoByInliners(std::vector<std::vector<Vec2f>> pairs);
 
-    std::vector<std::vector<Vec2i>> matchDescriptors(PanoImage &pim1, PanoImage &pim2, float threshold=0.8);
+    std::vector<std::vector<Vec2i>> matchDescriptors(PanoImage &pim1, PanoImage &pim2, float threshold=0.5);
     FloatImage vizMatches(PanoImage &pim1, PanoImage &pim2, std::vector<std::vector<Vec2i>> matches);
-    Mat3f RANSAC(PanoImage &pim1, PanoImage &pim2);
 
 
 };
