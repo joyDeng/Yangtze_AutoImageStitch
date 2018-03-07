@@ -15,6 +15,13 @@ void PanoImage::horrisCornerDetector(){
 }
 
 void PanoImage::calculatePatches(){
+    // 1. use luminance value
+    // 2. blur image a little bit
+    // 3. calculate base on patch size
+    // and correct for brightness/contrast
+
+
+
     
 }
 
