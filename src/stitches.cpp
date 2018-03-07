@@ -172,6 +172,55 @@ void ImageBound::grow(Vec3f point){
     btnright = v2;
 }
 
+std::vector<std::vector<Vec2f>> Pano::matchDescriptors(PanoImage &pim1, PanoImage &pim2, float threshold){
+    std::vector<std::vector<Vec2f>> output;
+
+    // how to init these min?
+    float min, smin, dist = 0, ratio = 0;
+    Vecxf d;
+    int min_index = -1, smin_index = -1;
+
+    for (int i = 0; i < pim1.getPointCount(); ++i) {
+        // for any feature point in panoImage 1, find its correspondence in panoImage 2
+        // by 2-NN test
+        min = pim1.getPatchSize();
+        smin = min;
+        for (int j = 0; j < pim2.getPointCount(); ++j) {
+            d = pim1.getPatches(i) - pim2.getPatches(j);
+            dist = d.squaredNorm();
+            if(dist < min){
+                min_index = j;
+                smin_index = min_index;
+                smin = min;
+                min = dist;
+            }else if(dist < smin && dist != min){
+                smin_index = j;
+                smin = dist;
+            }
+        }
+        ratio = min / smin;
+        if(ratio < threshold){
+            // good match
+            std::vector<Vec2f> refs;
+            Vec2f ref1, ref2;
+            ref1 << pim1.getFeaturePoint(i).x(), pim1.getFeaturePoint(i).y();
+            ref2 << pim2.getFeaturePoint(min_index).x(), pim2.getFeaturePoint(min_index).y();
+            refs.push_back(ref1);
+            refs.push_back(ref2);
+            output.push_back(refs);
+        }
+    }
+    return output;
+}
+
+Mat3f Pano::RANSAC(PanoImage &pim1, PanoImage &pim2){
+    Mat3f H;
+    return H;
+}
+
+
+
+
 
 
 

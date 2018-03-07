@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include "floatimage.h"
 #include "common.h"
+#include "PanoImage.hpp"
 
 // smallest box that bound the image
 struct imagebound{
@@ -49,6 +50,10 @@ public:
     
     // calculate the shift offset when conbining two images
     Canvas calculateCanvas(ImageBound a, ImageBound b);
+
+    std::vector<std::vector<Vec2f>> matchDescriptors(PanoImage &pim1, PanoImage &pim2, float threshold=0.8);
+    Mat3f RANSAC(PanoImage &pim1, PanoImage &pim2);
+
 };
 
 
