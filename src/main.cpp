@@ -23,30 +23,30 @@ int main(){
 //    std::cout<<" "<<rng.nextFloat()<<endl;
 
     int window = 9;
-    float harris_th = 0.5f, sigma = 2.0f, match_th = 0.3f, pwindow = 21;
+    float harris_th = 0.2f, sigma = 2.0f, match_th = 0.6f, pwindow = 21;
 
-    FloatImage im1(DATA_DIR "/input/left.png");
-    FloatImage im2(DATA_DIR "/input/right.png");
+    FloatImage im1(DATA_DIR "/input/lily1.jpg");
+    FloatImage im2(DATA_DIR "/input/lily2.jpg");
     Pano pano;
     
     PanoImage pim(im1);
-//    FloatImage detected = pim.harrisCornerDetector(window, harris_th);
-//    detected.write(DATA_DIR "/output/leftRthreshold.png");
-//    pim.calculatePatches(sigma, 21);
+    FloatImage detected = pim.harrisCornerDetector(window, harris_th);
+    detected.write(DATA_DIR "/output/leftRthreshold.png");
+    pim.calculatePatches(sigma, 21);
 
     PanoImage pim2(im2);
-//    FloatImage detected2 = pim2.harrisCornerDetector(window, harris_th);
-//    detected2.write(DATA_DIR "/output/rightRthreshold.png");
-//    pim2.calculatePatches(sigma, 21);
+    FloatImage detected2 = pim2.harrisCornerDetector(window, harris_th);
+    detected2.write(DATA_DIR "/output/rightRthreshold.png");
+    pim2.calculatePatches(sigma, 21);
 
-//    std::vector<std::vector<Vec2i>> matches = pano.matchDescriptors(pim, pim2, patch_th);
-//    std::cout << matches.size() << endl;
-//    for (int i = 0; i < matches.size(); ++i) {
-//        printf("Match: (%d, %d) to (%d, %d)\n", matches[i][0].x(), matches[i][0].y(), matches[i][1].x(), matches[i][0].y());
-//    }
+    std::vector<std::vector<Vec2i>> matches = pano.matchDescriptors(pim, pim2, match_th);
+    std::cout << matches.size() << endl;
+    for (int i = 0; i < matches.size(); ++i) {
+        printf("Match: (%d, %d) to (%d, %d)\n", matches[i][0].x(), matches[i][0].y(), matches[i][1].x(), matches[i][0].y());
+    }
 //
-//    FloatImage matchesImage = pano.vizMatches(pim, pim2, matches);
-//    matchesImage.write(DATA_DIR "/output/matchesImage.png");
+    FloatImage matchesImage = pano.vizMatches(pim, pim2, matches);
+    matchesImage.write(DATA_DIR "/output/matchesImage.png");
 
 
     std::vector<std::vector<Vec2f>> pairs;
@@ -72,7 +72,7 @@ int main(){
 //    cat.write(DATA_DIR "/output/left_right.png");
 
     FloatImage autocat = pano.autocat2images(pim, pim2, window, harris_th, match_th, sigma, pwindow);
-    autocat.write(DATA_DIR "/output/auto_left_right.png");
+    autocat.write(DATA_DIR "/output/auto_lily_left_right.png");
 
     return 0;
 }
