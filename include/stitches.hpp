@@ -52,7 +52,10 @@ public:
     Canvas calculateCanvas(ImageBound a, ImageBound b);
 
     std::vector<std::vector<Vec2f>> matchDescriptors(PanoImage &pim1, PanoImage &pim2, float threshold=0.8);
-    Mat3f RANSAC(PanoImage &pim1, PanoImage &pim2);
+    Mat3f RANSAC( PanoImage &pim1, PanoImage &pim2, float portion = 0.5, float accuracy = 0.01);
+    
+    Mat3f computeHomo(std::vector<std::vector<Vec2f>> pairs);
+    Mat3f recomputeHomoByInliners(std::vector<std::vector<Vec2f>> pairs);
 
 };
 

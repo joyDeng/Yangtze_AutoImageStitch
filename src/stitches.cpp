@@ -9,6 +9,24 @@
 #include "stitches.hpp"
 #include <Eigen/SVD>
 
+using std::vector;
+
+Mat3f Pano::computeHomo(std::vector<std::vector<Vec2f>> pairs){
+    // construct Ax = b homogenous equation systems
+    MatrixXf A;
+    A.resize(8,9);
+    for(int i = 0; i < 4 ; i++){
+        float x1 = pairs[i][0].x();
+        float y1 = pairs[i][0].y();
+        float x = pairs[i][1].x();
+        float y = pairs[i][1].y();
+        A.row(i * 2) << x, y, 1, 0, 0, 0, -x * x1, -y * x1, -x1;
+        A.row(i * 2 + 1) << 0, 0, 0, x, y, 1, -x * y1, -y1 * y, -y1;
+    }
+    
+    return solveHomo(A);
+}
+
 FloatImage Pano::cat2images(const FloatImage &im1, const FloatImage &im2, std::vector<Vec2f> ref1, std::vector<Vec2f> ref2){
     
     // construct Ax = b homogenous equation systems
@@ -170,8 +188,8 @@ void ImageBound::grow(Vec3f point){
     btnright = v2;
 }
 
-std::vector<std::vector<Vec2f>> Pano::matchDescriptors(PanoImage &pim1, PanoImage &pim2, float threshold){
-    std::vector<std::vector<Vec2f>> output;
+vector<vector<Vec2f>> Pano::matchDescriptors(PanoImage &pim1, PanoImage &pim2, float threshold){
+    vector<vector<Vec2f>> output;
 
     // how to init these min?
     float min, smin, dist = 0, ratio = 0;
@@ -211,9 +229,89 @@ std::vector<std::vector<Vec2f>> Pano::matchDescriptors(PanoImage &pim1, PanoImag
     return output;
 }
 
-Mat3f Pano::RANSAC(PanoImage &pim1, PanoImage &pim2){
+//RANSAC for estimatimating homography
+Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float portion, float accuBound){
     Mat3f H;
-    return H;
+
+    vector<vector<Vec2f>> pairs = matchDescriptors(pim1, pim2);
+    vector<vector<Vec2f>> Largest_inliers;
+    Mat3f Homo;
+    float Prob = 1;
+    float failProb = 1 - std::powf(portion,4);
+    uint32_t maxInlinerSize = 0;
+    bool beginIterate = false;
+    
+    pcg32 rng;
+    uint32_t rndBound = pairs.size();
+    
+    //Ransac loop: stop when the failure probability
+    //of finding the correct H is low
+    while(Prob > accuBound){
+        vector<vector<Vec2f>> inliers;
+        //select four feature pairs(at random)
+        vector<vector<Vec2f>> ranPairs;
+        for(int i = 0 ; i < 4 ; i++)
+            ranPairs.push_back(pairs[rng.nextUInt(rndBound)]);
+        
+        //compute homography
+        Mat3f H = computeHomo(ranPairs);
+        
+        //compute inliers where ||pi, Hpi|| < epsillon
+        for(int i = 0 ; i < (int)rndBound ; i++){
+            Vec3f hp = H * Vec3f(pairs[i][1].x(),pairs[i][1].x(),1);
+            hp = hp / hp.z();
+            Vec3f ep =  hp - Vec3f(pairs[i][0].x(),pairs[i][0].x(),1);
+            if(ep.norm() < __FLT_EPSILON__)
+                inliers.push_back(pairs[i]);
+        }
+        
+        //update the stop point
+        float ratio = (float)inliers.size() / (float)rndBound;
+        if(ratio >= portion && !beginIterate) beginIterate = true;
+        if(beginIterate) Prob *= failProb;
+        
+        //Keep largest set of inliers
+        if(inliers.size() > maxInlinerSize){
+            Homo = H;
+            Largest_inliers.clear();
+            Largest_inliers = inliers;
+            maxInlinerSize = inliers.size();
+        }
+    }
+    
+    //Re-compute least-squares H estimate on all of the inliers
+    Mat3f updatedHomo = recomputeHomoByInliners(Largest_inliers);
+    
+    return Homo;
+}
+
+Mat3f Pano::recomputeHomoByInliners(std::vector<std::vector<Vec2f>> pairs){
+    uint32_t rowsize = pairs.size();
+    MatrixXf A;
+    MatrixXf X,Y,Z;
+    A.resize(rowsize,3);
+    X.resize(rowsize,1);
+    Y.resize(rowsize,1);
+    Z.resize(rowsize,1);
+    
+    for(int i = 0 ; i < (int)rowsize ; i++){
+        A.row(i) << pairs[i][1].x(), pairs[i][1].y(), 1;
+        X.row(i) << pairs[i][0].x();
+        Y.row(i) << pairs[i][0].y();
+        Z.row(i) << 1;
+    }
+    
+    SvdXf svd(A,Eigen::ComputeFullU | Eigen::ComputeFullV);
+    Vec3f abc = svd.solve(X);
+    Vec3f def = svd.solve(Y);
+    Vec3f ghi = svd.solve(Z);
+    
+    Mat3f homo;
+    homo.row(0) = abc;
+    homo.row(1) = def;
+    homo.row(2) = ghi;
+    
+    return homo;
 }
 
 
