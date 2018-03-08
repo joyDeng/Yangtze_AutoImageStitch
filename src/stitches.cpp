@@ -222,7 +222,7 @@ std::vector<std::vector<Vec2i>> Pano::matchDescriptors(PanoImage &pim1, PanoImag
         smin = min;
         min_index = -1, smin_index = -1;
         for (int j = 0; j < pim2.getPointCount(); ++j) {
-            if(std::find(found.begin(), found.end(), j) == found.end()) {
+//            if(std::find(found.begin(), found.end(), j) == found.end()) {
                 d = pim1.getPatches(i) - pim2.getPatches(j);
                 dist = d.squaredNorm();
                 if (dist < min) {
@@ -234,7 +234,7 @@ std::vector<std::vector<Vec2i>> Pano::matchDescriptors(PanoImage &pim1, PanoImag
                     smin_index = j;
                     smin = dist;
                 }
-            }
+//            }
         }
         ratio = min / smin;
         if(ratio < threshold){

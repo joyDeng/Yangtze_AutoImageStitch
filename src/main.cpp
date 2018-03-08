@@ -22,20 +22,29 @@ int main(){
 //    int window = 9;
 //    float harris_th = 0.3f, sigma = 2.f;
 //
-//    FloatImage im1(DATA_DIR "/input/left.png");
-//    FloatImage im2(DATA_DIR "/input/right.png");
+    FloatImage im1(DATA_DIR "/input/left.png");
+    FloatImage im2(DATA_DIR "/input/right.png");
 
 //    FloatImage im1(DATA_DIR "/input/yosemite1.jpg");
 //    FloatImage im2(DATA_DIR "/input/yosemite2.jpg");
 
-    FloatImage im1(DATA_DIR "/input/pano.tga");
-    FloatImage im2(DATA_DIR "/input/pano1.tga");
+//    FloatImage im1(DATA_DIR "/input/pano.tga");
+//    FloatImage im2(DATA_DIR "/input/pano1.tga");
 
 //    FloatImage im1(DATA_DIR "/input/lily1.jpg");
 //    FloatImage im2(DATA_DIR "/input/lily2.jpg");
 
 //    FloatImage im1(DATA_DIR "/input/pano3.tga");
 //    FloatImage im2(DATA_DIR "/input/pano2.tga");
+
+//    Pano pano;
+//    pano.setWindow(9);
+//    pano.setPatchWindow(31);
+//    pano.setMatchTh(0.8f);
+//    pano.setHarrisTh(0.3f);
+//    pano.setSigma(3.f);
+//    pano.setNorm(true);
+//    pano.setPortion(0.2f);
 
     Pano pano;
     pano.setWindow(9);
