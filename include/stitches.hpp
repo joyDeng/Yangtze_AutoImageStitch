@@ -21,6 +21,7 @@ struct imagebound{
     
     imagebound();
     void grow(Vec3f point);
+    bool inbound(Vec3f point);
     
 };
 
@@ -47,8 +48,8 @@ class Pano{
 public:
     
     Pano(){
-        m_harris_th = 0.2;
-        m_match_th = 0.5;
+        m_harris_th = 0.3;
+        m_match_th = 0.6;
         m_sigma = 2;
         m_window = 9;
         m_pwindow = 21;
@@ -79,8 +80,10 @@ public:
     
     // cat 2 image given corresponding poin sets
     FloatImage cat2images(const FloatImage &im1, const FloatImage &im2, Mat3f homo);
+    FloatImage cat2imageBlend(const FloatImage &im1, const FloatImage &im2, Mat3f homo);
     FloatImage mancat2images(const FloatImage &im1, const FloatImage &im2, std::vector<std::vector<Vec2f>> pairs);
     FloatImage autocat2images(PanoImage &pim1, PanoImage &pim2);
+
 
     
     // solve Ax = 0 with svd
@@ -92,17 +95,16 @@ public:
     
     // calculate the shift offset when conbining two images
     Canvas calculateCanvas(ImageBound a, ImageBound b);
+    
+    // calculate weight map of a image of sizex * sizey
+    FloatImage calweight(int sizex, int sizey);
 
 
 
 
     Mat3f RANSAC( PanoImage &pim1, PanoImage &pim2, float match_th = 0.5, float portion = 0.5, float accuracy = 0.1,
                   float threshold = 1);
-
-
-    
     Mat3f computeHomo(std::vector<std::vector<Vec2f>> pairs);
-    FloatImage autocat2imageBlend(PanoImage &pim1, PanoImage &pim2);
 
     std::vector<std::vector<Vec2i>> matchDescriptors(PanoImage &pim1, PanoImage &pim2, float threshold=0.5);
     FloatImage vizMatches(PanoImage &pim1, PanoImage &pim2, std::vector<std::vector<Vec2i>> matches);
