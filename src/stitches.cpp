@@ -34,6 +34,7 @@ Mat3f Pano::computeHomo(std::vector<std::vector<Vec2f>> pairs){
     return solveHomo(A);
 }
 
+<<<<<<< HEAD
 FloatImage Pano::autocatnimages(std::vector<PanoImage> &pims){
     // make sure pims is not empty and pims size is not 1
 
@@ -73,7 +74,9 @@ FloatImage Pano::autocatnimages(std::vector<PanoImage> &pims){
     return output;
 }
 
-FloatImage Pano::autocat2images(PanoImage &pim1, PanoImage &pim2){
+
+FloatImage Pano::autocat2images(PanoImage &pim1, PanoImage &pim2, bool blend){
+
     FloatImage im1 = pim1.getImage(), im2 = pim2.getImage();
     pim1.harrisCornerDetector(m_window, m_harris_th);
     pim2.harrisCornerDetector(m_window, m_harris_th);
@@ -84,7 +87,7 @@ FloatImage Pano::autocat2images(PanoImage &pim1, PanoImage &pim2){
 
     cout << "ransac done"<<endl;
     
-    
+    if(blend) return cat2imageBlend(im1, im2, homo);
     return cat2images(im1, im2, homo);
 
 }
@@ -200,7 +203,7 @@ FloatImage Pano::catnimages(std::vector<FloatImage> ims, std::vector<Mat3f> homo
 FloatImage Pano::cat2imageBlend(const FloatImage &im1, const FloatImage &im2, Mat3f homo){
     //calculate weight map for both image
     FloatImage w1 = calweight(im1.sizeX(), im1.sizeY());
-    FloatImage w2 = calweight(im1.sizeY(), im2.sizeY());
+    FloatImage w2 = calweight(im2.sizeX(), im2.sizeY());
     Mat3f homo_i = homo.inverse();
     
     //calculate outputimage size
@@ -221,18 +224,20 @@ FloatImage Pano::cat2imageBlend(const FloatImage &im1, const FloatImage &im2, Ma
                 float weightsum = w1(i,j,0);
                 Vec3f curpos = Vec3f(i,j,1), re_pos;
                 int ix,iy;
-                bool in2 = im2bound.inbound(curpos);
-                if(in2){
+                bool in2 = false;
+                // if overlap with im2
+                if(im2bound.inbound(curpos)){
                     re_pos = homo_i * curpos;
                     re_pos /= re_pos.z();
                     ix = floor(re_pos.x());
                     iy = floor(re_pos.y());
-                    weightsum += w2(ix, iy, 0);
+                    if(ix < 0 || iy < 0 || ix >= im2.sizeX() || iy >= im2.sizeY()) in2 = false;
+                    else in2 = true;
+                    if(in2) weightsum += w2(ix, iy, 0);
                 }
                 for(int c = 0 ; c < im1.channels() ; c++){
                     float nume = im1(i,j,c) *  w1(i,j,0);
-                    if(in2)
-                        nume += im2(ix, iy, c) * w2(ix, iy, 0);
+                    if(in2) nume += im2(ix, iy, c) * w2(ix, iy, 0);
                     output(pos.x(), pos.y(), c) = nume / weightsum;
                 }
             }
@@ -244,6 +249,7 @@ FloatImage Pano::cat2imageBlend(const FloatImage &im1, const FloatImage &im2, Ma
     Vec2i offsetImage2 = Vec2i(floor(im2bound.topleft.x()), floor(im2bound.topleft.y())) - canv.offset;
     Vec2f sizeTransedImage2 = im2bound.btnright - im2bound.topleft;
     
+    // attach image2
     for(int i = 0 ; i < sizeTransedImage2.x(); i++){
         for(int j = 0 ; j < sizeTransedImage2.y() ; j++){
             Vec2f transed_pos = im2bound.topleft + Vec2f(i,j);
@@ -265,9 +271,6 @@ FloatImage Pano::cat2imageBlend(const FloatImage &im1, const FloatImage &im2, Ma
     }
     cout << "cat 2 image done"<<endl;
     return output;
-
-    
-    
 }
 
 float lerp(float x, float min, float max){
@@ -602,11 +605,15 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
         printf("Best Match: (%d, %d) to (%d, %d)\n", (int)bestPairs[i][0].x(), (int)bestPairs[i][0].y(),
                (int)bestPairs[i][1].x(), (int)bestPairs[i][1].y());
     }
+<<<<<<< HEAD
     cout << Homo << endl;
     //Homo = computeHomo(Largest_inliers);
     viz = vizMatches(pim1, pim2, Largest_inliers);
     viz.debugWrite();
 
+=======
+//    Homo = computeHomo(Largest_inliers);
+>>>>>>> 08e37563e0839e0d1818936dd328d70dad80605c
     return Homo;
 }
 

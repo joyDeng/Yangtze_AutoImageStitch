@@ -61,6 +61,7 @@ int main(){
 //    pims.push_back(PanoImage(FloatImage(DATA_DIR "/input/yosemite3.jpg")));
 //    pims.push_back(PanoImage(FloatImage(DATA_DIR "/input/yosemite4.jpg")));
 
+<<<<<<< HEAD
 
 
 
@@ -82,6 +83,17 @@ int main(){
 //    pano.setSigma(2.f);
 //    pano.setNorm(true);
 //    pano.setPortion(0.2f);
+=======
+    Pano pano;
+    pano.setWindow(9);
+    pano.setPatchWindow(31);
+    pano.setMatchTh(0.6f);
+    pano.setHarrisTh(0.3f);
+    pano.setSigma(2.f);
+    pano.setNorm(true);
+    pano.setPortion(0.2f);
+
+>>>>>>> 08e37563e0839e0d1818936dd328d70dad80605c
     
 //    PanoImage pim(im1);
 //    FloatImage detected = pim.harrisCornerDetector(window, harris_th);
@@ -126,6 +138,7 @@ int main(){
 //    FloatImage cat = pano.mancat2images(im1, im2, pairs);
 //    cat.write(DATA_DIR "/output/left_right.png");
 
+
 //    FloatImage autocat = pano.autocat2images(pim, pim2);
 //    autocat.write(DATA_DIR "/output/auto_table_left_right.png");
 //    FloatImage autocat = pano.autocatnimages(pims);
@@ -154,8 +167,9 @@ void testCatTable(){
     pano.setPortion(0.1f);
     PanoImage pim1(FloatImage(DATA_DIR "/input/table1.jpg"));
     PanoImage pim2(FloatImage(DATA_DIR "/input/table2.jpg"));
-    FloatImage autocat = pano.autocat2images(pim1, pim2);
-    autocat.write(DATA_DIR "/output/auto_table_left_right.png");
+    //FloatImage autocat = pano.autocat2images(pim1, pim2);
+    FloatImage autocat = pano.autocat2images(pim1, pim2, true);
+    autocat.write(DATA_DIR "/output/auto_pano_left_right.png");
 
 }
 
@@ -193,6 +207,7 @@ void testCatNPan(){
 
 }
 
+<<<<<<< HEAD
 void testCatYosemite(){
     Pano pano;
     pano.setWindow(9);
@@ -268,5 +283,4 @@ void testHome(){
     autocat.write(DATA_DIR "/output/auto_home_left_right.png");
 
 }
-
 
