@@ -250,20 +250,24 @@ FloatImage Pano::catnimagesBlend(FloatImage ref, std::vector<FloatImage> ims, st
     //paste image1 onto canvas
     FloatImage output(canv.length, canv.height, ref.channels());
 
+    canv_w.debugWrite();
+
     for(int i = 0 ; i < ref.sizeX() ; i++) {
         for (int j = 0; j < ref.sizeY(); j++) {
             int nx = i - canv.offset.x();
             int ny = j - canv.offset.y();
-            if (nx >= 0 && ny >= 0 && nx < canv.length && ny < canv.height)
+            if (nx >= 0 && ny >= 0 && nx < canv.length && ny < canv.height) {
+                canv_w(nx, ny, 0) += refWeight(i, j, 0);
                 for (int c = 0; c < ref.channels(); c++) {
                     output(nx, ny, c) += (ref(i, j, c) * refWeight(i, j, 0));
-                    canv_w(nx, ny, 0) += refWeight(i, j, 0);
+
                 }
+            }
         }
     }
     cout << "image ref done"<<endl;
 
-
+    canv_w.debugWrite();
 
     for (int n = 0; n < homos.size(); ++n) {
         Vec2i offsetImage = Vec2i(floor(bounds[n].topleft.x()), floor(bounds[n].topleft.y())) - canv.offset;
@@ -278,12 +282,14 @@ FloatImage Pano::catnimagesBlend(FloatImage ref, std::vector<FloatImage> ims, st
 
                 if(ims[n].inBound(pos.x(), pos.y())){
                     Vec2i canvas_pos = offsetImage + Vec2i(i,j);
-                    if(canvas_pos.x() >= 0 && canvas_pos.y() >= 0 && canvas_pos.y() < canv.height && canvas_pos.x() < canv.length)
-                        for(int c = 0 ; c < ims[n].channels() ; c++) {
+                    if(canvas_pos.x() >= 0 && canvas_pos.y() >= 0 && canvas_pos.y() < canv.height && canvas_pos.x() < canv.length) {
+                        canv_w(canvas_pos.x(), canvas_pos.y(), 0) += weights[n](pos.x(), pos.y(), 0);
+                        for (int c = 0; c < ims[n].channels(); c++) {
                             output(canvas_pos.x(), canvas_pos.y(), c) +=
                                     (ims[n](pos.x(), pos.y(), c) * weights[n](pos.x(), pos.y(), 0));
-                            canv_w(canvas_pos.x(), canvas_pos.y(), 0) += weights[n](pos.x(), pos.y(), 0);
+
                         }
+                    }
                 }
             }
         }
@@ -296,6 +302,7 @@ FloatImage Pano::catnimagesBlend(FloatImage ref, std::vector<FloatImage> ims, st
         for (int j = 0; j < canv.height; ++j) {
             if(canv_w(i, j, 0) > 0){
                 for (int c = 0; c < output.channels(); ++c) {
+                    cout << canv_w(i, j, 0) <<endl;
                     output(i, j, c) = output(i, j, c) / canv_w(i, j, 0);
                 }
             }
