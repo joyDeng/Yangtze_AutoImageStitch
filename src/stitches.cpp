@@ -30,7 +30,6 @@ Mat3f Pano::computeHomo(std::vector<std::vector<Vec2f>> pairs){
         A.row(i * 2 + 1) << 0, 0, 0, x, y, 1, -x * y1, -y1 * y, -y1;
     }
 
-    
     return solveHomo(A);
 }
 
@@ -185,8 +184,6 @@ FloatImage Pano::catnimages(FloatImage ref, std::vector<FloatImage> ims, std::ve
         }
     }
     cout << "image ref done"<<endl;
-
-
 
     for (int n = 0; n < homos.size(); ++n) {
         Vec2i offsetImage = Vec2i(floor(bounds[n].topleft.x()), floor(bounds[n].topleft.y())) - canv.offset;
