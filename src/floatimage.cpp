@@ -502,3 +502,10 @@ void FloatImage::drawLine(int a, int b, int c, int d){
     }
 }
 
+bool FloatImage::inBound(int x, int y){
+	if (x < 0 || x >= width() || y < 0 || y >= height()){
+		return false;
+	}
+	return true;
+}
+
