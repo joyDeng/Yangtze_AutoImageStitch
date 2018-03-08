@@ -29,11 +29,16 @@ Mat3f Pano::computeHomo(std::vector<std::vector<Vec2f>> pairs){
         A.row(i * 2) << x, y, 1, 0, 0, 0, -x * x1, -y * x1, -x1;
         A.row(i * 2 + 1) << 0, 0, 0, x, y, 1, -x * y1, -y1 * y, -y1;
     }
+
     
     return solveHomo(A);
 }
 
+
+
+
 FloatImage Pano::autocat2images(PanoImage &pim1, PanoImage &pim2, bool blend){
+
     FloatImage im1 = pim1.getImage(), im2 = pim2.getImage();
     pim1.harrisCornerDetector(m_window, m_harris_th);
     pim2.harrisCornerDetector(m_window, m_harris_th);
@@ -88,6 +93,126 @@ FloatImage Pano::cat2images(const FloatImage &im1, const FloatImage &im2, Mat3f 
     }
     cout << "cat 2 image done"<<endl;
     return output;
+}
+
+//<<<<<<< HEAD
+FloatImage Pano::autocatnimages(std::vector<PanoImage> &pims, bool center){
+    // make sure pims is not empty and pims size is not 1
+
+    // initImages (calculate features and patches)
+    vector<FloatImage> ims;
+    vector<Mat3f> homos;
+    FloatImage output;
+
+
+    for (int i = 0; i < pims.size(); ++i) {
+        pims[i].harrisCornerDetector(m_window, m_harris_th);
+        pims[i].calculatePatches(m_sigma, m_pwindow, m_blur, m_norm);
+    }
+    int refn;
+    if(center){
+        refn = pims.size()/2;}
+    else{
+        refn = 0;
+    }
+//        FloatImage ref(pims[0].getImage());
+//        Mat3f lhomo = Mat3f::Identity();
+//        for (int i = 0; i < pims.size() - 1; ++i) {
+//            Mat3f nhomo = lhomo * RANSAC(pims[i], pims[i+1], m_match_th, m_portion);
+//            ims.push_back(pims[i+1].getImage());
+//            homos.push_back(nhomo);
+//            lhomo << nhomo;
+//        }
+//
+//    }else{
+        // choose the middle one as reference
+
+    FloatImage ref(pims[refn].getImage());
+
+    Mat3f lhomo = Mat3f::Identity();
+    for (int i = refn; i < pims.size() - 1; ++i) {
+        Mat3f nhomo = lhomo * RANSAC(pims[i], pims[i+1], m_match_th, m_portion);
+        ims.push_back(pims[i+1].getImage());
+        homos.push_back(nhomo);
+        lhomo << nhomo;
+    }
+
+    lhomo = Mat3f::Identity();
+    for (int i = refn; i > 0; --i) {
+        Mat3f nhomo = lhomo * RANSAC(pims[i], pims[i-1], m_match_th, m_portion);
+        ims.push_back(pims[i-1].getImage());
+        homos.push_back(nhomo);
+        lhomo << nhomo;
+    }
+
+    output = catnimages(ref, ims, homos);
+//    }
+
+    return output;
+}
+
+FloatImage Pano::catnimages(FloatImage ref, std::vector<FloatImage> ims, std::vector<Mat3f> homos){
+    // ims are FloatImages from 0 to n
+    // 0 is the reference image
+
+    vector<Mat3f> invHomos;
+    for (int n = 0; n < homos.size(); ++n) {
+        invHomos.push_back(homos[n].inverse());
+    }
+    ImageBound im1bound = boundBox(ref);
+
+    vector<ImageBound> bounds;
+    Canvas canv;
+
+    for (int n = 0; n < homos.size(); ++n) {
+        bounds.push_back(boundBoxHomo(ims[n], homos[n]));
+    }
+    bounds.push_back(im1bound);
+    // calculate canvas of output image
+    canv = calculateCanvas(bounds);
+    cout << "image bound"<<endl;
+
+    //paste image1 onto canvas
+    FloatImage output(canv.length, canv.height, ref.channels());
+
+    for(int i = 0 ; i < ref.sizeX() ; i++) {
+        for (int j = 0; j < ref.sizeY(); j++) {
+            int nx = i - canv.offset.x();
+            int ny = j - canv.offset.y();
+            if (nx >= 0 && ny >= 0 && nx < canv.length && ny < canv.height)
+                for (int c = 0; c < ref.channels(); c++)
+                    output(nx, ny, c) = ref(i, j, c);
+        }
+    }
+    cout << "image ref done"<<endl;
+
+
+
+    for (int n = 0; n < homos.size(); ++n) {
+        Vec2i offsetImage = Vec2i(floor(bounds[n].topleft.x()), floor(bounds[n].topleft.y())) - canv.offset;
+        Vec2f sizeTransedImage = bounds[n].btnright - bounds[n].topleft;
+
+        for (int i = 0; i < sizeTransedImage.x(); ++i) {
+            for (int j = 0; j < sizeTransedImage.y(); ++j) {
+                Vec2f transed_pos = bounds[n].topleft + Vec2f(i,j);
+
+                Vec3f pos_f = invHomos[n] * Vec3f(transed_pos.x(), transed_pos.y(), 1);
+                Vec2i pos(floor(pos_f.x()/pos_f.z()), floor(pos_f.y()/pos_f.z()));
+
+                if(ims[n].inBound(pos.x(), pos.y())){
+                    Vec2i canvas_pos = offsetImage + Vec2i(i,j);
+                    if(canvas_pos.x() >= 0 && canvas_pos.y() >= 0 && canvas_pos.y() < canv.height && canvas_pos.x() < canv.length)
+                        for(int c = 0 ; c < ims[n].channels() ; c++)
+                            output(canvas_pos.x(), canvas_pos.y(), c) = ims[n](pos.x(), pos.y(),c);
+                }
+            }
+        }
+        cout << "image " << n + 1<< " done"<<endl;
+    }
+
+
+    return output;
+
 }
 
 
@@ -199,22 +324,24 @@ FloatImage Pano::mancat2images(const FloatImage &im1, const FloatImage &im2, std
 }
 
 Mat3f Pano::solveHomo(MatrixXf m){
+
     SvdXf svd(m, Eigen::ComputeFullU | Eigen::ComputeFullV);
     Vecxf  x;
     x.resize(9);
-   
+
     // Then the solution x is the eigenvector corresponding to the only zero
     // eigenvalue of ATA which corresponds to the right most column of V
     MatrixXf t,s;
     s = (svd.matrixV());
     int colcount = s.cols();
-    x = s.col(colcount-1);
+    x = s.col(colcount - 1);
 
     Mat3f H;
     float k = 1.0 / x[8];
     H.row(0) <<  k * x[0], k * x[1],k * x[2];
     H.row(1) <<  k * x[3], k * x[4],k * x[5];
     H.row(2) << k * x[6], k * x[7], k * x[8];
+
 
     return H;
 }
@@ -286,6 +413,31 @@ Canvas Pano::calculateCanvas(ImageBound a, ImageBound b){
     
 }
 
+Canvas Pano::calculateCanvas(vector<ImageBound> bs){
+
+
+    ImageBound b;
+//    b.grow(Vec3f(bs[0].topleft.x(), bs[0].topleft.y(), 1));
+//    b.grow(Vec3f(bs[0].btnright.x(), bs[0].btnright.y(),1));
+    for (int i = 0; i < bs.size(); ++i) {
+        b.grow(Vec3f(bs[i].topleft.x(), bs[i].topleft.y(), 1));
+        b.grow(Vec3f(bs[i].btnright.x(), bs[i].btnright.y(),1));
+
+    }
+
+
+    Canvas canv;
+
+    // calculate offset of image canvas and the size of canvas
+    Vec2i can;
+    can << floor(b.topleft.x()), floor(b.topleft.y());
+    canv.offset = can;
+    canv.length = ceil(b.btnright.x() - b.topleft.x());
+    canv.height = ceil(b.btnright.y() - b.topleft.y());
+    return canv;
+
+}
+
 ImageBound::imagebound(){
     Vec2f v1, v2;
     v1 << INFINITY,INFINITY;
@@ -325,7 +477,7 @@ std::vector<std::vector<Vec2i>> Pano::matchDescriptors(PanoImage &pim1, PanoImag
         for (int j = 0; j < pim2.getPointCount(); ++j) {
             if(std::find(found.begin(), found.end(), j) == found.end()) {
                 d = pim1.getPatches(i) - pim2.getPatches(j);
-                dist = d.squaredNorm();
+                dist = d.norm();
                 if (dist < min) {
                     smin_index = min_index;
                     min_index = j;
@@ -432,7 +584,7 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
         if(inliers.size() > maxInlinerSize){
             maxInlinerSize = inliers.size();
             Homo = H;
-            Largest_inliers.clear();
+            //Largest_inliers.clear();
             Largest_inliers = inliers;
             bestPairs = ranPairs;
 
@@ -449,7 +601,15 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
         printf("Best Match: (%d, %d) to (%d, %d)\n", (int)bestPairs[i][0].x(), (int)bestPairs[i][0].y(),
                (int)bestPairs[i][1].x(), (int)bestPairs[i][1].y());
     }
-//    Homo = computeHomo(Largest_inliers);
+//<<<<<<< HEAD
+    cout << Homo << endl;
+    //Homo = computeHomo(Largest_inliers);
+    viz = vizMatches(pim1, pim2, Largest_inliers);
+    viz.debugWrite();
+
+//=======
+////    Homo = computeHomo(Largest_inliers);
+//>>>>>>> 08e37563e0839e0d1818936dd328d70dad80605c
     return Homo;
 }
 

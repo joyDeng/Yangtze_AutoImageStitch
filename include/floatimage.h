@@ -85,6 +85,7 @@ public:
 
     // Helper functions for validation
     void drawLine(int a, int b, int c, int d);
+    bool inBound(int x, int y);
 
 private:
     static int s_debugWriteNumber; // Image number for debug write
