@@ -261,7 +261,6 @@ FloatImage Pano::catnimagesBlend(FloatImage ref, std::vector<FloatImage> ims, st
     cout << "image ref done"<<endl;
 
 
-
     for (int n = 0; n < homos.size(); ++n) {
         Vec2i offsetImage = Vec2i(floor(bounds[n].topleft.x()), floor(bounds[n].topleft.y())) - canv.offset;
         Vec2f sizeTransedImage = bounds[n].btnright - bounds[n].topleft;
@@ -378,9 +377,6 @@ FloatImage Pano::cat2imageBlend(const FloatImage &im1, const FloatImage &im2, Ma
     return output;
 }
 
-float lerp(float x, float min, float max){
-    return (1 - x) * max + x * min;
-}
 
 FloatImage Pano::calweight(int sizex, int sizey){
     FloatImage weightmap(sizex,sizey,1);
@@ -506,18 +502,12 @@ Canvas Pano::calculateCanvas(vector<ImageBound> bs){
 
 
     ImageBound b;
-//    b.grow(Vec3f(bs[0].topleft.x(), bs[0].topleft.y(), 1));
-//    b.grow(Vec3f(bs[0].btnright.x(), bs[0].btnright.y(),1));
     for (int i = 0; i < bs.size(); ++i) {
         b.grow(Vec3f(bs[i].topleft.x(), bs[i].topleft.y(), 1));
         b.grow(Vec3f(bs[i].btnright.x(), bs[i].btnright.y(),1));
 
     }
-
-
     Canvas canv;
-
-    // calculate offset of image canvas and the size of canvas
     Vec2i can;
     can << floor(b.topleft.x()), floor(b.topleft.y());
     canv.offset = can;
@@ -619,12 +609,7 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
     vector<vector<Vec2f>> bestPairs;
     //Ransac loop: stop when the failure probability
     //of finding the correct H is low
-//    int itsbound = (int) (log(accuBound) / log(failProb));
 
-////<<<<<<< HEAD
-//    for(int its = 0 ; its < itsbound ; its++){
-//        std::cout<<"prob: "<<its<<std::endl;
-////=======
     int iter = (int)(logf(0.05) / logf(1 - powf(portion, 4)));
     int iterx = 0;
     cout << iter << endl;
@@ -632,7 +617,6 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
 
     while(Prob > accuBound && iterx < iter){
         std::cout<<"iter: "<<iterx<<" of"<<iter<<std::endl;
-////>>>>>>> 1ee3aa648ddd3351f211fba1948a04f08c01ca4c
         vector<vector<Vec2f>> inliers;
         //select four feature pairs(at random)
         vector<vector<Vec2f>> ranPairs;
@@ -690,15 +674,12 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
         printf("Best Match: (%d, %d) to (%d, %d)\n", (int)bestPairs[i][0].x(), (int)bestPairs[i][0].y(),
                (int)bestPairs[i][1].x(), (int)bestPairs[i][1].y());
     }
-//<<<<<<< HEAD
+
     cout << Homo << endl;
     //Homo = computeHomo(Largest_inliers);
     viz = vizMatches(pim1, pim2, Largest_inliers);
     viz.debugWrite();
 
-//=======
-////    Homo = computeHomo(Largest_inliers);
-//>>>>>>> 08e37563e0839e0d1818936dd328d70dad80605c
     return Homo;
 }
 

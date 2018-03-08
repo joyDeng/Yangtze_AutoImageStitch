@@ -48,4 +48,6 @@ private:
     FloatImage m_chrom;
 };
 
+
+
 #endif /* PanoImage_hpp */

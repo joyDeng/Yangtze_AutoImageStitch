@@ -329,3 +329,8 @@ FloatImage normalizeBySD(const FloatImage &lumi){
 }
 
 
+float lerp(float x, float min, float max){
+    return (1 - x) * max + x * min;
+}
+
+
