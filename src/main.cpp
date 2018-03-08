@@ -23,10 +23,11 @@ int main(){
 //    std::cout<<" "<<rng.nextFloat()<<endl;
 
     int window = 9;
-    float harris_th = 0.3f, sigma = 2.0f, match_th = 0.5f, pwindow = 21, por = 0.35;
 
-    FloatImage im1(DATA_DIR "/input/left.png");
-    FloatImage im2(DATA_DIR "/input/right.png");
+    float harris_th = 0.02f, sigma = 3.f, match_th = 0.8f, pwindow = 31, por = 0.1;
+
+    FloatImage im1(DATA_DIR "/input/pano3.tga");
+    FloatImage im2(DATA_DIR "/input/pano2.tga");
     Pano pano;
     
     PanoImage pim(im1);
@@ -75,32 +76,34 @@ int main(){
     autocat.write(DATA_DIR "/output/auto_table_left_right.png");
 
 
+
     return 0;
+
 }
 
-//void pano(){
-//    FloatImage left(DATA_DIR "/input/left.png");
-//    FloatImage right(DATA_DIR "/input/right.png");
+void panof(){
+//    FloatImage left(DATA_DIR "/input/table2.png");
+//    FloatImage right(DATA_DIR "/input/table1.png");
 //
 //
-//    MatrixXf ma(9, 9);
-//    VectorXf v(9);
+//    Eigen::MatrixXf ma(9, 9);
+//    Eigen::VectorXf v(9);
 //
 //
 //
 //    vector<vector<int>> ref1;
-//    ref1.push_back({457,99});
-//    ref1.push_back({451,417});
-//    ref1.push_back({543,426});
-//    ref1.push_back({545,95});
+//    ref1.push_back({441, 472});
+//    ref1.push_back({467, 397});
+//    ref1.push_back({43, 514});
+//    ref1.push_back({443, 465});
 //
 //
 //
 //    vector<vector<int>> ref2;
-//    ref2.push_back({34,95});
-//    ref2.push_back({38,429});
-//    ref2.push_back({135,419});
-//    ref2.push_back({124,99});
+//    ref2.push_back({266, 487});
+//    ref2.push_back({289, 417});
+//    ref2.push_back({53, 756});
+//    ref2.push_back({266, 480});
 //
 //    ma <<   ref2[0][0], ref2[0][1], 1, 0, 0, 0, -ref2[0][0] * ref1[0][0], -ref1[0][0] * ref2[0][1], -ref1[0][0],
 //            0, 0, 0, ref2[0][0], ref2[0][1], 1, -ref2[0][0] * ref1[0][1], -ref1[0][1] * ref2[0][1], -ref1[0][1],
@@ -115,14 +118,14 @@ int main(){
 //    cout << ma << endl;
 //    v << 0, 0, 0, 0, 0, 0, 0, 0, 1;
 //
-//    MatrixXf H = ma.inverse() * v;
-//    Matrix3f hm = Map<Matrix<float, 3, 3, RowMajor>>(H.data());
+//    Eigen::MatrixXf H = ma.inverse() * v;
+//    Eigen::Matrix3f hm = Eigen::Map<Eigen::Matrix<float, 3, 3, Eigen::RowMajor>>(H.data());
 //    cout << H << endl;
 //    cout << hm << endl;
 //
-//    Vector3f test;
-//    Vector3f res;
-//    Matrix3f hmi = hm.inverse();
+//    Eigen::Vector3f test;
+//    Eigen::Vector3f res;
+//    Eigen::Matrix3f hmi = hm.inverse();
 //
 //    vector<vector<int>> ref3;
 //
@@ -167,5 +170,5 @@ int main(){
 //    }
 //
 //    output.debugWrite();
-//
-//}
+
+}

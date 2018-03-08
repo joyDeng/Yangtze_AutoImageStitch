@@ -492,8 +492,13 @@ void FloatImage::drawLine(int a, int b, int c, int d){
     for (int i = a; i <= c; ++i) {
         res = k1 * i + k2;
         for (int j = 0; j < channels(); ++j) {
-            operator()(i, (int)res , j) = 1.f;
+            operator()(i, (int)res , j) = 0.f;
         }
+//        if(channels() > 2){
+//            operator()(i, (int)res , 1) = 1.f;
+//        }else{
+//            operator()(i, (int)res , 0) = 1.f;
+//        }
     }
 }
 
