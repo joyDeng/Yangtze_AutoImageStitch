@@ -23,10 +23,10 @@ int main(){
 //    std::cout<<" "<<rng.nextFloat()<<endl;
 
     int window = 9;
-    float harris_th = 0.2f, sigma = 2.0f, match_th = 0.6f, pwindow = 21, por = 0.6;
+    float harris_th = 0.3f, sigma = 2.0f, match_th = 0.5f, pwindow = 21, por = 0.35;
 
-    FloatImage im1(DATA_DIR "/input/table2.jpg");
-    FloatImage im2(DATA_DIR "/input/table1.jpg");
+    FloatImage im1(DATA_DIR "/input/left.png");
+    FloatImage im2(DATA_DIR "/input/right.png");
     Pano pano;
     
     PanoImage pim(im1);

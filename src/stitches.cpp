@@ -104,7 +104,11 @@ Mat3f Pano::solveHomo(MatrixXf m){
     // Then the solution x is the eigenvector corresponding to the only zero
     // eigenvalue of ATA which corresponds to the right most column of V
     MatrixXf t,s;
-    x = (svd.matrixV()).col(8);
+    s = (svd.matrixV());
+    int colcount = s.cols();
+//    std::cout<<"col count: "<<colcount<<std::endl;
+//    std::cout<<"m row count: "<<colcount<<std::endl;
+    x = s.col(colcount-1);
 
     Mat3f H;
     float k = 1.0 / x[8];
@@ -269,7 +273,7 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
     //Ransac loop: stop when the failure probability
     //of finding the correct H is low
     while(Prob > accuBound){
-//        std::cout<<"prob: "<<Prob<<std::endl;
+        std::cout<<"prob: "<<Prob<<std::endl;
         vector<vector<Vec2f>> inliers;
         //select four feature pairs(at random)
         vector<vector<Vec2f>> ranPairs;
@@ -288,11 +292,6 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
             pair.push_back(p1);
             ranPairs.push_back(pair);
         }
-//        std::cout<<endl;
-//        std::cout<<"rand set:";
-//        for(it = has.begin();it != has.end();it++)
-//            std::cout<<*it<<" ";
-        //compute homography
         Mat3f H = computeHomo(ranPairs);
         
         //compute inliers where ||pi, Hpi|| < epsillon
@@ -301,7 +300,7 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
             hp = hp / hp.z();
             Vec3f ep =  hp - Vec3f(pairs[i][0].x(),pairs[i][0].y(),1);
 //            std::cout<<"ep: "<<ep.norm()<<std::endl;
-            if(ep.norm() < 3){
+            if(ep.norm() < 1){
                 std::vector<Vec2i> p = pairs[i];
                 Vec2f p0 = Vec2f(p[0].x(), p[0].y());
                 Vec2f p1 = Vec2f(p[1].x(), p[1].y());
@@ -312,27 +311,22 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
             }
         }
         
-        //update the stop point
-        float ratio = (float)inliers.size() / (float)rndBound;
-//        std::cout<<"ratio: "<<ratio<<std::endl;
-        if(ratio >= portion && !beginIterate)beginIterate = true;
-        if(beginIterate && ratio >= portion) Prob *= failProb;
-        
         //Keep largest set of inliers
-        if(inliers.size() + 4 > maxInlinerSize){
+        if(inliers.size() > maxInlinerSize){
             Homo = H;
             Largest_inliers.clear();
             Largest_inliers = inliers;
-            for(int i = 0 ; i < 4 ; i++)
-                Largest_inliers.push_back(ranPairs[i]);
-            maxInlinerSize = inliers.size() + 4;
         }
+        
+        float ratio = (float)Largest_inliers.size() / (float)pairs.size();
+        if(ratio > portion)
+            Prob *= failProb;
     }
     
     //Re-compute least-squares H estimate on all of the inliers
-    Mat3f updatedHomo = computeHomo(Largest_inliers);
+    Homo = computeHomo(Largest_inliers);
     
-    return updatedHomo;
+    return Homo;
 }
 
 Mat3f Pano::recomputeHomoByInliners(std::vector<std::vector<Vec2f>> pairs, Mat3f H){
