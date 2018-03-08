@@ -22,19 +22,21 @@ int main(){
 
     float harris_th = 0.5f, sigma = 3.f, match_th = 0.4f, pwindow = 31, por = 0.2;
 
-    FloatImage im1(DATA_DIR "/input/lily1.jpg");
-    FloatImage im2(DATA_DIR "/input/lily2.jpg");
+    FloatImage im1(DATA_DIR "/input/left.png");
+    FloatImage im2(DATA_DIR "/input/right.png");
     Pano pano;
     
     PanoImage pim(im1);
     FloatImage detected = pim.harrisCornerDetector(window, harris_th);
     detected.write(DATA_DIR "/output/leftRthreshold.png");
     pim.calculatePatches(sigma, 21);
-//
+////
     PanoImage pim2(im2);
     FloatImage detected2 = pim2.harrisCornerDetector(window, harris_th);
     detected2.write(DATA_DIR "/output/rightRthreshold.png");
     pim2.calculatePatches(sigma, 21);
+    
+//    pano.calweight(100, 200);
 //
 //    std::vector<std::vector<Vec2i>> matches = pano.matchDescriptors(pim, pim2, match_th);
 //    std::cout << matches.size() << endl;

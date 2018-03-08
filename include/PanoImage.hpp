@@ -28,7 +28,7 @@ public:
     FloatImage harrisCornerDetector(int window, float threshold);
     
     // feature descriptor
-    void calculatePatches(float sigma = 2.f, int size = 9, bool blur = true, bool norm = false);
+    void calculatePatches(float sigma = 2.f, int size = 9, bool blur = true, bool norm = true);
 
     
     
