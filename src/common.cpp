@@ -323,7 +323,7 @@ FloatImage normalizeBySD(const FloatImage &lumi){
     }
     sd = std::sqrtf(sd / lumi.size());
     for (int i = 0; i < lumi.size(); ++i) {
-        output(i) = lumi(i) / sd;
+        output(i) = (lumi(i) - mean) / sd;
     }
     return output;
 }
