@@ -154,7 +154,12 @@ int main(){
 //    testCatPan();
 //    testHome();
 
-    testNHome(5148, 5155);
+    Pano pano;
+    FloatImage ref(DATA_DIR "/input/lily1.jpg");
+    FloatImage refWeight = pano.calweight(ref.sizeX(), ref.sizeY());
+    refWeight.write(DATA_DIR "/output/weightmap.png");
+
+    //testNHome(5148, 5155);
 
     return 0;
 
