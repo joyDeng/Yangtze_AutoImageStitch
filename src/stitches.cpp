@@ -85,7 +85,7 @@ FloatImage Pano::autocat2images(PanoImage &pim1, PanoImage &pim2){
     cout << "ransac done"<<endl;
     
     
-    return cat2image(im1, im2, homo);
+    return cat2images(im1, im2, homo);
 
 }
 
@@ -128,6 +128,72 @@ FloatImage Pano::cat2images(const FloatImage &im1, const FloatImage &im2, Mat3f 
     }
     cout << "cat 2 image done"<<endl;
     return output;
+}
+
+FloatImage Pano::catnimages(std::vector<FloatImage> ims, std::vector<Mat3f> homos){
+    // ims are FloatImages from 0 to n
+    // 0 is the reference image
+    FloatImage output;
+    FloatImage ref = ims[0];
+    vector<Mat3f> invHomos;
+    for (int n = 0; n < homos.size(); ++n) {
+        invHomos.push_back(homos[n].inverse());
+    }
+    ImageBound im1bound = boundBox(ref);
+    vector<ImageBound> bounds;
+    Canvas canv;
+    for (int n = 0; n < homos.size(); ++n) {
+        bounds.push_back(boundBoxHomo(ims[n+1], homos[n]));
+    }
+    //calculateCanvas();
+
+
+    // calculate canvas of output image
+
+
+
+
+
+    cout << "image bound"<<endl;
+
+//    //paste image1 onto canvas
+//    FloatImage output(canv.length, canv.height, im1.channels());
+//    for(int i = 0 ; i < im1.sizeX() ; i++)
+//        for(int j = 0 ; j < im1.sizeY() ; j++){
+//            int nx  = i - canv.offset.x();
+//            int ny = j - canv.offset.y();
+//            if(nx >= 0 && ny >= 0 && nx < canv.length && ny < canv.height)
+//                for(int c = 0 ; c < im1.channels() ; c++)
+//                    output(nx, ny, c) = im1(i, j, c);
+//        }
+//    cout << "image 1 done"<<endl;
+//    //query image2 and map onto canvas
+//
+//    Vec2i offsetImage2 = Vec2i(floor(im2bound.topleft.x()), floor(im2bound.topleft.y())) - canv.offset;
+//    Vec2f sizeTransedImage2 = im2bound.btnright - im2bound.topleft;
+//
+//    for (int n = 1; n < homos.size(); ++n) {
+//
+//        for(int i = 0 ; i < sizeTransedImage2.x(); i++){
+//            for(int j = 0 ; j < sizeTransedImage2.y() ; j++){
+//                Vec2f transed_pos = im2bound.topleft + Vec2f(i,j);
+//                Vec3f pos_f = homo_inverse * Vec3f(transed_pos.x(), transed_pos.y(), 1);
+//                Vec2i pos(floor(pos_f.x()/pos_f.z()), floor(pos_f.y()/pos_f.z()));
+//                if(pos.x() >= 0 && pos.y() >= 0 && pos.x() < ims[n].sizeX() && pos.y() < ims[n].sizeY()){
+//                    Vec2i canvas_pos = offsetImage2 + Vec2i(i,j);
+//                    if(canvas_pos.x() > 0 && canvas_pos.y() > 0 && canvas_pos.y() < canv.height && canvas_pos.x() < canv.length)
+//                        for(int c = 0 ; c < ims[n].channels() ; c++)
+//                            output(canvas_pos.x(), canvas_pos.y(), c) = ims[n](pos.x(), pos.y(),c);
+//                }
+//            }
+//        }
+//        cout << "cat image "<< n+1 <<" done"<<endl;
+//
+//    }
+
+
+    return output;
+
 }
 
 
@@ -346,6 +412,32 @@ Canvas Pano::calculateCanvas(ImageBound a, ImageBound b){
     return canv;
     
 }
+
+//Canvas Pano::calculateCanvas(vector<Imagebound> bs){
+//
+//
+//    ImageBound ab;
+//    ab.grow(Vec3f(a.topleft.x(),  a.topleft.y(), 1));
+//    ab.grow(Vec3f(a.btnright.x(), a.btnright.y(),1));
+//    ab.grow(Vec3f(b.topleft.x(),  b.topleft.y(), 1));
+//    ab.grow(Vec3f(b.btnright.x(), b.btnright.y(),1));
+//
+//    ImageBound bound;
+//    for (int i = 0; i < bs.size(); ++i) {
+//
+//    }
+//
+//    Canvas canv;
+//
+//    // calculate offset of image canvas and the size of canvas
+//    Vec2i can;
+//    can << floor(ab.topleft.x()), floor(ab.topleft.y());
+//    canv.offset = can;
+//    canv.length = ceil(ab.btnright.x() - ab.topleft.x());
+//    canv.height = ceil(ab.btnright.y() - ab.topleft.y());
+//    return canv;
+//
+//}
 
 ImageBound::imagebound(){
     Vec2f v1, v2;

@@ -262,8 +262,8 @@ void testHome(){
     pano.setPortion(0.2f);
 
 
-    PanoImage pim1(FloatImage(DATA_DIR "/input/home/IMG_5142.jpg"));
-    PanoImage pim2(FloatImage(DATA_DIR "/input/home/IMG_5143.jpg"));
+    PanoImage pim1(FloatImage(DATA_DIR "/input/home/IMG_5164.jpg"));
+    PanoImage pim2(FloatImage(DATA_DIR "/input/home/IMG_5165.jpg"));
     FloatImage autocat = pano.autocat2images(pim1, pim2);
     autocat.write(DATA_DIR "/output/auto_home_left_right.png");
 
