@@ -13,16 +13,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="72a43945-6345-4e22-97e9-af7ffe6ee6f5" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/data/output/2.png" afterPath="$PROJECT_DIR$/data/output/2.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/auto_table_left_right.png" afterPath="$PROJECT_DIR$/data/output/auto_table_left_right.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/matchesImage.png" afterPath="$PROJECT_DIR$/data/output/matchesImage.png" />
-      <change beforePath="$PROJECT_DIR$/include/PanoImage.hpp" afterPath="$PROJECT_DIR$/include/PanoImage.hpp" />
-      <change beforePath="$PROJECT_DIR$/include/floatimage.h" afterPath="$PROJECT_DIR$/include/floatimage.h" />
-      <change beforePath="$PROJECT_DIR$/include/stitches.hpp" afterPath="$PROJECT_DIR$/include/stitches.hpp" />
-      <change beforePath="$PROJECT_DIR$/src/PanoImage.cpp" afterPath="$PROJECT_DIR$/src/PanoImage.cpp" />
-      <change beforePath="$PROJECT_DIR$/src/floatimage.cpp" afterPath="$PROJECT_DIR$/src/floatimage.cpp" />
-      <change beforePath="$PROJECT_DIR$/src/main.cpp" afterPath="$PROJECT_DIR$/src/main.cpp" />
       <change beforePath="$PROJECT_DIR$/src/stitches.cpp" afterPath="$PROJECT_DIR$/src/stitches.cpp" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -71,8 +61,8 @@
       <file leaf-file-name="stitches.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/stitches.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1068">
-              <caret line="133" column="17" lean-forward="false" selection-start-line="133" selection-start-column="17" selection-end-line="133" selection-end-column="17" />
+            <state relative-caret-position="378">
+              <caret line="87" column="20" lean-forward="false" selection-start-line="87" selection-start-column="20" selection-end-line="87" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -277,12 +267,12 @@
       <workItem from="1520391802349" duration="16811000" />
       <workItem from="1520411334904" duration="5300000" />
       <workItem from="1520448345447" duration="140000" />
-      <workItem from="1520453118417" duration="42071000" />
+      <workItem from="1520453118417" duration="42137000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="81124000" />
+    <option name="totallyTimeSpent" value="81190000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="797" extended-state="0" />
@@ -723,8 +713,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/stitches.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1068">
-          <caret line="133" column="17" lean-forward="false" selection-start-line="133" selection-start-column="17" selection-end-line="133" selection-end-column="17" />
+        <state relative-caret-position="378">
+          <caret line="87" column="20" lean-forward="false" selection-start-line="87" selection-start-column="20" selection-end-line="87" selection-end-column="20" />
           <folding />
         </state>
       </provider>

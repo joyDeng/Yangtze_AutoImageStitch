@@ -85,7 +85,7 @@ FloatImage Pano::autocat2images(PanoImage &pim1, PanoImage &pim2){
     cout << "ransac done"<<endl;
     
     
-    return cat2imageBlend(im1, im2, homo);
+    return cat2image(im1, im2, homo);
 
 }
 
