@@ -145,7 +145,7 @@ FloatImage Pano::autocatnimages(std::vector<PanoImage> &pims, bool center){
         lhomo << nhomo;
     }
 
-    output = catnimages(ref, ims, homos);
+    output = catnimagesBlend(ref, ims, homos);
 //    }
 
     return output;
@@ -208,6 +208,98 @@ FloatImage Pano::catnimages(FloatImage ref, std::vector<FloatImage> ims, std::ve
             }
         }
         cout << "image " << n + 1<< " done"<<endl;
+    }
+
+
+    return output;
+
+}
+
+FloatImage Pano::catnimagesBlend(FloatImage ref, std::vector<FloatImage> ims, std::vector<Mat3f> homos){
+    // ims are FloatImages from 0 to n
+    // 0 is the reference image
+
+    // init weight maps
+    FloatImage refWeight = calweight(ref.sizeX(), ref.sizeY());
+    vector<FloatImage> weights;
+    for (int n = 0; n < ims.size(); ++n) {
+        weights.push_back(calweight(ims[n].sizeX(), ims[n].sizeY()));
+    }
+
+    // init inv homos
+    vector<Mat3f> invHomos;
+    for (int n = 0; n < homos.size(); ++n) {
+        invHomos.push_back(homos[n].inverse());
+    }
+
+    // init imagebounds
+    ImageBound im1bound = boundBox(ref);
+    vector<ImageBound> bounds;
+    Canvas canv;
+
+    for (int n = 0; n < homos.size(); ++n) {
+        bounds.push_back(boundBoxHomo(ims[n], homos[n]));
+    }
+    bounds.push_back(im1bound);
+    // calculate canvas of output image
+    canv = calculateCanvas(bounds);
+    cout << "image bound"<<endl;
+
+    FloatImage canv_w(canv.length, canv.height, 1);
+
+    //paste image1 onto canvas
+    FloatImage output(canv.length, canv.height, ref.channels());
+
+    for(int i = 0 ; i < ref.sizeX() ; i++) {
+        for (int j = 0; j < ref.sizeY(); j++) {
+            int nx = i - canv.offset.x();
+            int ny = j - canv.offset.y();
+            if (nx >= 0 && ny >= 0 && nx < canv.length && ny < canv.height)
+                for (int c = 0; c < ref.channels(); c++) {
+                    output(nx, ny, c) += (ref(i, j, c) * refWeight(i, j, 0));
+                    canv_w(nx, ny, 0) += refWeight(i, j, 0);
+                }
+        }
+    }
+    cout << "image ref done"<<endl;
+
+
+
+    for (int n = 0; n < homos.size(); ++n) {
+        Vec2i offsetImage = Vec2i(floor(bounds[n].topleft.x()), floor(bounds[n].topleft.y())) - canv.offset;
+        Vec2f sizeTransedImage = bounds[n].btnright - bounds[n].topleft;
+
+        for (int i = 0; i < sizeTransedImage.x(); ++i) {
+            for (int j = 0; j < sizeTransedImage.y(); ++j) {
+                Vec2f transed_pos = bounds[n].topleft + Vec2f(i,j);
+
+                Vec3f pos_f = invHomos[n] * Vec3f(transed_pos.x(), transed_pos.y(), 1);
+                Vec2i pos(floor(pos_f.x()/pos_f.z()), floor(pos_f.y()/pos_f.z()));
+
+                if(ims[n].inBound(pos.x(), pos.y())){
+                    Vec2i canvas_pos = offsetImage + Vec2i(i,j);
+                    if(canvas_pos.x() >= 0 && canvas_pos.y() >= 0 && canvas_pos.y() < canv.height && canvas_pos.x() < canv.length)
+                        for(int c = 0 ; c < ims[n].channels() ; c++) {
+                            output(canvas_pos.x(), canvas_pos.y(), c) +=
+                                    (ims[n](pos.x(), pos.y(), c) * weights[n](pos.x(), pos.y(), 0));
+                            canv_w(canvas_pos.x(), canvas_pos.y(), 0) += weights[n](pos.x(), pos.y(), 0);
+                        }
+                }
+            }
+        }
+        cout << "image " << n + 1<< " done"<<endl;
+    }
+
+
+    canv_w.debugWrite();
+    for (int i = 0; i < canv.length; ++i) {
+        for (int j = 0; j < canv.height; ++j) {
+            if(canv_w(i, j, 0) > 0){
+                for (int c = 0; c < output.channels(); ++c) {
+                    output(i, j, c) = output(i, j, c) / canv_w(i, j, 0);
+                }
+            }
+        }
     }
 
 
