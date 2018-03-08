@@ -114,17 +114,6 @@ FloatImage Pano::autocatnimages(std::vector<PanoImage> &pims, bool center){
     else{
         refn = 0;
     }
-//        FloatImage ref(pims[0].getImage());
-//        Mat3f lhomo = Mat3f::Identity();
-//        for (int i = 0; i < pims.size() - 1; ++i) {
-//            Mat3f nhomo = lhomo * RANSAC(pims[i], pims[i+1], m_match_th, m_portion);
-//            ims.push_back(pims[i+1].getImage());
-//            homos.push_back(nhomo);
-//            lhomo << nhomo;
-//        }
-//
-//    }else{
-        // choose the middle one as reference
 
     FloatImage ref(pims[refn].getImage());
 
@@ -247,15 +236,19 @@ FloatImage Pano::catnimagesBlend(FloatImage ref, std::vector<FloatImage> ims, st
     //paste image1 onto canvas
     FloatImage output(canv.length, canv.height, ref.channels());
 
+    canv_w.debugWrite();
+
     for(int i = 0 ; i < ref.sizeX() ; i++) {
         for (int j = 0; j < ref.sizeY(); j++) {
             int nx = i - canv.offset.x();
             int ny = j - canv.offset.y();
-            if (nx >= 0 && ny >= 0 && nx < canv.length && ny < canv.height)
+            if (nx >= 0 && ny >= 0 && nx < canv.length && ny < canv.height) {
+                canv_w(nx, ny, 0) += refWeight(i, j, 0);
                 for (int c = 0; c < ref.channels(); c++) {
                     output(nx, ny, c) += (ref(i, j, c) * refWeight(i, j, 0));
-                    canv_w(nx, ny, 0) += refWeight(i, j, 0);
+
                 }
+            }
         }
     }
     cout << "image ref done"<<endl;
@@ -274,12 +267,14 @@ FloatImage Pano::catnimagesBlend(FloatImage ref, std::vector<FloatImage> ims, st
 
                 if(ims[n].inBound(pos.x(), pos.y())){
                     Vec2i canvas_pos = offsetImage + Vec2i(i,j);
-                    if(canvas_pos.x() >= 0 && canvas_pos.y() >= 0 && canvas_pos.y() < canv.height && canvas_pos.x() < canv.length)
-                        for(int c = 0 ; c < ims[n].channels() ; c++) {
+                    if(canvas_pos.x() >= 0 && canvas_pos.y() >= 0 && canvas_pos.y() < canv.height && canvas_pos.x() < canv.length) {
+                        canv_w(canvas_pos.x(), canvas_pos.y(), 0) += weights[n](pos.x(), pos.y(), 0);
+                        for (int c = 0; c < ims[n].channels(); c++) {
                             output(canvas_pos.x(), canvas_pos.y(), c) +=
                                     (ims[n](pos.x(), pos.y(), c) * weights[n](pos.x(), pos.y(), 0));
-                            canv_w(canvas_pos.x(), canvas_pos.y(), 0) += weights[n](pos.x(), pos.y(), 0);
+
                         }
+                    }
                 }
             }
         }
@@ -292,6 +287,7 @@ FloatImage Pano::catnimagesBlend(FloatImage ref, std::vector<FloatImage> ims, st
         for (int j = 0; j < canv.height; ++j) {
             if(canv_w(i, j, 0) > 0){
                 for (int c = 0; c < output.channels(); ++c) {
+                    cout << canv_w(i, j, 0) <<endl;
                     output(i, j, c) = output(i, j, c) / canv_w(i, j, 0);
                 }
             }
@@ -517,28 +513,6 @@ Canvas Pano::calculateCanvas(vector<ImageBound> bs){
 
 }
 
-ImageBound::imagebound(){
-    Vec2f v1, v2;
-    v1 << INFINITY,INFINITY;
-    v2 << -INFINITY,-INFINITY;
-    topleft = v1;
-    btnright = v2;
-}
-
-void ImageBound::grow(Vec3f point){
-    Vec2f v1, v2;
-    v1 << std::min(topleft.x(), point.x()), std::min(topleft.y(), point.y());
-    v2 << std::max(btnright.x(),point.x()), std::max(btnright.y(), point.y());
-    topleft = v1;
-    btnright = v2;
-}
-
-bool imagebound::inbound(Vec3f point){
-    if(point.x() < topleft.x() || point.x() > btnright.x() || point.y() < topleft.y() || point.y() > btnright.y()) return false;
-    else return true;
-}
-
-
 std::vector<std::vector<Vec2i>> Pano::matchDescriptors(PanoImage &pim1, PanoImage &pim2, float threshold){
     std::vector<std::vector<Vec2i>> output;
     // how to init these min?
@@ -596,7 +570,6 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
 
     FloatImage matchesImage = vizMatches(pim1, pim2, pairs);
     matchesImage.write(DATA_DIR "/output/matchesImage.png");
-
 
     vector<vector<Vec2f>> Largest_inliers;
     Mat3f Homo;
@@ -690,21 +663,17 @@ FloatImage Pano::vizMatches(PanoImage &pim1, PanoImage &pim2, std::vector<std::v
                       im1.channels());
     int offsetX = im1.sizeX();
 
-    for (int i = 0; i < im1.sizeX(); ++i) {
-        for (int j = 0; j < im1.sizeY(); ++j) {
-            for (int k = 0; k < im1.channels(); ++k) {
+    for (int i = 0; i < im1.sizeX(); ++i)
+        for (int j = 0; j < im1.sizeY(); ++j)
+            for (int k = 0; k < im1.channels(); ++k)
                 output(i, j, k) = im1(i, j, k);
-            }
-        }
-    }
 
-    for (int i = 0; i < im2.sizeX(); ++i) {
-        for (int j = 0; j < im2.sizeY(); ++j) {
-            for (int k = 0; k < im2.channels(); ++k) {
+
+    for (int i = 0; i < im2.sizeX(); ++i)
+        for (int j = 0; j < im2.sizeY(); ++j)
+            for (int k = 0; k < im2.channels(); ++k)
                 output(i + offsetX, j, k) = im2(i, j, k);
-            }
-        }
-    }
+
 
     for (int i = 0; i < matches.size(); ++i)
         output.drawLine(matches[i][0].x(), matches[i][0].y(), matches[i][1].x() + offsetX, matches[i][1].y());

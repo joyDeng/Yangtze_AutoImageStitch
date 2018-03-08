@@ -11,6 +11,26 @@
 
 
 
+ImageBound::imagebound(){
+    Vec2f v1, v2;
+    v1 << INFINITY,INFINITY;
+    v2 << -INFINITY,-INFINITY;
+    topleft = v1;
+    btnright = v2;
+}
+
+void ImageBound::grow(Vec3f point){
+    Vec2f v1, v2;
+    v1 << std::min(topleft.x(), point.x()), std::min(topleft.y(), point.y());
+    v2 << std::max(btnright.x(),point.x()), std::max(btnright.y(), point.y());
+    topleft = v1;
+    btnright = v2;
+}
+
+bool ImageBound::inbound(Vec3f point){
+    if(point.x() < topleft.x() || point.x() > btnright.x() || point.y() < topleft.y() || point.y() > btnright.y()) return false;
+    else return true;
+}
 
 PanoImage::PanoImage(const FloatImage &other, const int patchsize){
     FloatImage image(other);

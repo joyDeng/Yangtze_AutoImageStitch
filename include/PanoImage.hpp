@@ -14,6 +14,31 @@
 #include "floatimage.h"
 #include "filtering.h"
 
+// smallest 3D box that bound the image plane
+
+struct planebound{
+    Vec3f topRightBack;
+    Vec3f btnLeftFront;
+    
+    planebound();
+    void grow(Vec3f point);
+    bool inbound(Vec3f point);
+    bool intersect();
+};
+
+// smallest box that bound the image
+struct imagebound{
+    Vec2f topleft;
+    Vec2f btnright;
+    
+    imagebound();
+    void grow(Vec3f point);
+    bool inbound(Vec3f point);
+};
+
+typedef struct imagebound ImageBound;
+typedef struct planebound PlaneBound;
+
 class PanoImage{
 public:
     PanoImage(const FloatImage &other, const int patchsize = 9);
@@ -47,6 +72,7 @@ private:
     FloatImage m_intensity;
     FloatImage m_chrom;
 };
+
 
 
 
