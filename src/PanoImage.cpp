@@ -49,7 +49,7 @@ void PanoImage::calculatePatches(float sigma, int size, bool blur, bool norm) {
         for (int i = -s; i <= s; ++i) {
             for (int j = -s; j <= s; ++j) {
                 patch((i+s) * m_patchSize + (j+s)) = image.smartAccessor(m_featurePoints[p].x() + i,
-                                                                 m_featurePoints[p].y() + j, 0);
+                                                                 m_featurePoints[p].y() + j, 0, true);
             }
         }
         m_patches.push_back(patch);
@@ -59,6 +59,8 @@ void PanoImage::calculatePatches(float sigma, int size, bool blur, bool norm) {
 }
 
 FloatImage PanoImage::harrisCornerDetector(int k, float threshold){
+    m_featurePoints.clear();
+
     float emk = 0.05;// range from 0.04 ~ 0.06
     // initialize sliding window
     m_featurePoints.clear();
@@ -131,6 +133,8 @@ FloatImage PanoImage::harrisCornerDetector(int k, float threshold){
         }
 
     m_pointCount = m_featurePoints.size();
+
+    output.debugWrite();
 
     return output;
 }

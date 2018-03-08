@@ -15,28 +15,51 @@
 
 //using namespace std;
 //using namespace Eigen;
+void panof();
 
 int main(){
 
-    int window = 9;
+//    int window = 9;
+//    float harris_th = 0.3f, sigma = 2.f;
+//
+//    FloatImage im1(DATA_DIR "/input/left.png");
+//    FloatImage im2(DATA_DIR "/input/right.png");
 
-    float harris_th = 0.5f, sigma = 3.f, match_th = 0.4f, pwindow = 31, por = 0.2;
+//    FloatImage im1(DATA_DIR "/input/yosemite1.jpg");
+//    FloatImage im2(DATA_DIR "/input/yosemite2.jpg");
+
+//    FloatImage im1(DATA_DIR "/input/pano.tga");
+//    FloatImage im2(DATA_DIR "/input/pano1.tga");
+
+//    FloatImage im1(DATA_DIR "/input/lily1.jpg");
+//    FloatImage im2(DATA_DIR "/input/lily2.jpg");
+
+//    FloatImage im1(DATA_DIR "/input/pano3.tga");
+//    FloatImage im2(DATA_DIR "/input/pano2.tga");
+
 
     FloatImage im1(DATA_DIR "/input/left.png");
     FloatImage im2(DATA_DIR "/input/right.png");
+
     Pano pano;
+    pano.setWindow(9);
+    pano.setPatchWindow(21);
+    pano.setMatchTh(0.6f);
+    pano.setHarrisTh(0.3f);
+    pano.setSigma(2.f);
+    pano.setNorm(true);
+    pano.setPortion(0.2f);
     
     PanoImage pim(im1);
-    FloatImage detected = pim.harrisCornerDetector(window, harris_th);
-    detected.write(DATA_DIR "/output/leftRthreshold.png");
-    pim.calculatePatches(sigma, 21);
-////
+//    FloatImage detected = pim.harrisCornerDetector(window, harris_th);
+//    detected.write(DATA_DIR "/output/leftRthreshold.png");
+//    pim.calculatePatches(sigma, 21);
+//
     PanoImage pim2(im2);
-    FloatImage detected2 = pim2.harrisCornerDetector(window, harris_th);
-    detected2.write(DATA_DIR "/output/rightRthreshold.png");
-    pim2.calculatePatches(sigma, 21);
-    
-//    pano.calweight(100, 200);
+//    FloatImage detected2 = pim2.harrisCornerDetector(window, harris_th);
+//    detected2.write(DATA_DIR "/output/rightRthreshold.png");
+//    pim2.calculatePatches(sigma, 21);
+
 //
 //    std::vector<std::vector<Vec2i>> matches = pano.matchDescriptors(pim, pim2, match_th);
 //    std::cout << matches.size() << endl;
@@ -73,15 +96,16 @@ int main(){
     FloatImage autocat = pano.autocat2images(pim, pim2);
     autocat.write(DATA_DIR "/output/auto_table_left_right.png");
 
+//    panof();
 
 
     return 0;
 
 }
 
-void panof(){
-//    FloatImage left(DATA_DIR "/input/table2.png");
-//    FloatImage right(DATA_DIR "/input/table1.png");
+//void panof(){
+//    FloatImage left(DATA_DIR "/input/table2.jpg");
+//    FloatImage right(DATA_DIR "/input/table1.jpg");
 //
 //
 //    Eigen::MatrixXf ma(9, 9);
@@ -89,20 +113,24 @@ void panof(){
 //
 //
 //
+//
+//
+//
+//
 //    vector<vector<int>> ref1;
-//    ref1.push_back({441, 472});
-//    ref1.push_back({467, 397});
-//    ref1.push_back({43, 514});
-//    ref1.push_back({443, 465});
-//
-//
-//
+//    ref1.push_back({465,395});
+//    ref1.push_back({381,384});
+//    ref1.push_back({310,448});
+//    ref1.push_back({435,482});
+////
+////
+////
 //    vector<vector<int>> ref2;
-//    ref2.push_back({266, 487});
-//    ref2.push_back({289, 417});
-//    ref2.push_back({53, 756});
-//    ref2.push_back({266, 480});
-//
+//    ref2.push_back({287,419});
+//    ref2.push_back({211,408});
+//    ref2.push_back({138,475});
+//    ref2.push_back({262,499});
+////
 //    ma <<   ref2[0][0], ref2[0][1], 1, 0, 0, 0, -ref2[0][0] * ref1[0][0], -ref1[0][0] * ref2[0][1], -ref1[0][0],
 //            0, 0, 0, ref2[0][0], ref2[0][1], 1, -ref2[0][0] * ref1[0][1], -ref1[0][1] * ref2[0][1], -ref1[0][1],
 //            ref2[1][0], ref2[1][1], 1, 0, 0, 0, -ref2[1][0] * ref1[1][0], -ref1[1][0] * ref2[1][1], -ref1[1][0],
@@ -168,5 +196,5 @@ void panof(){
 //    }
 //
 //    output.debugWrite();
-
-}
+//
+//}

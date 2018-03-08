@@ -37,8 +37,8 @@ FloatImage Pano::autocat2images(PanoImage &pim1, PanoImage &pim2){
     FloatImage im1 = pim1.getImage(), im2 = pim2.getImage();
     pim1.harrisCornerDetector(m_window, m_harris_th);
     pim2.harrisCornerDetector(m_window, m_harris_th);
-    pim1.calculatePatches(m_sigma, m_pwindow);
-    pim2.calculatePatches(m_sigma, m_pwindow);
+    pim1.calculatePatches(m_sigma, m_pwindow, m_blur, m_norm);
+    pim2.calculatePatches(m_sigma, m_pwindow, m_blur, m_norm);
 
     Mat3f homo = RANSAC(pim1, pim2, m_match_th, m_portion);
 
@@ -381,8 +381,18 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
     //of finding the correct H is low
     int itsbound = (int) (log(accuBound) / log(failProb));
 
+//<<<<<<< HEAD
     for(int its = 0 ; its < itsbound ; its++){
         std::cout<<"prob: "<<its<<std::endl;
+//=======
+//    int iter = (int)(logf(0.05) / logf(1 - powf(portion, 4)));
+//    int iterx = 0;
+//    cout << iter << endl;
+//    cout << "number of pairs: "<<rndBound<<endl;
+//
+//    while(Prob > accuBound && iterx < iter){
+//        std::cout<<"prob: "<<Prob<<std::endl;
+////>>>>>>> 1ee3aa648ddd3351f211fba1948a04f08c01ca4c
         vector<vector<Vec2f>> inliers;
         //select four feature pairs(at random)
         vector<vector<Vec2f>> ranPairs;
@@ -421,11 +431,11 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
         
         //Keep largest set of inliers
         if(inliers.size() > maxInlinerSize){
+            maxInlinerSize = inliers.size();
             Homo = H;
             Largest_inliers.clear();
             Largest_inliers = inliers;
             bestPairs = ranPairs;
-            maxInlinerSize = inliers.size();
 
         }
     }
