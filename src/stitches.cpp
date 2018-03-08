@@ -24,8 +24,8 @@ Mat3f Pano::computeHomo(std::vector<std::vector<Vec2f>> pairs){
         float y1 = pairs[i][0].y();
         float x = pairs[i][1].x();
         float y = pairs[i][1].y();
-        printf("Best Match: (%d, %d) to (%d, %d)\n", (int)pairs[i][0].x(), (int)pairs[i][0].y(),
-               (int)pairs[i][1].x(), (int)pairs[i][1].y());
+//        printf("Best Match: (%d, %d) to (%d, %d)\n", (int)pairs[i][0].x(), (int)pairs[i][0].y(),
+//               (int)pairs[i][1].x(), (int)pairs[i][1].y());
         A.row(i * 2) << x, y, 1, 0, 0, 0, -x * x1, -y * x1, -x1;
         A.row(i * 2 + 1) << 0, 0, 0, x, y, 1, -x * y1, -y1 * y, -y1;
     }
@@ -42,12 +42,6 @@ FloatImage Pano::autocat2images(PanoImage &pim1, PanoImage &pim2, int window,
     pim2.calculatePatches(sigma, pwindow);
 
     Mat3f homo = RANSAC(pim1, pim2, match_th, portion);
-
-    Vec3f test;
-    test << 220.f, 407.f, 1;
-    cout << homo * test  << endl;
-    test << 483.f, 67.f, 1;
-    cout << homo * test << endl;
 
     cout << "ransac done"<<endl;
 
@@ -126,8 +120,6 @@ Mat3f Pano::solveHomo(MatrixXf m){
     H.row(1) <<  k * x[3], k * x[4],k * x[5];
     H.row(2) << k * x[6], k * x[7], k * x[8];
 
-
-    cout << H << endl;
 
     return H;
 }
@@ -374,7 +366,14 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
     FloatImage viz = vizMatches(pim1, pim2, bestPairs);
     viz.debugWrite();
 
-    Mat3f updatedHomo = computeHomo(Largest_inliers);
+    // output best
+    for (int i = 0; i < 4; ++i) {
+        printf("Best Match: (%d, %d) to (%d, %d)\n", (int)bestPairs[i][0].x(), (int)bestPairs[i][0].y(),
+               (int)bestPairs[i][1].x(), (int)bestPairs[i][1].y());
+    }
+
+
+    //Mat3f updatedHomo = computeHomo(Largest_inliers);
 
     
     return Homo;

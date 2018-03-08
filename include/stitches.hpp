@@ -58,8 +58,8 @@ public:
 
 
 
-    Mat3f RANSAC( PanoImage &pim1, PanoImage &pim2, float match_th = 0.5, float portion = 0.5, float accuracy = 0.99,
-                  float threshold = 5);
+    Mat3f RANSAC( PanoImage &pim1, PanoImage &pim2, float match_th = 0.5, float portion = 0.5, float accuracy = 0.995,
+                  float threshold = 1);
 
 
     

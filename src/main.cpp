@@ -23,10 +23,10 @@ int main(){
 //    std::cout<<" "<<rng.nextFloat()<<endl;
 
     int window = 9;
-    float harris_th = 0.1f, sigma = 3.0f, match_th = 0.7f, pwindow = 31, por = 0.2;
+    float harris_th = 0.02f, sigma = 3.f, match_th = 0.8f, pwindow = 31, por = 0.1;
 
-    FloatImage im1(DATA_DIR "/input/lily1.jpg");
-    FloatImage im2(DATA_DIR "/input/lily2.jpg");
+    FloatImage im1(DATA_DIR "/input/pano3.tga");
+    FloatImage im2(DATA_DIR "/input/pano2.tga");
     Pano pano;
     
     PanoImage pim(im1);
@@ -75,10 +75,12 @@ int main(){
     autocat.write(DATA_DIR "/output/auto_table_left_right.png");
 
 
+
     return 0;
+
 }
 
-void pano(){
+void panof(){
 //    FloatImage left(DATA_DIR "/input/table2.png");
 //    FloatImage right(DATA_DIR "/input/table1.png");
 //
@@ -89,16 +91,16 @@ void pano(){
 //
 //
 //    vector<vector<int>> ref1;
-//    ref1.push_back({220, 407});
-//    ref1.push_back({483, 67});
+//    ref1.push_back({441, 472});
+//    ref1.push_back({467, 397});
 //    ref1.push_back({43, 514});
 //    ref1.push_back({443, 465});
 //
 //
 //
 //    vector<vector<int>> ref2;
-//    ref2.push_back({223, 423});
-//    ref2.push_back({285, 115});
+//    ref2.push_back({266, 487});
+//    ref2.push_back({289, 417});
 //    ref2.push_back({53, 756});
 //    ref2.push_back({266, 480});
 //
