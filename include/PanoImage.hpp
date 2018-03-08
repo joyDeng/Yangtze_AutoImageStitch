@@ -29,6 +29,11 @@ public:
     
     // feature descriptor
     void calculatePatches(float sigma = 2.f, int size = 9, bool blur = true, bool norm = true);
+    
+    ~PanoImage(){
+        m_patches.clear();
+        m_featurePoints.clear();
+    }
 
     
     

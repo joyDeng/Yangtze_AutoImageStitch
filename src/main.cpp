@@ -45,7 +45,7 @@ int main(){
     pano.setWindow(9);
     pano.setPatchWindow(21);
     pano.setMatchTh(0.6f);
-    pano.setHarrisTh(0.3f);
+    pano.setHarrisTh(0.5f);
     pano.setSigma(2.f);
     pano.setNorm(true);
     pano.setPortion(0.2f);
