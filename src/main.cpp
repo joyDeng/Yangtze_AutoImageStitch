@@ -18,27 +18,24 @@
 void panof();
 
 int main(){
-    
-    //test generate a random float number in (0-1)
-//    pcg32 rng;
-//    std::cout<<" "<<rng.nextFloat()<<endl;
 
     int window = 9;
     float harris_th = 0.3f, sigma = 2.f, match_th = 0.8f, pwindow = 13, por = 0.1;
 
     FloatImage im1(DATA_DIR "/input/table2.jpg");
     FloatImage im2(DATA_DIR "/input/table1.jpg");
+
     Pano pano;
     
     PanoImage pim(im1);
-//    FloatImage detected = pim.harrisCornerDetector(window, harris_th);
-//    detected.write(DATA_DIR "/output/leftRthreshold.png");
-//    pim.calculatePatches(sigma, 21);
+    FloatImage detected = pim.harrisCornerDetector(window, harris_th);
+    detected.write(DATA_DIR "/output/leftRthreshold.png");
+    pim.calculatePatches(sigma, 21);
 //
     PanoImage pim2(im2);
-//    FloatImage detected2 = pim2.harrisCornerDetector(window, harris_th);
-//    detected2.write(DATA_DIR "/output/rightRthreshold.png");
-//    pim2.calculatePatches(sigma, 21);
+    FloatImage detected2 = pim2.harrisCornerDetector(window, harris_th);
+    detected2.write(DATA_DIR "/output/rightRthreshold.png");
+    pim2.calculatePatches(sigma, 21);
 //
 //    std::vector<std::vector<Vec2i>> matches = pano.matchDescriptors(pim, pim2, match_th);
 //    std::cout << matches.size() << endl;
@@ -72,7 +69,7 @@ int main(){
 //    FloatImage cat = pano.mancat2images(im1, im2, pairs);
 //    cat.write(DATA_DIR "/output/left_right.png");
 
-    FloatImage autocat = pano.autocat2images(pim, pim2, window, harris_th, match_th, sigma, pwindow, por);
+    FloatImage autocat = pano.autocat2images(pim, pim2);
     autocat.write(DATA_DIR "/output/auto_table_left_right.png");
 
 //    panof();

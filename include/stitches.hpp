@@ -36,13 +36,37 @@ typedef struct canvas Canvas;
 typedef struct imagebound ImageBound;
 
 class Pano{
+    float m_harris_th;
+    float m_match_th;
+    float m_sigma;
+    int m_pwindow;
+    int m_window;
+    float m_portion;
 public:
+    
+    Pano(){
+        m_harris_th = 0.2;
+        m_match_th = 0.5;
+        m_sigma = 2;
+        m_window = 9;
+        m_pwindow = 21;
+        m_portion = 0.2;
+    }
+    
+    Pano(int window,float harris_th, float match_th, float sigma, int pwindow, float portion){
+        m_harris_th = harris_th;;
+        m_match_th = match_th;
+        m_sigma = sigma;
+        m_window = window;
+        m_pwindow = pwindow;
+        m_portion = portion;
+
+    }
     
     // cat 2 image given corresponding poin sets
     FloatImage cat2images(const FloatImage &im1, const FloatImage &im2, Mat3f homo);
     FloatImage mancat2images(const FloatImage &im1, const FloatImage &im2, std::vector<std::vector<Vec2f>> pairs);
-    FloatImage autocat2images(PanoImage &pim1, PanoImage &pim2, int window,
-                                    float harris_th, float match_th, float sigma, int pwindow, float portion);
+    FloatImage autocat2images(PanoImage &pim1, PanoImage &pim2);
 
     
     // solve Ax = 0 with svd
@@ -58,13 +82,13 @@ public:
 
 
 
-    Mat3f RANSAC( PanoImage &pim1, PanoImage &pim2, float match_th = 0.5, float portion = 0.5, float accuracy = 0.995,
+    Mat3f RANSAC( PanoImage &pim1, PanoImage &pim2, float match_th = 0.5, float portion = 0.5, float accuracy = 0.1,
                   float threshold = 1);
 
 
     
     Mat3f computeHomo(std::vector<std::vector<Vec2f>> pairs);
-    Mat3f recomputeHomoByInliners(std::vector<std::vector<Vec2f>> pairs, Mat3f Homo);
+    FloatImage autocat2imageBlend(PanoImage &pim1, PanoImage &pim2);
 
     std::vector<std::vector<Vec2i>> matchDescriptors(PanoImage &pim1, PanoImage &pim2, float threshold=0.5);
     FloatImage vizMatches(PanoImage &pim1, PanoImage &pim2, std::vector<std::vector<Vec2i>> matches);
