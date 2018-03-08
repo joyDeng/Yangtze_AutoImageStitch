@@ -23,6 +23,7 @@ void testCatTable();
 void testCatPan();
 void testCatNPan();
 void testHome();
+void testNHome(int start, int end);
 
 int main(){
 
@@ -61,7 +62,7 @@ int main(){
 //    pims.push_back(PanoImage(FloatImage(DATA_DIR "/input/yosemite3.jpg")));
 //    pims.push_back(PanoImage(FloatImage(DATA_DIR "/input/yosemite4.jpg")));
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 
 
 
@@ -83,17 +84,17 @@ int main(){
 //    pano.setSigma(2.f);
 //    pano.setNorm(true);
 //    pano.setPortion(0.2f);
-=======
-    Pano pano;
-    pano.setWindow(9);
-    pano.setPatchWindow(31);
-    pano.setMatchTh(0.6f);
-    pano.setHarrisTh(0.3f);
-    pano.setSigma(2.f);
-    pano.setNorm(true);
-    pano.setPortion(0.2f);
-
->>>>>>> 08e37563e0839e0d1818936dd328d70dad80605c
+//=======
+//    Pano pano;
+//    pano.setWindow(9);
+//    pano.setPatchWindow(31);
+//    pano.setMatchTh(0.6f);
+//    pano.setHarrisTh(0.3f);
+//    pano.setSigma(2.f);
+//    pano.setNorm(true);
+//    pano.setPortion(0.2f);
+//
+//>>>>>>> 08e37563e0839e0d1818936dd328d70dad80605c
     
 //    PanoImage pim(im1);
 //    FloatImage detected = pim.harrisCornerDetector(window, harris_th);
@@ -151,7 +152,10 @@ int main(){
 //    testCatNPan();
 //
 //    testCatPan();
-    testHome();
+//    testHome();
+
+    testNHome(5148, 5155);
+
     return 0;
 
 }
@@ -207,7 +211,7 @@ void testCatNPan(){
 
 }
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 void testCatYosemite(){
     Pano pano;
     pano.setWindow(9);
@@ -254,10 +258,11 @@ void testNHome(int start, int end){
     pano.setNorm(true);
     pano.setPortion(0.2f);
 
-    char buffer[255];
+
     std::vector<PanoImage> pims;
     for (int n = start; n <= end; n++) {
-        sprintf(buffer, DATA_DIR "/output/home/IMG_%d.jpg", n);
+        char buffer[255];
+        sprintf(buffer, DATA_DIR "/input/home/IMG_%d.jpg", n);
         pims.push_back(PanoImage(FloatImage(buffer)));
     }
 
@@ -277,10 +282,10 @@ void testHome(){
     pano.setPortion(0.2f);
 
 
-    PanoImage pim1(FloatImage(DATA_DIR "/input/home/IMG_5164.jpg"));
-    PanoImage pim2(FloatImage(DATA_DIR "/input/home/IMG_5165.jpg"));
-    FloatImage autocat = pano.autocat2images(pim1, pim2);
-    autocat.write(DATA_DIR "/output/auto_home_left_right.png");
+    PanoImage pim1(FloatImage(DATA_DIR "/input/home/IMG_5142.jpg"));
+    PanoImage pim2(FloatImage(DATA_DIR "/input/home/IMG_5143.jpg"));
+    FloatImage autocat = pano.autocat2images(pim1, pim2, true);
+    autocat.write(DATA_DIR "/output/auto_home_left_right_blend.png");
 
 }
 
