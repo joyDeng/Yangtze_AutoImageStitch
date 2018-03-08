@@ -48,7 +48,7 @@ void PanoImage::calculatePatches(float sigma, int size, bool blur, bool norm) {
         Vecxf patch(m_patchSize * m_patchSize);
         for (int i = -s; i <= s; ++i) {
             for (int j = -s; j <= s; ++j) {
-                patch((i+s) * m_patchSize + (j+s)) = image.smartAccessor(m_featurePoints[p].x() + i,
+                patch((j+s) * m_patchSize + (i+s)) = image.smartAccessor(m_featurePoints[p].x() + i,
                                                                  m_featurePoints[p].y() + j, 0, true);
             }
         }

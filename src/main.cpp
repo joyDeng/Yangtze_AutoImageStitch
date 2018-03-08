@@ -22,8 +22,8 @@ int main(){
 //    int window = 9;
 //    float harris_th = 0.3f, sigma = 2.f;
 //
-//    FloatImage im1(DATA_DIR "/input/left.png");
-//    FloatImage im2(DATA_DIR "/input/right.png");
+    FloatImage im1(DATA_DIR "/input/left.png");
+    FloatImage im2(DATA_DIR "/input/right.png");
 
 //    FloatImage im1(DATA_DIR "/input/yosemite1.jpg");
 //    FloatImage im2(DATA_DIR "/input/yosemite2.jpg");
@@ -38,17 +38,24 @@ int main(){
 //    FloatImage im2(DATA_DIR "/input/pano2.tga");
 
 
-    FloatImage im1(DATA_DIR "/input/left.png");
-    FloatImage im2(DATA_DIR "/input/right.png");
-
     Pano pano;
     pano.setWindow(9);
-    pano.setPatchWindow(21);
-    pano.setMatchTh(0.6f);
-    pano.setHarrisTh(0.5f);
-    pano.setSigma(2.f);
+    pano.setPatchWindow(31);
+    pano.setMatchTh(0.8f);
+    pano.setHarrisTh(0.3f);
+    pano.setSigma(3.f);
     pano.setNorm(true);
     pano.setPortion(0.2f);
+//>>>>>>> b93c624c05cdae70ba18afdb832bcc07a30ee569
+//
+//    Pano pano;
+//    pano.setWindow(9);
+//    pano.setPatchWindow(21);
+//    pano.setMatchTh(0.6f);
+//    pano.setHarrisTh(0.5f);
+//    pano.setSigma(2.f);
+//    pano.setNorm(true);
+//    pano.setPortion(0.2f);
     
     PanoImage pim(im1);
 //    FloatImage detected = pim.harrisCornerDetector(window, harris_th);
