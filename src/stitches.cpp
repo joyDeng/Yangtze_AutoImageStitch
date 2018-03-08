@@ -33,15 +33,14 @@ Mat3f Pano::computeHomo(std::vector<std::vector<Vec2f>> pairs){
     return solveHomo(A);
 }
 
-FloatImage Pano::autocat2images(PanoImage &pim1, PanoImage &pim2, int window,
-                                float harris_th, float match_th, float sigma, int pwindow, float portion){
+FloatImage Pano::autocat2images(PanoImage &pim1, PanoImage &pim2){
     FloatImage im1 = pim1.getImage(), im2 = pim2.getImage();
-    pim1.harrisCornerDetector(window, harris_th);
-    pim2.harrisCornerDetector(window, harris_th);
-    pim1.calculatePatches(sigma, pwindow);
-    pim2.calculatePatches(sigma, pwindow);
+    pim1.harrisCornerDetector(m_window, m_harris_th);
+    pim2.harrisCornerDetector(m_window, m_harris_th);
+    pim1.calculatePatches(m_sigma, m_pwindow);
+    pim2.calculatePatches(m_sigma, m_pwindow);
 
-    Mat3f homo = RANSAC(pim1, pim2, match_th, portion);
+    Mat3f homo = RANSAC(pim1, pim2, m_match_th, m_portion);
 
     cout << "ransac done"<<endl;
 
@@ -105,17 +104,13 @@ FloatImage Pano::mancat2images(const FloatImage &im1, const FloatImage &im2, std
 Mat3f Pano::solveHomo(MatrixXf m){
     SvdXf svd(m, Eigen::ComputeFullU | Eigen::ComputeFullV);
     Vecxf  x;
-//    b.resize(8);
     x.resize(9);
-//    b << 0, 0, 0, 0, 0, 0, 0, 0;
    
     // Then the solution x is the eigenvector corresponding to the only zero
     // eigenvalue of ATA which corresponds to the right most column of V
     MatrixXf t,s;
     s = (svd.matrixV());
     int colcount = s.cols();
-//    std::cout<<"col count: "<<colcount<<std::endl;
-//    std::cout<<"m row count: "<<colcount<<std::endl;
     x = s.col(colcount-1);
 
     Mat3f H;
@@ -214,8 +209,6 @@ void ImageBound::grow(Vec3f point){
 
 std::vector<std::vector<Vec2i>> Pano::matchDescriptors(PanoImage &pim1, PanoImage &pim2, float threshold){
     std::vector<std::vector<Vec2i>> output;
-
-
     // how to init these min?
     float min, smin, dist = 0, ratio = 0;
     Vecxf d;
@@ -278,7 +271,7 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
     float Prob = 1;
     float failProb = 1 - std::powf(portion,4);
     uint32_t maxInlinerSize = 0;
-    bool beginIterate = false;
+//    bool beginIterate = false;
     
     pcg32 rng;
     uint32_t rndBound = pairs.size();
@@ -346,8 +339,6 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
     
     //Re-compute least-squares H estimate on all of the inliers
 
-    //Mat3f updatedHomo = recomputeHomoByInliners(Largest_inliers, Homo);
-
     // visualize
     FloatImage viz = vizMatches(pim1, pim2, bestPairs);
     viz.debugWrite();
@@ -363,41 +354,41 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
     return Homo;
 }
 
-Mat3f Pano::recomputeHomoByInliners(std::vector<std::vector<Vec2f>> pairs, Mat3f H){
-    uint32_t rowsize = pairs.size();
-    MatrixXf A;
-    MatrixXf X,Y,Z;
-    A.resize(rowsize,3);
-    X.resize(rowsize,1);
-    Y.resize(rowsize,1);
-    Z.resize(rowsize,1);
-    
-    for(int i = 0 ; i < (int)rowsize ; i++){
-        Vec3f hp = H * Vec3f(pairs[i][1].x(), pairs[i][1].y(), 1);
-        A.row(i) << pairs[i][1].x(), pairs[i][1].y(), 1;
-        X.row(i) << pairs[i][0].x();
-        Y.row(i) << pairs[i][0].y();
-        Z.row(i) << 1;
-    }
-    
-    BDCSvdXf svd(A,Eigen::ComputeFullU | Eigen::ComputeFullV);
-    MatrixXf u = svd.matrixV();
-    MatrixXf v = svd.matrixU();
-    
-    Vec3f abc = svd.solve(X);
-    Vec3f def = svd.solve(Y);
-    Vec3f ghi = svd.solve(Z);
-    std::cout<<"abc: "<<abc<<std::endl;
-    std::cout<<"def: "<<def<<std::endl;
-    std::cout<<"ghi: "<<ghi<<std::endl;
-    
-    Mat3f homo;
-    homo.row(0) = abc / ghi.z();
-    homo.row(1) = def / ghi.z();
-    homo.row(2) = ghi / ghi.z();
-    
-    return homo;
-}
+//Mat3f Pano::recomputeHomoByInliners(std::vector<std::vector<Vec2f>> pairs, Mat3f H){
+//    uint32_t rowsize = pairs.size();
+//    MatrixXf A;
+//    MatrixXf X,Y,Z;
+//    A.resize(rowsize,3);
+//    X.resize(rowsize,1);
+//    Y.resize(rowsize,1);
+//    Z.resize(rowsize,1);
+//    
+//    for(int i = 0 ; i < (int)rowsize ; i++){
+//        Vec3f hp = H * Vec3f(pairs[i][1].x(), pairs[i][1].y(), 1);
+//        A.row(i) << pairs[i][1].x(), pairs[i][1].y(), 1;
+//        X.row(i) << pairs[i][0].x();
+//        Y.row(i) << pairs[i][0].y();
+//        Z.row(i) << 1;
+//    }
+//    
+//    BDCSvdXf svd(A,Eigen::ComputeFullU | Eigen::ComputeFullV);
+//    MatrixXf u = svd.matrixV();
+//    MatrixXf v = svd.matrixU();
+//    
+//    Vec3f abc = svd.solve(X);
+//    Vec3f def = svd.solve(Y);
+//    Vec3f ghi = svd.solve(Z);
+//    std::cout<<"abc: "<<abc<<std::endl;
+//    std::cout<<"def: "<<def<<std::endl;
+//    std::cout<<"ghi: "<<ghi<<std::endl;
+//    
+//    Mat3f homo;
+//    homo.row(0) = abc / ghi.z();
+//    homo.row(1) = def / ghi.z();
+//    homo.row(2) = ghi / ghi.z();
+//    
+//    return homo;
+//}
 
 FloatImage Pano::vizMatches(PanoImage &pim1, PanoImage &pim2, std::vector<std::vector<Vec2i>> matches){
     FloatImage im1 = pim1.getImage(), im2 = pim2.getImage();
