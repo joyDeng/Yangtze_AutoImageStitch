@@ -42,6 +42,8 @@ class Pano{
     int m_pwindow;
     int m_window;
     float m_portion;
+    bool m_blur;
+    bool m_norm;
 public:
     
     Pano(){
@@ -51,6 +53,8 @@ public:
         m_window = 9;
         m_pwindow = 21;
         m_portion = 0.2;
+        m_blur = true;
+        m_norm = true;
     }
     
     Pano(int window,float harris_th, float match_th, float sigma, int pwindow, float portion){
@@ -62,6 +66,16 @@ public:
         m_portion = portion;
 
     }
+
+    void setWindow(int w){m_window = w;};
+    void setHarrisTh(float th){m_harris_th = th;};
+    void setMatchTh(float th){m_match_th = th;};
+    void setSigma(float s){m_sigma = s;};
+    void setPatchWindow(int p){m_pwindow = p;};
+    void setPortion(float p){m_portion = p;}
+    void setBlur(bool b){m_blur = b;};
+    void setNorm(bool b){m_norm = b;};
+
     
     // cat 2 image given corresponding poin sets
     FloatImage cat2images(const FloatImage &im1, const FloatImage &im2, Mat3f homo);

@@ -59,6 +59,8 @@ void PanoImage::calculatePatches(float sigma, int size, bool blur, bool norm) {
 }
 
 FloatImage PanoImage::harrisCornerDetector(int k, float threshold){
+    m_featurePoints.clear();
+
     float emk = 0.05;// range from 0.04 ~ 0.06
     // initialize sliding window
     MatrixXf window;
@@ -130,6 +132,8 @@ FloatImage PanoImage::harrisCornerDetector(int k, float threshold){
         }
 
     m_pointCount = m_featurePoints.size();
+
+    output.debugWrite();
 
     return output;
 }

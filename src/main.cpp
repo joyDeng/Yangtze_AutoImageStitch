@@ -19,23 +19,42 @@ void panof();
 
 int main(){
 
-    int window = 9;
-    float harris_th = 0.3f, sigma = 2.f, match_th = 0.8f, pwindow = 13, por = 0.1;
+//    int window = 9;
+//    float harris_th = 0.3f, sigma = 2.f;
+//
+//    FloatImage im1(DATA_DIR "/input/left.png");
+//    FloatImage im2(DATA_DIR "/input/right.png");
 
-    FloatImage im1(DATA_DIR "/input/table2.jpg");
-    FloatImage im2(DATA_DIR "/input/table1.jpg");
+//    FloatImage im1(DATA_DIR "/input/yosemite1.jpg");
+//    FloatImage im2(DATA_DIR "/input/yosemite2.jpg");
+
+    FloatImage im1(DATA_DIR "/input/pano.tga");
+    FloatImage im2(DATA_DIR "/input/pano1.tga");
+
+//    FloatImage im1(DATA_DIR "/input/lily1.jpg");
+//    FloatImage im2(DATA_DIR "/input/lily2.jpg");
+
+//    FloatImage im1(DATA_DIR "/input/pano3.tga");
+//    FloatImage im2(DATA_DIR "/input/pano2.tga");
 
     Pano pano;
+    pano.setWindow(9);
+    pano.setPatchWindow(21);
+    pano.setMatchTh(0.6f);
+    pano.setHarrisTh(0.3f);
+    pano.setSigma(2.f);
+    pano.setNorm(true);
+    pano.setPortion(0.2f);
     
     PanoImage pim(im1);
-    FloatImage detected = pim.harrisCornerDetector(window, harris_th);
-    detected.write(DATA_DIR "/output/leftRthreshold.png");
-    pim.calculatePatches(sigma, 21);
+//    FloatImage detected = pim.harrisCornerDetector(window, harris_th);
+//    detected.write(DATA_DIR "/output/leftRthreshold.png");
+//    pim.calculatePatches(sigma, 21);
 //
     PanoImage pim2(im2);
-    FloatImage detected2 = pim2.harrisCornerDetector(window, harris_th);
-    detected2.write(DATA_DIR "/output/rightRthreshold.png");
-    pim2.calculatePatches(sigma, 21);
+//    FloatImage detected2 = pim2.harrisCornerDetector(window, harris_th);
+//    detected2.write(DATA_DIR "/output/rightRthreshold.png");
+//    pim2.calculatePatches(sigma, 21);
 //
 //    std::vector<std::vector<Vec2i>> matches = pano.matchDescriptors(pim, pim2, match_th);
 //    std::cout << matches.size() << endl;
