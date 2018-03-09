@@ -13,29 +13,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="72a43945-6345-4e22-97e9-af7ffe6ee6f5" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/data/output/0.png" afterPath="$PROJECT_DIR$/data/output/0.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/1.png" afterPath="$PROJECT_DIR$/data/output/1.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/10.png" afterPath="$PROJECT_DIR$/data/output/10.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/11.png" afterPath="$PROJECT_DIR$/data/output/11.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/12.png" afterPath="$PROJECT_DIR$/data/output/12.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/13.png" afterPath="$PROJECT_DIR$/data/output/13.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/14.png" afterPath="$PROJECT_DIR$/data/output/14.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/15.png" afterPath="$PROJECT_DIR$/data/output/15.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/16.png" afterPath="$PROJECT_DIR$/data/output/16.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/17.png" afterPath="$PROJECT_DIR$/data/output/17.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/18.png" afterPath="$PROJECT_DIR$/data/output/18.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/2.png" afterPath="$PROJECT_DIR$/data/output/2.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/3.png" afterPath="$PROJECT_DIR$/data/output/3.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/4.png" afterPath="$PROJECT_DIR$/data/output/4.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/5.png" afterPath="$PROJECT_DIR$/data/output/5.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/6.png" afterPath="$PROJECT_DIR$/data/output/6.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/7.png" afterPath="$PROJECT_DIR$/data/output/7.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/8.png" afterPath="$PROJECT_DIR$/data/output/8.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/9.png" afterPath="$PROJECT_DIR$/data/output/9.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/auto_home.png" afterPath="$PROJECT_DIR$/data/output/auto_home.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/matchesImage.png" afterPath="$PROJECT_DIR$/data/output/matchesImage.png" />
-      <change beforePath="$PROJECT_DIR$/src/main.cpp" afterPath="$PROJECT_DIR$/src/main.cpp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/include/SpherePano.h" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/SpherePano.cpp" />
+      <change beforePath="$PROJECT_DIR$/data/output/auto_table_left_right.png" afterPath="$PROJECT_DIR$/data/output/auto_table_left_right_noblend.png" />
+      <change beforePath="$PROJECT_DIR$/include/PanoImage.hpp" afterPath="$PROJECT_DIR$/include/PanoImage.hpp" />
+      <change beforePath="$PROJECT_DIR$/include/common.h" afterPath="$PROJECT_DIR$/include/common.h" />
+      <change beforePath="$PROJECT_DIR$/include/stitches.hpp" afterPath="$PROJECT_DIR$/include/stitches.hpp" />
+      <change beforePath="$PROJECT_DIR$/src/PanoImage.cpp" afterPath="$PROJECT_DIR$/src/PanoImage.cpp" />
+      <change beforePath="$PROJECT_DIR$/src/common.cpp" afterPath="$PROJECT_DIR$/src/common.cpp" />
       <change beforePath="$PROJECT_DIR$/src/stitches.cpp" afterPath="$PROJECT_DIR$/src/stitches.cpp" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -62,8 +47,8 @@
       <file leaf-file-name="PanoImage.hpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/include/PanoImage.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="31" column="21" lean-forward="false" selection-start-line="31" selection-start-column="21" selection-end-line="31" selection-end-column="21" />
+            <state relative-caret-position="599">
+              <caret line="69" column="18" lean-forward="false" selection-start-line="69" selection-start-column="18" selection-end-line="69" selection-end-column="18" />
               <folding>
                 <element signature="e#122#140#0" expanded="true" />
               </folding>
@@ -75,7 +60,7 @@
         <entry file="file://$PROJECT_DIR$/include/stitches.hpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="968">
-              <caret line="84" column="15" lean-forward="false" selection-start-line="84" selection-start-column="15" selection-end-line="84" selection-end-column="15" />
+              <caret line="75" column="15" lean-forward="false" selection-start-line="75" selection-start-column="15" selection-end-line="75" selection-end-column="15" />
               <folding />
             </state>
           </provider>
@@ -84,8 +69,8 @@
       <file leaf-file-name="stitches.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/stitches.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
-              <caret line="285" column="101" lean-forward="false" selection-start-line="285" selection-start-column="101" selection-end-line="285" selection-end-column="101" />
+            <state relative-caret-position="4">
+              <caret line="236" column="64" lean-forward="false" selection-start-line="236" selection-start-column="64" selection-end-line="236" selection-end-column="64" />
               <folding />
             </state>
           </provider>
@@ -95,7 +80,7 @@
         <entry file="file://$PROJECT_DIR$/src/PanoImage.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="743">
-              <caret line="60" column="67" lean-forward="false" selection-start-line="60" selection-start-column="67" selection-end-line="60" selection-end-column="67" />
+              <caret line="80" column="67" lean-forward="false" selection-start-line="80" selection-start-column="67" selection-end-line="80" selection-end-column="67" />
               <folding />
             </state>
           </provider>
@@ -114,10 +99,10 @@
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-201">
-              <caret line="156" column="18" lean-forward="false" selection-start-line="156" selection-start-column="18" selection-end-line="156" selection-end-column="18" />
+            <state relative-caret-position="670">
+              <caret line="213" column="0" lean-forward="false" selection-start-line="213" selection-start-column="0" selection-end-line="213" selection-end-column="0" />
               <folding>
-                <marker date="1520550660000" expanded="true" signature="1097:1196" ph="..." />
+                <marker date="1520553189000" expanded="true" signature="1097:1196" ph="..." />
               </folding>
             </state>
           </provider>
@@ -127,8 +112,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>cat</find>
-      <find>Homo</find>
       <find>Homo =</find>
       <find>calculatePat</find>
       <find>cout &lt;&lt; H</find>
@@ -155,8 +138,10 @@
       <find>H</find>
       <find>canv_w</find>
       <find>blend</find>
-      <find>catnimage</find>
       <find>calcula</find>
+      <find>catnimage</find>
+      <find>cout</find>
+      <find>cout &lt;&lt;</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -173,8 +158,8 @@
         <option value="$PROJECT_DIR$/src/floatimage.cpp" />
         <option value="$PROJECT_DIR$/src/PanoImage.cpp" />
         <option value="$PROJECT_DIR$/include/stitches.hpp" />
-        <option value="$PROJECT_DIR$/src/main.cpp" />
         <option value="$PROJECT_DIR$/src/stitches.cpp" />
+        <option value="$PROJECT_DIR$/src/main.cpp" />
       </list>
     </option>
   </component>
@@ -280,12 +265,12 @@
       <workItem from="1520391802349" duration="16811000" />
       <workItem from="1520411334904" duration="5300000" />
       <workItem from="1520448345447" duration="140000" />
-      <workItem from="1520453118417" duration="58987000" />
+      <workItem from="1520453118417" duration="60248000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="98040000" />
+    <option name="totallyTimeSpent" value="99301000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="797" extended-state="0" />
@@ -366,7 +351,7 @@
         <state relative-caret-position="315">
           <caret line="21" column="6" lean-forward="false" selection-start-line="21" selection-start-column="6" selection-end-line="22" selection-end-column="44" />
           <folding>
-            <marker date="1520550660000" expanded="true" signature="1097:1196" ph="..." />
+            <marker date="1520553189000" expanded="true" signature="1097:1196" ph="..." />
           </folding>
         </state>
       </provider>
@@ -408,7 +393,7 @@
         <state relative-caret-position="225">
           <caret line="15" column="24" lean-forward="true" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
           <folding>
-            <marker date="1520550660000" expanded="true" signature="1097:1196" ph="..." />
+            <marker date="1520553189000" expanded="true" signature="1097:1196" ph="..." />
           </folding>
         </state>
       </provider>
@@ -450,7 +435,7 @@
         <state relative-caret-position="525">
           <caret line="35" column="45" lean-forward="false" selection-start-line="35" selection-start-column="45" selection-end-line="35" selection-end-column="45" />
           <folding>
-            <marker date="1520550660000" expanded="true" signature="1097:1196" ph="..." />
+            <marker date="1520553189000" expanded="true" signature="1097:1196" ph="..." />
           </folding>
         </state>
       </provider>
@@ -534,7 +519,7 @@
         <state relative-caret-position="390">
           <caret line="26" column="16" lean-forward="false" selection-start-line="26" selection-start-column="16" selection-end-line="26" selection-end-column="16" />
           <folding>
-            <marker date="1520550660000" expanded="true" signature="1097:1196" ph="..." />
+            <marker date="1520553189000" expanded="true" signature="1097:1196" ph="..." />
           </folding>
         </state>
       </provider>
@@ -573,7 +558,7 @@
         <state relative-caret-position="210">
           <caret line="14" column="4" lean-forward="false" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
           <folding>
-            <marker date="1520550660000" expanded="true" signature="1097:1196" ph="..." />
+            <marker date="1520553189000" expanded="true" signature="1097:1196" ph="..." />
           </folding>
         </state>
       </provider>
@@ -691,17 +676,17 @@
     <entry file="file://$PROJECT_DIR$/src/PanoImage.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="743">
-          <caret line="60" column="67" lean-forward="false" selection-start-line="60" selection-start-column="67" selection-end-line="60" selection-end-column="67" />
+          <caret line="80" column="67" lean-forward="false" selection-start-line="80" selection-start-column="67" selection-end-line="80" selection-end-column="67" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-201">
-          <caret line="156" column="18" lean-forward="false" selection-start-line="156" selection-start-column="18" selection-end-line="156" selection-end-column="18" />
+        <state relative-caret-position="670">
+          <caret line="213" column="0" lean-forward="false" selection-start-line="213" selection-start-column="0" selection-end-line="213" selection-end-column="0" />
           <folding>
-            <marker date="1520550660000" expanded="true" signature="1097:1196" ph="..." />
+            <marker date="1520553189000" expanded="true" signature="1097:1196" ph="..." />
           </folding>
         </state>
       </provider>
@@ -709,15 +694,15 @@
     <entry file="file://$PROJECT_DIR$/include/stitches.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="968">
-          <caret line="84" column="15" lean-forward="false" selection-start-line="84" selection-start-column="15" selection-end-line="84" selection-end-column="15" />
+          <caret line="75" column="15" lean-forward="false" selection-start-line="75" selection-start-column="15" selection-end-line="75" selection-end-column="15" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/include/PanoImage.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="31" column="21" lean-forward="false" selection-start-line="31" selection-start-column="21" selection-end-line="31" selection-end-column="21" />
+        <state relative-caret-position="599">
+          <caret line="69" column="18" lean-forward="false" selection-start-line="69" selection-start-column="18" selection-end-line="69" selection-end-column="18" />
           <folding>
             <element signature="e#122#140#0" expanded="true" />
           </folding>
@@ -726,8 +711,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/stitches.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="285" column="101" lean-forward="false" selection-start-line="285" selection-start-column="101" selection-end-line="285" selection-end-column="101" />
+        <state relative-caret-position="4">
+          <caret line="236" column="64" lean-forward="false" selection-start-line="236" selection-start-column="64" selection-end-line="236" selection-end-column="64" />
           <folding />
         </state>
       </provider>

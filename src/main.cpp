@@ -154,7 +154,7 @@ int main(){
 //    testCatPan();
 //    testHome();
 
-    testNHome(5150, 5155);
+    testNHome(5181, 5186);
 
     return 0;
 
@@ -211,7 +211,7 @@ void testCatNPan(){
 
 }
 
-//<<<<<<< HEAD
+
 void testCatYosemite(){
     Pano pano;
     pano.setWindow(9);
@@ -252,8 +252,8 @@ void testNHome(int start, int end){
     Pano pano;
     pano.setWindow(9);
     pano.setPatchWindow(31);
-    pano.setMatchTh(0.5f);
-    pano.setHarrisTh(0.3f);
+    pano.setMatchTh(0.7f);
+    pano.setHarrisTh(0.2f);
     pano.setSigma(3.f);
     pano.setNorm(true);
     pano.setPortion(0.2f);
@@ -267,7 +267,7 @@ void testNHome(int start, int end){
     }
 
     FloatImage autocat = pano.autocatnimages(pims);
-    autocat.write(DATA_DIR "/output/auto_home.png");
+    autocat.write(DATA_DIR "/output/auto_home_snow.png");
 
 }
 
