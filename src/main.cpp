@@ -154,7 +154,7 @@ int main(){
 //    testCatPan();
 //    testHome();
 
-    testNHome(5181, 5186);
+    testNHome(5149, 5155);
 
     return 0;
 
@@ -267,7 +267,7 @@ void testNHome(int start, int end){
     }
 
     FloatImage autocat = pano.autocatnimages(pims);
-    autocat.write(DATA_DIR "/output/auto_home_snow.png");
+    autocat.write(DATA_DIR "/output/auto_home_lounge_smooth.png");
 
 }
 
