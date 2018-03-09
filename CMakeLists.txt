@@ -60,12 +60,14 @@ add_executable(yangtze
   include/Pano.hpp
   include/PanoImage.hpp
   include/SpherePano.h
+  include/PlanePano.h
 
   # Source code files
   src/main.cpp
   src/Pano.cpp
   src/PanoImage.cpp
   src/SpherePano.cpp
+  src/PlanePano.cpp
 )
 
 
