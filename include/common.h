@@ -155,6 +155,8 @@ float lerp(float x, float min, float max);
 
 FloatImage equalizeRGBHistograms(const FloatImage &im);
 FloatImage matchRGBHistograms(const FloatImage & F1, const FloatImage & F2);
+float interpolateLin(const FloatImage &im, float x, float y, int z, bool clamp = true);
+std::vector<float> gauss1DValues(float sigma, float truncate);
 
 
 

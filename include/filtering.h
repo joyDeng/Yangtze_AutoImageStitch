@@ -60,6 +60,7 @@ FloatImage gradientMagnitude(const FloatImage &im, bool clamp=true);
 FloatImage gradientXY(const FloatImage &im, bool X, bool clamp);
 
 // Gaussian Blurring
+
 vector<float> gauss1DFilterValues(float sigma, float truncate);
 vector<float> gauss2DFilterValues(float sigma, float truncate);
 FloatImage gaussianBlur_horizontal(const FloatImage &im, float sigma, float truncate=3.0, bool clamp=true);

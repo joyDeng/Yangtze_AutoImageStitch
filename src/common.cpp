@@ -333,4 +333,32 @@ float lerp(float x, float min, float max){
     return (1 - x) * max + x * min;
 }
 
+// from Assignment 6
+float interpolateLin(const FloatImage &im, float x, float y, int z, bool clamp) {
+    // Hint: use smartAccessor() to handle coordinates outside the image
+    //return final float value
+    float x1 = floorf(x), x2 = ceilf(x), y1 = floorf(y), y2 = ceilf(y);
+    float fx = x - x1, fy = y - y1, inx1, inx2, iny;
+    inx1 = fx * im.smartAccessor(x2, y1, z, clamp) + (1-fx) * im.smartAccessor(x1, y1, z, clamp);
+    inx2 = fx * im.smartAccessor(x2, y2, z, clamp) + (1-fx) * im.smartAccessor(x1, y2, z, clamp);
+    iny = fy * inx2 + (1-fy) * inx1;
+
+    return iny;
+}
+
+vector<float> gauss1DValues(float sigma, float truncate){
+    int offset = int(ceil(truncate * sigma));
+    int filterSize = 2 * offset;
+
+    vector<float> fData(filterSize, 0);
+
+    // compute the un-normalized value of the gaussian
+    for (int i = 0; i < filterSize; i++)
+    {
+        fData[i] = exp(-pow(i - offset, 2) / (2.0 * pow(sigma, 2)));
+    }
+
+    return fData;
+}
+
 

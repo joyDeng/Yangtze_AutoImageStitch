@@ -131,7 +131,7 @@ FloatImage Pano::autocatnimages(std::vector<PanoImage> &pims, bool center){
         lhomo << nhomo;
     }
 
-    output = catnimagesBlend(ref, ims, homos);
+    output = catnimagesTwoScaleBlend(ref, ims, homos);
 //    }
 
     return output;
@@ -297,7 +297,7 @@ FloatImage Pano::catnimagesBlend(FloatImage ref, std::vector<FloatImage> ims, st
 
 }
 
-FloatImage Pano::catnimagesTwoScaleBlend(FloatImage ref, std::vector<FloatImage> ims, std::vector<Mat3f> homos, float sigma){
+FloatImage Pano::catnimagesTwoScaleBlend(FloatImage ref, std::vector<FloatImage> ims, std::vector<Mat3f> homos, float sigma, bool lin){
     // ims are FloatImages from 0 to n
     // 0 is the reference image
 
@@ -368,8 +368,7 @@ FloatImage Pano::catnimagesTwoScaleBlend(FloatImage ref, std::vector<FloatImage>
                 if(ismax) canv_maxw(nx, ny, 0) = refWeight(i, j, 0);
                 for (int c = 0; c < ref.channels(); c++) {
                     outputlow(nx, ny, c) += (low_ref(i, j, c) * refWeight(i, j, 0));
-                    if(ismax) outputhigh(nx, ny, c) = hi_ref(i, j, c);
-
+                    if (ismax) outputhigh(nx, ny, c) = hi_ref(i, j, c);
                 }
             }
         }
@@ -386,19 +385,28 @@ FloatImage Pano::catnimagesTwoScaleBlend(FloatImage ref, std::vector<FloatImage>
                 Vec2f transed_pos = bounds[n].topleft + Vec2f(i,j);
 
                 Vec3f pos_f = invHomos[n] * Vec3f(transed_pos.x(), transed_pos.y(), 1);
+                pos_f /= pos_f.z();
                 Vec2i pos(floor(pos_f.x()/pos_f.z()), floor(pos_f.y()/pos_f.z()));
 
                 if(ims[n].inBound(pos.x(), pos.y())){
                     Vec2i canvas_pos = offsetImage + Vec2i(i,j);
                     if(canvas_pos.x() >= 0 && canvas_pos.y() >= 0 && canvas_pos.y() < canv.height && canvas_pos.x() < canv.length) {
                         canv_w(canvas_pos.x(), canvas_pos.y(), 0) += weights[n](pos.x(), pos.y(), 0);
-                        ismax = refWeight(pos.x(), pos.y(), 0) > canv_maxw(canvas_pos.x(), canvas_pos.y(), 0);
-                        if(ismax) canv_maxw(canvas_pos.x(), canvas_pos.y(), 0) = refWeight(pos.x(), pos.y(), 0);
+                        if(lin)
+                            ismax = interpolateLin(weights[n], pos.x(), pos.y(), 0) > canv_maxw(canvas_pos.x(), canvas_pos.y(), 0);
+                        else
+                            ismax = refWeight(pos.x(), pos.y(), 0) > canv_maxw(canvas_pos.x(), canvas_pos.y(), 0);
 
+                        if(ismax) canv_maxw(canvas_pos.x(), canvas_pos.y(), 0) =
+                                          lin ? interpolateLin(weights[n], pos_f.x(), pos_f.y(), 0): weights[n](pos.x(), pos.y(), 0);
                         for (int c = 0; c < ims[n].channels(); c++) {
                             outputlow(canvas_pos.x(), canvas_pos.y(), c) +=
                                     (lows[n](pos.x(), pos.y(), c) * weights[n](pos.x(), pos.y(), 0));
-                            if(ismax) outputhigh(canvas_pos.x(), canvas_pos.y(), c) = highs[n](pos.x(), pos.y(), c);
+                            if(lin)
+                                if(ismax) outputhigh(canvas_pos.x(), canvas_pos.y(), c) = interpolateLin(highs[n], pos_f.x(), pos_f.y(), c);
+                            else
+                                if(ismax) outputhigh(canvas_pos.x(), canvas_pos.y(), c) = highs[n](pos.x(), pos.y(), c);
+
                         }
                     }
                 }
@@ -499,20 +507,32 @@ FloatImage Pano::cat2imageBlend(const FloatImage &im1, const FloatImage &im2, Ma
 }
 
 
-FloatImage Pano::calweight(int sizex, int sizey){
+FloatImage Pano::calweight(int sizex, int sizey, bool gau, float ratio){
     FloatImage weightmap(sizex,sizey,1);
     float cx = sizex / 2;
     float cy = sizey / 2;
-    for(int i = 0 ; i < sizex ; i++){
-        float k = fabsf(i - cx) / (float)cx;
-        for(int j = 0 ; j < sizey ; j++){
-            weightmap(i,j,0) = lerp(k , 0, 1);
+
+    if(gau){
+        float sigmax = cx * ratio, sigmay = cy * ratio;
+        for (int i = 0; i < sizex; ++i) {
+            for (int j = 0; j < sizey; ++j) {
+                weightmap(i, j, 0) =  exp(-powf(i - cx, 2) / (2.0 * powf(sigmax, 2))) *
+                                      exp(-powf(j - cy, 2) / (2.0 * powf(sigmay, 2)));
+            }
+
         }
-    }
-    for(int j = 0 ; j < sizey ; j++){
-        float k = fabsf(j - cy) / (float)cy;
+    }else{
         for(int i = 0 ; i < sizex ; i++){
-            weightmap(i,j,0) = sqrt(weightmap(i,j,0) * lerp(k , 0, 1)) ;
+            float k = fabsf(i - cx) / (float)cx;
+            for(int j = 0 ; j < sizey ; j++){
+                weightmap(i,j,0) = lerp(k , 0, 1);
+            }
+        }
+        for(int j = 0 ; j < sizey ; j++){
+            float k = fabsf(j - cy) / (float)cy;
+            for(int i = 0 ; i < sizex ; i++){
+                weightmap(i,j,0) = sqrt(weightmap(i,j,0) * lerp(k , 0, 1)) ;
+            }
         }
     }
 //Debug write: weightmap.write(DATA_DIR "/output/test_weightmap.png");

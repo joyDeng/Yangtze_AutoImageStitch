@@ -160,13 +160,21 @@ FloatImage PanoImage::harrisCornerDetector(int k, float threshold){
 }
 
 FloatImage PanoImage::vizPatches(){
-//    for (int p = 0; p < m_featurePoints.size(); ++p) {
-//        for (int j = -s; j <= s; ++j) {
-//            patch((j+s) * m_patchSize + (i+s)) = image.smartAccessor(m_featurePoints[p].x() + i,
-//                                                                     m_featurePoints[p].y() + j, 0, true);
-//        }
-//    }
-
+    FloatImage output(m_image);
+    int s = m_patchSize / 2;
+    for (int p = 0; p < m_patches.size(); ++p) {
+        for (int j = -s; j <= s; ++j) {
+            for (int i = -s; i <= s; ++i) {
+                if(output.inBound(i + m_featurePoints[p].x(), j + m_featurePoints[p].y()))
+                    if(m_patches[p]((j+s) *s +i+s) > 0){
+                        output(i + m_featurePoints[p].x(), j + m_featurePoints[p].y(), 1) = 1.f;
+                    }else{
+                        output(i + m_featurePoints[p].x(), j + m_featurePoints[p].y(), 0) = 1.f;
+                    }
+            }
+        }
+    }
+    return output;
 }
 
 
