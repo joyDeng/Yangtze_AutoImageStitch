@@ -13,26 +13,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="72a43945-6345-4e22-97e9-af7ffe6ee6f5" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/data/output/0.png" afterPath="$PROJECT_DIR$/data/output/0.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/1.png" afterPath="$PROJECT_DIR$/data/output/1.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/2.png" afterPath="$PROJECT_DIR$/data/output/2.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/3.png" afterPath="$PROJECT_DIR$/data/output/3.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/4.png" afterPath="$PROJECT_DIR$/data/output/4.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/5.png" afterPath="$PROJECT_DIR$/data/output/5.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/6.png" afterPath="$PROJECT_DIR$/data/output/6.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/7.png" afterPath="$PROJECT_DIR$/data/output/7.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/auto_home_lego_lin.png" afterPath="$PROJECT_DIR$/data/output/auto_home_lego_lin.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/auto_yosemite.png" afterPath="$PROJECT_DIR$/data/output/auto_yosemite.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/data/output/auto_normal_left_right.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/data/output/auto_sphere_left_right.png" />
       <change beforePath="$PROJECT_DIR$/data/output/matchesImage.png" afterPath="$PROJECT_DIR$/data/output/matchesImage.png" />
-      <change beforePath="$PROJECT_DIR$/data/output/testBlurPatch.png" afterPath="$PROJECT_DIR$/data/output/testBlurPatch.png" />
-      <change beforePath="$PROJECT_DIR$/include/Pano.hpp" afterPath="$PROJECT_DIR$/include/Pano.hpp" />
+      <change beforePath="$PROJECT_DIR$/include/PanoImage.hpp" afterPath="$PROJECT_DIR$/include/PanoImage.hpp" />
+      <change beforePath="$PROJECT_DIR$/include/SpherePano.h" afterPath="$PROJECT_DIR$/include/SpherePano.h" />
       <change beforePath="$PROJECT_DIR$/include/common.h" afterPath="$PROJECT_DIR$/include/common.h" />
-      <change beforePath="$PROJECT_DIR$/include/floatimage.h" afterPath="$PROJECT_DIR$/include/floatimage.h" />
-      <change beforePath="$PROJECT_DIR$/src/Pano.cpp" afterPath="$PROJECT_DIR$/src/Pano.cpp" />
-      <change beforePath="$PROJECT_DIR$/src/PanoImage.cpp" afterPath="$PROJECT_DIR$/src/PanoImage.cpp" />
+      <change beforePath="$PROJECT_DIR$/src/SpherePano.cpp" afterPath="$PROJECT_DIR$/src/SpherePano.cpp" />
       <change beforePath="$PROJECT_DIR$/src/common.cpp" afterPath="$PROJECT_DIR$/src/common.cpp" />
-      <change beforePath="$PROJECT_DIR$/src/floatimage.cpp" afterPath="$PROJECT_DIR$/src/floatimage.cpp" />
       <change beforePath="$PROJECT_DIR$/src/main.cpp" afterPath="$PROJECT_DIR$/src/main.cpp" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -50,7 +38,7 @@
         <entry file="file://$PROJECT_DIR$/include/PanoImage.hpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-286">
-              <caret line="39" column="36" lean-forward="false" selection-start-line="39" selection-start-column="31" selection-end-line="39" selection-end-column="36" />
+              <caret line="29" column="36" lean-forward="false" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="36" />
               <folding>
                 <element signature="e#122#140#0" expanded="true" />
               </folding>
@@ -82,7 +70,7 @@
         <entry file="file://$PROJECT_DIR$/include/common.h">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="266">
-              <caret line="160" column="17" lean-forward="false" selection-start-line="160" selection-start-column="17" selection-end-line="160" selection-end-column="17" />
+              <caret line="161" column="17" lean-forward="false" selection-start-line="161" selection-start-column="17" selection-end-line="161" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -101,8 +89,8 @@
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="213" column="0" lean-forward="false" selection-start-line="213" selection-start-column="0" selection-end-line="213" selection-end-column="23" />
+            <state relative-caret-position="976">
+              <caret line="258" column="0" lean-forward="false" selection-start-line="258" selection-start-column="0" selection-end-line="258" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -122,7 +110,7 @@
         <entry file="file://$PROJECT_DIR$/src/common.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="191">
-              <caret line="365" column="18" lean-forward="false" selection-start-line="365" selection-start-column="18" selection-end-line="365" selection-end-column="18" />
+              <caret line="372" column="18" lean-forward="false" selection-start-line="372" selection-start-column="18" selection-end-line="372" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -132,7 +120,7 @@
         <entry file="file://$PROJECT_DIR$/include/Pano.hpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="139">
-              <caret line="82" column="19" lean-forward="true" selection-start-line="82" selection-start-column="19" selection-end-line="82" selection-end-column="19" />
+              <caret line="82" column="19" lean-forward="false" selection-start-line="82" selection-start-column="19" selection-end-line="82" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -312,12 +300,12 @@
       <workItem from="1520453118417" duration="62892000" />
       <workItem from="1520556489712" duration="14281000" />
       <workItem from="1520572544884" duration="600000" />
-      <workItem from="1520574661521" duration="5942000" />
+      <workItem from="1520574661521" duration="6018000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="122768000" />
+    <option name="totallyTimeSpent" value="122844000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="797" extended-state="0" />
@@ -644,7 +632,7 @@
     <entry file="file://$PROJECT_DIR$/include/common.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="266">
-          <caret line="160" column="17" lean-forward="false" selection-start-line="160" selection-start-column="17" selection-end-line="160" selection-end-column="17" />
+          <caret line="161" column="17" lean-forward="false" selection-start-line="161" selection-start-column="17" selection-end-line="161" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -660,7 +648,7 @@
     <entry file="file://$PROJECT_DIR$/include/PanoImage.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-286">
-          <caret line="39" column="36" lean-forward="false" selection-start-line="39" selection-start-column="31" selection-end-line="39" selection-end-column="36" />
+          <caret line="29" column="36" lean-forward="false" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="36" />
           <folding>
             <element signature="e#122#140#0" expanded="true" />
           </folding>
@@ -670,15 +658,15 @@
     <entry file="file://$PROJECT_DIR$/src/common.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="191">
-          <caret line="365" column="18" lean-forward="false" selection-start-line="365" selection-start-column="18" selection-end-line="365" selection-end-column="18" />
+          <caret line="372" column="18" lean-forward="false" selection-start-line="372" selection-start-column="18" selection-end-line="372" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="213" column="0" lean-forward="false" selection-start-line="213" selection-start-column="0" selection-end-line="213" selection-end-column="23" />
+        <state relative-caret-position="976">
+          <caret line="258" column="0" lean-forward="false" selection-start-line="258" selection-start-column="0" selection-end-line="258" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -686,7 +674,7 @@
     <entry file="file://$PROJECT_DIR$/include/Pano.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="139">
-          <caret line="82" column="19" lean-forward="true" selection-start-line="82" selection-start-column="19" selection-end-line="82" selection-end-column="19" />
+          <caret line="82" column="19" lean-forward="false" selection-start-line="82" selection-start-column="19" selection-end-line="82" selection-end-column="19" />
           <folding />
         </state>
       </provider>

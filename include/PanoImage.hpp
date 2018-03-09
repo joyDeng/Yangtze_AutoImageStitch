@@ -14,17 +14,7 @@
 #include "floatimage.h"
 #include "filtering.h"
 
-// smallest 3D box that bound the image plane
 
-struct planebound{
-    Vec3f topRightBack;
-    Vec3f btnLeftFront;
-    
-    planebound();
-    void grow(Vec3f point);
-    bool inbound(Vec3f point);
-    bool intersect();
-};
 
 // smallest box that bound the image
 struct imagebound{

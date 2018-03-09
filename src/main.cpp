@@ -11,12 +11,34 @@
 
 #include "Pano.hpp"
 #include "PanoImage.hpp"
+#include "SpherePano.h"
 #include "utils.h"
 
 //using namespace std;
 //using namespace Eigen;
 
 
+<<<<<<< HEAD
+void testCatYosemite();
+void testCatNYosemite();
+void testCatTable();
+void testCatPan();
+void testCatNPan();
+void testHome();
+void testNHome(int start, int end);
+void testSphere();
+
+int main(){
+
+//    testNHome(5181, 5186);
+    testSphere();
+
+    return 0;
+
+}
+
+=======
+>>>>>>> f5d8868afd2e44c75fc1eaab69bf9119251823d5
 void testCatTable(){
     Pano pano;
     pano.setWindow(9);
@@ -167,6 +189,29 @@ void testHome(){
 
 }
 
+<<<<<<< HEAD
+void testSphere(){
+    SpherePano pano(400);
+    pano.setWindow(9);
+    pano.setPatchWindow(31);
+    pano.setMatchTh(0.7f);
+    pano.setHarrisTh(0.2f);
+    pano.setSigma(3.f);
+    pano.setNorm(true);
+    pano.setPortion(0.2f);
+    
+    PanoImage pim1(FloatImage(DATA_DIR "/input/left.png"));
+    PanoImage pim2(FloatImage(DATA_DIR "/input/right.png"));
+    FloatImage autocat = pano.autocat2imagesInSphere(pim1, pim2);
+    autocat.write(DATA_DIR "/output/auto_sphere_left_right.png");
+    
+//    FloatImage autonos = pano.autocat2images(pim1, pim2);
+//    autonos.write(DATA_DIR "/output/auto_normal_left_right.png");
+
+
+}
+
+=======
 void testWeightMap(){
     Pano pano;
     FloatImage im(DATA_DIR "/input/yosemite1.jpg");
@@ -228,3 +273,4 @@ int main(){
     return 0;
 
 }
+>>>>>>> f5d8868afd2e44c75fc1eaab69bf9119251823d5
