@@ -28,6 +28,7 @@ struct canvas{
 typedef struct canvas Canvas;
 
 class Pano{
+public:
     float m_harris_th;
     float m_match_th;
     float m_sigma;
@@ -36,7 +37,6 @@ class Pano{
     float m_portion;
     bool m_blur;
     bool m_norm;
-public:
     
     Pano(){
         m_harris_th = 0.3;

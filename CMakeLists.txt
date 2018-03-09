@@ -57,13 +57,15 @@ SOURCE_GROUP("ext\\stb" FILES ${ext_stb_srcs})
 add_executable(yangtze
 
   # Header files
-  include/stitches.hpp
+  include/Pano.hpp
   include/PanoImage.hpp
+  include/SpherePano.h
 
   # Source code files
   src/main.cpp
-  src/stitches.cpp
+  src/Pano.cpp
   src/PanoImage.cpp
+  src/SpherePano.cpp
 )
 
 
