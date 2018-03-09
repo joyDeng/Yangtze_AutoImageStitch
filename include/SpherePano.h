@@ -10,7 +10,18 @@
 #define SpherePano_h
 #include "common.h"
 #include "floatimage.h"
+#include "stitches.hpp"
 #include "PanoImage.hpp"
+
+struct cameraRay{
+    //origin point position is Vec3f(0,0,0)
+    Vec3f dir;
+    float maxt;
+    float mint;
+    
+};
+
+typedef cameraRay Ray3f;
 
 class SpherePano : public Pano{
     
