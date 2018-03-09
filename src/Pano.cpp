@@ -344,14 +344,24 @@ FloatImage Pano::catnimagesTwoScaleBlend(FloatImage ref, std::vector<FloatImage>
     // init imagebounds
     ImageBound im1bound = boundBox(ref);
     vector<ImageBound> bounds;
+
+    vector<ImageBound> cbounds;
+
     Canvas canv;
 
     for (int n = 0; n < homos.size(); ++n) {
         bounds.push_back(boundBoxHomo(ims[n], homos[n]));
+        cbounds.push_back(boundBoxCrop(ims[n], homos[n]));
     }
     bounds.push_back(im1bound);
+
+    cbounds.push_back(im1bound);
+
     // calculate canvas of output image
     canv = calculateCanvas(bounds);
+
+
+
     cout << "image bound"<<endl;
 
     FloatImage canv_w(canv.length, canv.height, 1);
@@ -434,7 +444,7 @@ FloatImage Pano::catnimagesTwoScaleBlend(FloatImage ref, std::vector<FloatImage>
     }
 
 
-    return outputlow + outputhigh;
+    return autocrop(cbounds, canv.offset, outputlow + outputhigh);
 
 }
 
@@ -623,6 +633,40 @@ ImageBound Pano::boundBoxHomo(const FloatImage &im, Mat3f homo){
     
     return hb;
     
+}
+
+ImageBound Pano::boundBoxCrop(const FloatImage &im, Mat3f homo){
+    ImageBound hb;
+
+    Vec3f tl,tr,bl,br,ctl,ctr,cbl,cbr;
+    tl << 0,  0, 1;
+    tr << im.sizeX(), 0, 1;
+    bl << 0, im.sizeY(), 1;
+    br << im.sizeX(), im.sizeY(), 1;
+
+    tl = homo * tl;
+    tr = homo * tr;
+    bl = homo * bl;
+    br = homo * br;
+
+    tl = tl / tl.z();
+    tr = tr / tr.z();
+    bl = bl / bl.z();
+    br = br / br.z();
+
+    ctl << std::fmax(tl.x(), bl.x()), std::fmax(tl.y(), tr.y()),1;
+    ctr << std::fmax(tr.x(), br.x()), std::fmax(tl.y(), tr.y()),1;
+    cbl << std::fmax(tl.x(), bl.x()), std::fmin(bl.y(), br.y()),1;
+    cbr << std::fmax(tr.x(), br.x()), std::fmin(bl.y(), br.y()),1;
+
+
+    hb.grow(ctl);
+    hb.grow(ctr);
+    hb.grow(cbl);
+    hb.grow(cbr);
+
+    return hb;
+
 }
 
 Canvas Pano::calculateCanvas(ImageBound a, ImageBound b){
@@ -848,6 +892,26 @@ FloatImage Pano::vizMatches(PanoImage &pim1, PanoImage &pim2, std::vector<std::v
     }
     return vizMatches(pim1, pim2, matchesi);
 
+
+}
+
+FloatImage Pano::autocrop(std::vector<ImageBound> bs, Vec2i offset, const FloatImage &im){
+    Vec2f topleft, btmright;
+    topleft << bs[0].topleft;
+    btmright << bs[0].btnright;
+    for (int i = 1; i < bs.size(); ++i) {
+        topleft.x() = std::fmin(topleft.x(), bs[i].topleft.x());
+        topleft.y() = std::fmax(topleft.y(), bs[i].topleft.y());
+        btmright.x() = std::fmax(btmright.x(), bs[i].btnright.x());
+        btmright.y() = std::fmin(btmright.y(), bs[i].btnright.y());
+    }
+    cout << topleft << endl;
+    cout << btmright << endl;
+    printf("(%d, %d) to (%d, %d)", (int)topleft.x() - offset.x(), (int)topleft.y() - offset.y(),
+           (int)btmright.x() - offset.x(), (int)btmright.y() - offset.y());
+    printf("dimension is (%d, %d)", im.sizeX(), im.sizeY());
+    return cropImage(im, topleft.x() - offset.x(), topleft.y() - offset.y(),
+                     btmright.x() - offset.x(), btmright.y() - offset.y());
 
 }
 

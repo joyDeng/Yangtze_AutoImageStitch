@@ -165,7 +165,7 @@ void testNHome(int start, int end){
         pims.push_back(PanoImage(FloatImage(buffer)));
     }
 
-    FloatImage autocat = pano.autocatnimages(pims, true, false);
+    FloatImage autocat = pano.autocatnimages(pims);
     autocat.write(DATA_DIR "/output/auto_home_lego_lin.png");
 
 }
@@ -249,5 +249,4 @@ void testVizPatch(){
     desp.write(DATA_DIR "/output/testVizPatch.png");
 
 }
-
 

@@ -88,6 +88,7 @@ public:
     bool inBound(int x, int y);
     void drawSquare(int a, int b, int size=3);
 
+
 private:
     static int s_debugWriteNumber; // Image number for debug write
 };
