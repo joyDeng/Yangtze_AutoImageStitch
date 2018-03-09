@@ -69,6 +69,8 @@ public:
     // cat two images in spherecoordinates
     FloatImage cat2imagesInSphere(FloatImage re1, FloatImage im, Mat3f homo);
     FloatImage autocat2imagesInSphere(PanoImage ref, PanoImage im);
+    FloatImage catnimagesInSphere(FloatImage ref, vector<FloatImage> ims, vector<Mat3f> homos);
+    FloatImage autocatnimagesSphere(std::vector<PanoImage> &pims, bool center, bool blend, bool twoscale = false);
     
 };
 

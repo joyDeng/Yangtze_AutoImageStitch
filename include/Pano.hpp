@@ -99,8 +99,6 @@ public:
     FloatImage calweight(int sizex, int sizey, bool gau = true, float ratio = 0.2);
 
 
-
-
     Mat3f RANSAC( PanoImage &pim1, PanoImage &pim2, float match_th = 0.5, float portion = 0.5, float accuracy = 0.1,
                   float threshold = 1);
     Mat3f computeHomo(std::vector<std::vector<Vec2f>> pairs);
@@ -109,10 +107,7 @@ public:
     FloatImage vizMatches(PanoImage &pim1, PanoImage &pim2, std::vector<std::vector<Vec2i>> matches);
     FloatImage vizMatches(PanoImage &pim1, PanoImage &pim2, std::vector<std::vector<Vec2f>> matches);
 
-
-
 };
-
 
 
 #endif /* stiches_hpp */
