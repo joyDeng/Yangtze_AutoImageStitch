@@ -152,6 +152,7 @@ FloatImage visualizeRGBHistogram(const Histogram & histR,
                                  const Histogram & histB);
 
 float lerp(float x, float min, float max);
+Vec3f square2UniformSphere(const Vec2f sample);
 
 FloatImage equalizeRGBHistograms(const FloatImage &im);
 FloatImage matchRGBHistograms(const FloatImage & F1, const FloatImage & F2);
