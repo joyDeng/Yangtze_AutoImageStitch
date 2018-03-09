@@ -80,6 +80,8 @@ public:
     FloatImage autocat2images(PanoImage &pim1, PanoImage &pim2, bool blend=true);
     FloatImage autocatnimages(std::vector<PanoImage> &pims, bool center=true, bool blend=true, bool twoscale=true);
 
+    FloatImage autocrop(std::vector<ImageBound> bs, Vec2i offset, const FloatImage &im);
+
 
 
     
@@ -89,6 +91,7 @@ public:
     // calculate new canvas given image and homo
     ImageBound boundBox(const FloatImage &im);
     ImageBound boundBoxHomo(const FloatImage &im, Mat3f homo);
+    ImageBound boundBoxCrop(const FloatImage &im, Mat3f homo);
     
     // calculate the shift offset when conbining two images
     Canvas calculateCanvas(ImageBound a, ImageBound b);

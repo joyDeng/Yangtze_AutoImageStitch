@@ -361,4 +361,16 @@ vector<float> gauss1DValues(float sigma, float truncate){
     return fData;
 }
 
+FloatImage cropImage(const FloatImage &im, int a, int b, int c, int d){
+    FloatImage output(c - a, d - b, im.channels());
+    for (int i = a; i < c; ++i) {
+        for (int j = b; j < d; ++j) {
+            for (int n = 0; n < im.channels(); ++n) {
+                output(i - a, j - b, n) = im(i, j, n);
+            }
+        }
+    }
+    return output;
+}
+
 

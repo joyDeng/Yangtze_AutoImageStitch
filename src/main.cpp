@@ -144,7 +144,7 @@ void testNHome(int start, int end){
         pims.push_back(PanoImage(FloatImage(buffer)));
     }
 
-    FloatImage autocat = pano.autocatnimages(pims, true, false);
+    FloatImage autocat = pano.autocatnimages(pims);
     autocat.write(DATA_DIR "/output/auto_home_lego_lin.png");
 
 }
@@ -211,7 +211,7 @@ int main(){
 
 
     //testCatYosemite();
-//    testCatNYosemite();
+    testCatNYosemite();
     //testCatTable();
     //testCatNPan();
     //
@@ -222,7 +222,7 @@ int main(){
 //    testWeightMap();
 //    testVizPatch();
 //    testCatTable();
-    testCatLily();
+//    testCatLily();
 //    testNHome(5163, 5165);
 
     return 0;
