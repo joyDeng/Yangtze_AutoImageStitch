@@ -59,9 +59,9 @@ void PanoImage::calculatePatches(float sigma, int size, bool blur, bool norm) {
     if(blur){
         image = gaussianBlur_seperable(image, sigma);
     }
-    if(norm){
-        image = normalizeBySD(image);
-    }
+
+
+    image.write(DATA_DIR "/output/testBlurPatch.png");
 
 
     for (int p = 0; p < m_featurePoints.size(); ++p) {
@@ -72,8 +72,19 @@ void PanoImage::calculatePatches(float sigma, int size, bool blur, bool norm) {
                                                                  m_featurePoints[p].y() + j, 0, true);
             }
         }
+
+        if(norm){
+            float sd = 0, mean = patch.mean();
+            for (int n = 0; n < patch.size(); ++n) {
+                sd += powf(patch(n) - mean, 2);
+            }
+            sd = sqrtf(sd / (patch.size() - 1));
+            for (int n = 0; n < patch.size(); ++n) {
+                patch(n) = (patch(n) - mean)/sd;
+            }
+        }
+
         m_patches.push_back(patch);
-        //std::cout << patch << std::endl << std::endl;
     }
 
 }
@@ -160,13 +171,22 @@ FloatImage PanoImage::harrisCornerDetector(int k, float threshold){
 }
 
 FloatImage PanoImage::vizPatches(){
-//    for (int p = 0; p < m_featurePoints.size(); ++p) {
-//        for (int j = -s; j <= s; ++j) {
-//            patch((j+s) * m_patchSize + (i+s)) = image.smartAccessor(m_featurePoints[p].x() + i,
-//                                                                     m_featurePoints[p].y() + j, 0, true);
-//        }
-//    }
+    FloatImage output(m_image);
+    int s = m_patchSize / 2;
+    for (int p = 0; p < m_patches.size(); ++p) {
+        for (int i = -s; i <= s; ++i) {
+            for (int j = -s; j <= s; ++j) {
+                if(output.inBound(i + m_featurePoints[p].x(), j + m_featurePoints[p].y()))
+                    if(m_patches[p]((j+s) *m_patchSize +i+s) > 0){
+                            output(i + m_featurePoints[p].x(), j + m_featurePoints[p].y(), 1) = 1.f;
 
+                    }else{
+                            output(i + m_featurePoints[p].x(), j + m_featurePoints[p].y(), 0) = 1.f;
+                    }
+            }
+        }
+    }
+    return output;
 }
 
 

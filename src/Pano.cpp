@@ -93,7 +93,7 @@ FloatImage Pano::cat2images(const FloatImage &im1, const FloatImage &im2, Mat3f 
 }
 
 //<<<<<<< HEAD
-FloatImage Pano::autocatnimages(std::vector<PanoImage> &pims, bool center){
+FloatImage Pano::autocatnimages(std::vector<PanoImage> &pims, bool center, bool blend, bool twoscale){
     // make sure pims is not empty and pims size is not 1
 
     // initImages (calculate features and patches)
@@ -131,7 +131,17 @@ FloatImage Pano::autocatnimages(std::vector<PanoImage> &pims, bool center){
         lhomo << nhomo;
     }
 
-    output = catnimagesBlend(ref, ims, homos);
+    if(blend){
+        if(twoscale)
+            output = catnimagesTwoScaleBlend(ref, ims, homos);
+        else
+            output = catnimagesBlend(ref, ims, homos);
+
+    } else{
+        output = catnimages(ref, ims, homos);
+    }
+
+
 //    }
 
     return output;
@@ -297,6 +307,141 @@ FloatImage Pano::catnimagesBlend(FloatImage ref, std::vector<FloatImage> ims, st
 
 }
 
+FloatImage Pano::catnimagesTwoScaleBlend(FloatImage ref, std::vector<FloatImage> ims, std::vector<Mat3f> homos, float sigma, bool lin){
+    // ims are FloatImages from 0 to n
+    // 0 is the reference image
+
+    // two-scale separation
+    // using separable gaussian
+    // init filters
+    vector<float> fData = gauss1DFilterValues(sigma, 3.0);
+    Filter gaussX(fData, fData.size(), 1);
+    Filter gaussY(fData, 1, fData.size());
+
+    // init low pass
+    FloatImage low_ref = gaussY.Convolve(gaussX.Convolve(ref));
+    vector<FloatImage> lows;
+    for (int n = 0; n < ims.size(); ++n) {
+        lows.push_back(gaussY.Convolve(gaussX.Convolve(ims[n])));
+    }
+
+    // init high pass
+    FloatImage hi_ref = ref - low_ref;
+    vector<FloatImage> highs;
+    for (int n = 0; n < ims.size(); ++n) {
+        highs.push_back(ims[n] - lows[n]);
+    }
+
+    // init weight maps
+    FloatImage refWeight = calweight(ref.sizeX(), ref.sizeY());
+    vector<FloatImage> weights;
+    for (int n = 0; n < ims.size(); ++n) {
+        weights.push_back(calweight(ims[n].sizeX(), ims[n].sizeY()));
+    }
+
+    // init inv homos
+    vector<Mat3f> invHomos;
+    for (int n = 0; n < homos.size(); ++n) {
+        invHomos.push_back(homos[n].inverse());
+    }
+
+    // init imagebounds
+    ImageBound im1bound = boundBox(ref);
+    vector<ImageBound> bounds;
+    Canvas canv;
+
+    for (int n = 0; n < homos.size(); ++n) {
+        bounds.push_back(boundBoxHomo(ims[n], homos[n]));
+    }
+    bounds.push_back(im1bound);
+    // calculate canvas of output image
+    canv = calculateCanvas(bounds);
+    cout << "image bound"<<endl;
+
+    FloatImage canv_w(canv.length, canv.height, 1);
+    FloatImage canv_maxw(canv.length, canv.height, 1);
+
+    //paste image1 onto canvas
+    FloatImage outputlow(canv.length, canv.height, ref.channels());
+    FloatImage outputhigh(canv.length, canv.height, ref.channels());
+
+    //canv_w.debugWrite();
+
+    bool ismax;
+    for(int i = 0 ; i < ref.sizeX() ; i++) {
+        for (int j = 0; j < ref.sizeY(); j++) {
+            int nx = i - canv.offset.x();
+            int ny = j - canv.offset.y();
+            if (nx >= 0 && ny >= 0 && nx < canv.length && ny < canv.height) {
+                canv_w(nx, ny, 0) += refWeight(i, j, 0);
+                ismax = refWeight(i, j, 0) > canv_maxw(nx, ny, 0);
+                if(ismax) canv_maxw(nx, ny, 0) = refWeight(i, j, 0);
+                for (int c = 0; c < ref.channels(); c++) {
+                    outputlow(nx, ny, c) += (low_ref(i, j, c) * refWeight(i, j, 0));
+                    if (ismax) outputhigh(nx, ny, c) = hi_ref(i, j, c);
+                }
+            }
+        }
+    }
+    cout << "image ref done"<<endl;
+
+
+    for (int n = 0; n < homos.size(); ++n) {
+        Vec2i offsetImage = Vec2i(floor(bounds[n].topleft.x()), floor(bounds[n].topleft.y())) - canv.offset;
+        Vec2f sizeTransedImage = bounds[n].btnright - bounds[n].topleft;
+
+        for (int i = 0; i < sizeTransedImage.x(); ++i) {
+            for (int j = 0; j < sizeTransedImage.y(); ++j) {
+                Vec2f transed_pos = bounds[n].topleft + Vec2f(i,j);
+
+                Vec3f pos_f = invHomos[n] * Vec3f(transed_pos.x(), transed_pos.y(), 1);
+                pos_f /= pos_f.z();
+                Vec2i pos(floor(pos_f.x()/pos_f.z()), floor(pos_f.y()/pos_f.z()));
+
+                if(ims[n].inBound(pos.x(), pos.y())){
+                    Vec2i canvas_pos = offsetImage + Vec2i(i,j);
+                    if(canvas_pos.x() >= 0 && canvas_pos.y() >= 0 && canvas_pos.y() < canv.height && canvas_pos.x() < canv.length) {
+                        canv_w(canvas_pos.x(), canvas_pos.y(), 0) += weights[n](pos.x(), pos.y(), 0);
+                        if(lin)
+                            ismax = interpolateLin(weights[n], pos.x(), pos.y(), 0) > canv_maxw(canvas_pos.x(), canvas_pos.y(), 0);
+                        else
+                            ismax = refWeight(pos.x(), pos.y(), 0) > canv_maxw(canvas_pos.x(), canvas_pos.y(), 0);
+
+                        if(ismax) canv_maxw(canvas_pos.x(), canvas_pos.y(), 0) =
+                                          lin ? interpolateLin(weights[n], pos_f.x(), pos_f.y(), 0): weights[n](pos.x(), pos.y(), 0);
+                        for (int c = 0; c < ims[n].channels(); c++) {
+                            outputlow(canvas_pos.x(), canvas_pos.y(), c) +=
+                                    (lows[n](pos.x(), pos.y(), c) * weights[n](pos.x(), pos.y(), 0));
+                            if(lin)
+                                if(ismax) outputhigh(canvas_pos.x(), canvas_pos.y(), c) = interpolateLin(highs[n], pos_f.x(), pos_f.y(), c);
+                            else
+                                if(ismax) outputhigh(canvas_pos.x(), canvas_pos.y(), c) = highs[n](pos.x(), pos.y(), c);
+
+                        }
+                    }
+                }
+            }
+        }
+        cout << "image " << n + 1<< " done"<<endl;
+    }
+
+
+    canv_w.debugWrite();
+    for (int i = 0; i < canv.length; ++i) {
+        for (int j = 0; j < canv.height; ++j) {
+            if(canv_w(i, j, 0) > 0){
+                for (int c = 0; c < outputlow.channels(); ++c) {
+                    outputlow(i, j, c) = outputlow(i, j, c) / canv_w(i, j, 0);
+                }
+            }
+        }
+    }
+
+
+    return outputlow + outputhigh;
+
+}
+
 
 FloatImage Pano::cat2imageBlend(const FloatImage &im1, const FloatImage &im2, Mat3f homo){
     //calculate weight map for both image
@@ -372,20 +517,32 @@ FloatImage Pano::cat2imageBlend(const FloatImage &im1, const FloatImage &im2, Ma
 }
 
 
-FloatImage Pano::calweight(int sizex, int sizey){
+FloatImage Pano::calweight(int sizex, int sizey, bool gau, float ratio){
     FloatImage weightmap(sizex,sizey,1);
     float cx = sizex / 2;
     float cy = sizey / 2;
-    for(int i = 0 ; i < sizex ; i++){
-        float k = fabsf(i - cx) / (float)cx;
-        for(int j = 0 ; j < sizey ; j++){
-            weightmap(i,j,0) = lerp(k , 0, 1);
+
+    if(gau){
+        float sigmax = cx * ratio, sigmay = cy * ratio;
+        for (int i = 0; i < sizex; ++i) {
+            for (int j = 0; j < sizey; ++j) {
+                weightmap(i, j, 0) =  exp(-powf(i - cx, 2) / (2.0 * powf(sigmax, 2))) *
+                                      exp(-powf(j - cy, 2) / (2.0 * powf(sigmay, 2)));
+            }
+
         }
-    }
-    for(int j = 0 ; j < sizey ; j++){
-        float k = fabsf(j - cy) / (float)cy;
+    }else{
         for(int i = 0 ; i < sizex ; i++){
-            weightmap(i,j,0) = sqrt(weightmap(i,j,0) * lerp(k , 0, 1)) ;
+            float k = fabsf(i - cx) / (float)cx;
+            for(int j = 0 ; j < sizey ; j++){
+                weightmap(i,j,0) = lerp(k , 0, 1);
+            }
+        }
+        for(int j = 0 ; j < sizey ; j++){
+            float k = fabsf(j - cy) / (float)cy;
+            for(int i = 0 ; i < sizex ; i++){
+                weightmap(i,j,0) = sqrt(weightmap(i,j,0) * lerp(k , 0, 1)) ;
+            }
         }
     }
 //Debug write: weightmap.write(DATA_DIR "/output/test_weightmap.png");
@@ -646,7 +803,6 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
                (int)bestPairs[i][1].x(), (int)bestPairs[i][1].y());
     }
 
-    cout << Homo << endl;
     //Homo = computeHomo(Largest_inliers);
     viz = vizMatches(pim1, pim2, Largest_inliers);
     viz.debugWrite();
@@ -673,8 +829,13 @@ FloatImage Pano::vizMatches(PanoImage &pim1, PanoImage &pim2, std::vector<std::v
                 output(i + offsetX, j, k) = im2(i, j, k);
 
 
-    for (int i = 0; i < matches.size(); ++i)
+    for (int i = 0; i < matches.size(); ++i) {
         output.drawLine(matches[i][0].x(), matches[i][0].y(), matches[i][1].x() + offsetX, matches[i][1].y());
+        output.drawSquare(matches[i][0].x(), matches[i][0].y());
+        output.drawSquare(matches[i][1].x() + offsetX, matches[i][1].y());
+    }
+
+
 
     return output;
 

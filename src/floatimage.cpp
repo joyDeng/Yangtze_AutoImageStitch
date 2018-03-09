@@ -492,14 +492,21 @@ void FloatImage::drawLine(int a, int b, int c, int d){
     for (int i = a; i <= c; ++i) {
         res = k1 * i + k2;
         for (int j = 0; j < channels(); ++j) {
-            operator()(i, (int)res , j) = 0.f;
+            operator()(i, (int)res , j) = 1.f;
         }
-//        if(channels() > 2){
-//            operator()(i, (int)res , 1) = 1.f;
-//        }else{
-//            operator()(i, (int)res , 0) = 1.f;
-//        }
     }
+}
+
+void FloatImage::drawSquare(int a, int b, int size){
+	int s = size/2;
+	for (int i = -s; i <= s; ++i) {
+		for (int j = -s; j <= s; ++j) {
+			operator()(a + i, b + j, 0) = 1.f;
+			for (int c = 1; c < channels(); ++c) {
+				operator()(a + i, b + j, c) = 0.f;
+			}
+		}
+	}
 }
 
 bool FloatImage::inBound(int x, int y){
