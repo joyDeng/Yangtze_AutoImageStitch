@@ -30,7 +30,28 @@ void testCatTable(){
     PanoImage pim2(FloatImage(DATA_DIR "/input/table2.jpg"));
     //FloatImage autocat = pano.autocat2images(pim1, pim2);
     FloatImage autocat = pano.autocat2images(pim1, pim2, true);
-    autocat.write(DATA_DIR "/output/auto_pano_left_right.png");
+    autocat.write(DATA_DIR "/output/auto_table_left_right.png");
+
+}
+
+void testCatLily(){
+    Pano pano;
+    pano.setWindow(9);
+    pano.setPatchWindow(31);
+    pano.setMatchTh(0.7f);
+    pano.setHarrisTh(0.2f);
+    pano.setSigma(3.f);
+    pano.setNorm(true);
+    pano.setPortion(0.2f);
+
+    PanoImage pim1(FloatImage(DATA_DIR "/input/lily1.jpg"));
+    PanoImage pim2(FloatImage(DATA_DIR "/input/lily2.jpg"));
+//    vector<PanoImage> pims;
+//    pims.push_back(pim1);
+//    pims.push_back(pim2);
+    FloatImage autocat = pano.autocat2images(pim1, pim2);
+//    FloatImage autocat = pano.autocatnimages(pims);
+    autocat.write(DATA_DIR "/output/auto_lily_left_right.png");
 
 }
 
@@ -123,7 +144,7 @@ void testNHome(int start, int end){
         pims.push_back(PanoImage(FloatImage(buffer)));
     }
 
-    FloatImage autocat = pano.autocatnimages(pims);
+    FloatImage autocat = pano.autocatnimages(pims, true, false);
     autocat.write(DATA_DIR "/output/auto_home_lego_lin.png");
 
 }
@@ -195,13 +216,14 @@ int main(){
     //testCatNPan();
     //
     //testCatPan();
-    //testHome();
+//    testHome();
 
 //    testNHome(5180, 5186);
 //    testWeightMap();
 //    testVizPatch();
 //    testCatTable();
-    testNHome(5163, 5165);
+    testCatLily();
+//    testNHome(5163, 5165);
 
     return 0;
 

@@ -93,7 +93,7 @@ FloatImage Pano::cat2images(const FloatImage &im1, const FloatImage &im2, Mat3f 
 }
 
 //<<<<<<< HEAD
-FloatImage Pano::autocatnimages(std::vector<PanoImage> &pims, bool center){
+FloatImage Pano::autocatnimages(std::vector<PanoImage> &pims, bool center, bool blend, bool twoscale){
     // make sure pims is not empty and pims size is not 1
 
     // initImages (calculate features and patches)
@@ -131,7 +131,17 @@ FloatImage Pano::autocatnimages(std::vector<PanoImage> &pims, bool center){
         lhomo << nhomo;
     }
 
-    output = catnimagesTwoScaleBlend(ref, ims, homos);
+    if(blend){
+        if(twoscale)
+            output = catnimagesTwoScaleBlend(ref, ims, homos);
+        else
+            output = catnimagesBlend(ref, ims, homos);
+
+    } else{
+        output = catnimages(ref, ims, homos);
+    }
+
+
 //    }
 
     return output;
@@ -793,7 +803,6 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
                (int)bestPairs[i][1].x(), (int)bestPairs[i][1].y());
     }
 
-    cout << Homo << endl;
     //Homo = computeHomo(Largest_inliers);
     viz = vizMatches(pim1, pim2, Largest_inliers);
     viz.debugWrite();
@@ -820,8 +829,13 @@ FloatImage Pano::vizMatches(PanoImage &pim1, PanoImage &pim2, std::vector<std::v
                 output(i + offsetX, j, k) = im2(i, j, k);
 
 
-    for (int i = 0; i < matches.size(); ++i)
+    for (int i = 0; i < matches.size(); ++i) {
         output.drawLine(matches[i][0].x(), matches[i][0].y(), matches[i][1].x() + offsetX, matches[i][1].y());
+        output.drawSquare(matches[i][0].x(), matches[i][0].y());
+        output.drawSquare(matches[i][1].x() + offsetX, matches[i][1].y());
+    }
+
+
 
     return output;
 

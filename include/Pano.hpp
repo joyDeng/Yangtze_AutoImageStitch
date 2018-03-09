@@ -78,7 +78,7 @@ public:
     FloatImage catnimagesTwoScaleBlend(FloatImage ref, std::vector<FloatImage> ims, std::vector<Mat3f> homos, float sigma = 3.f, bool lin=true);
 
     FloatImage autocat2images(PanoImage &pim1, PanoImage &pim2, bool blend=true);
-    FloatImage autocatnimages(std::vector<PanoImage> &pims, bool center=true);
+    FloatImage autocatnimages(std::vector<PanoImage> &pims, bool center=true, bool blend=true, bool twoscale=true);
 
 
 
