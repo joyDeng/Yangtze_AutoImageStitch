@@ -10,7 +10,7 @@
 #define SpherePano_h
 #include "common.h"
 #include "floatimage.h"
-#include "stitches.hpp"
+#include "Pano.hpp"
 #include "PanoImage.hpp"
 
 struct cameraRay{
@@ -18,16 +18,18 @@ struct cameraRay{
     Vec3f dir;
     float maxt;
     float mint;
-    
 };
 
 typedef cameraRay Ray3f;
 
 class SpherePano : public Pano{
     
+    //initialize parameters
     SpherePano();
     
+    // cat two images in spherecoordinates
     FloatImage cat2images(PanoImage re1, PanoImage im, Mat3f homo);
+    
 };
 
 

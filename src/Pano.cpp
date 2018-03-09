@@ -6,7 +6,7 @@
 //
 //
 #include <iostream>
-#include "stitches.hpp"
+#include "Pano.hpp"
 #include <Eigen/SVD>
 #include <set>
 
@@ -32,8 +32,6 @@ Mat3f Pano::computeHomo(std::vector<std::vector<Vec2f>> pairs){
 
     return solveHomo(A);
 }
-
-
 
 
 FloatImage Pano::autocat2images(PanoImage &pim1, PanoImage &pim2, bool blend){

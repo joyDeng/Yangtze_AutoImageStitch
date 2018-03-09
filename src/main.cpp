@@ -9,7 +9,7 @@
 #include "common.h"
 #include "floatimage.h"
 
-#include "stitches.hpp"
+#include "Pano.hpp"
 #include "PanoImage.hpp"
 #include "utils.h"
 
