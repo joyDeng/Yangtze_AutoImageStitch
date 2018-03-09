@@ -14,13 +14,24 @@
   <component name="ChangeListManager">
     <list default="true" id="72a43945-6345-4e22-97e9-af7ffe6ee6f5" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/data/output/0.png" afterPath="$PROJECT_DIR$/data/output/0.png" />
+      <change beforePath="$PROJECT_DIR$/data/output/1.png" afterPath="$PROJECT_DIR$/data/output/1.png" />
+      <change beforePath="$PROJECT_DIR$/data/output/10.png" afterPath="$PROJECT_DIR$/data/output/10.png" />
+      <change beforePath="$PROJECT_DIR$/data/output/2.png" afterPath="$PROJECT_DIR$/data/output/2.png" />
+      <change beforePath="$PROJECT_DIR$/data/output/3.png" afterPath="$PROJECT_DIR$/data/output/3.png" />
+      <change beforePath="$PROJECT_DIR$/data/output/4.png" afterPath="$PROJECT_DIR$/data/output/4.png" />
+      <change beforePath="$PROJECT_DIR$/data/output/5.png" afterPath="$PROJECT_DIR$/data/output/5.png" />
+      <change beforePath="$PROJECT_DIR$/data/output/6.png" afterPath="$PROJECT_DIR$/data/output/6.png" />
+      <change beforePath="$PROJECT_DIR$/data/output/7.png" afterPath="$PROJECT_DIR$/data/output/7.png" />
+      <change beforePath="$PROJECT_DIR$/data/output/8.png" afterPath="$PROJECT_DIR$/data/output/8.png" />
+      <change beforePath="$PROJECT_DIR$/data/output/9.png" afterPath="$PROJECT_DIR$/data/output/9.png" />
+      <change beforePath="$PROJECT_DIR$/data/output/auto_yosemite.png" afterPath="$PROJECT_DIR$/data/output/auto_yosemite.png" />
+      <change beforePath="$PROJECT_DIR$/data/output/auto_yosemite_left_right.png" afterPath="$PROJECT_DIR$/data/output/auto_yosemite_left_right.png" />
       <change beforePath="$PROJECT_DIR$/data/output/matchesImage.png" afterPath="$PROJECT_DIR$/data/output/matchesImage.png" />
-      <change beforePath="$PROJECT_DIR$/include/Pano.hpp" afterPath="$PROJECT_DIR$/include/Pano.hpp" />
-      <change beforePath="$PROJECT_DIR$/include/common.h" afterPath="$PROJECT_DIR$/include/common.h" />
-      <change beforePath="$PROJECT_DIR$/include/filtering.h" afterPath="$PROJECT_DIR$/include/filtering.h" />
-      <change beforePath="$PROJECT_DIR$/src/Pano.cpp" afterPath="$PROJECT_DIR$/src/Pano.cpp" />
+      <change beforePath="$PROJECT_DIR$/data/output/testFeature.png" afterPath="$PROJECT_DIR$/data/output/testFeature.png" />
+      <change beforePath="$PROJECT_DIR$/data/output/testVizPatch.png" afterPath="$PROJECT_DIR$/data/output/testVizPatch.png" />
+      <change beforePath="$PROJECT_DIR$/include/PanoImage.hpp" afterPath="$PROJECT_DIR$/include/PanoImage.hpp" />
       <change beforePath="$PROJECT_DIR$/src/PanoImage.cpp" afterPath="$PROJECT_DIR$/src/PanoImage.cpp" />
-      <change beforePath="$PROJECT_DIR$/src/common.cpp" afterPath="$PROJECT_DIR$/src/common.cpp" />
       <change beforePath="$PROJECT_DIR$/src/main.cpp" afterPath="$PROJECT_DIR$/src/main.cpp" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -34,21 +45,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="filtering.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/filtering.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="57">
-              <caret line="150" column="0" lean-forward="false" selection-start-line="150" selection-start-column="0" selection-end-line="167" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Pano.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Pano.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="518" column="87" lean-forward="false" selection-start-line="518" selection-start-column="87" selection-end-line="518" selection-end-column="87" />
+            <state relative-caret-position="139">
+              <caret line="106" column="28" lean-forward="false" selection-start-line="106" selection-start-column="28" selection-end-line="106" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -67,8 +68,8 @@
       <file leaf-file-name="PanoImage.hpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/include/PanoImage.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="416">
-              <caret line="69" column="18" lean-forward="false" selection-start-line="69" selection-start-column="18" selection-end-line="69" selection-end-column="18" />
+            <state relative-caret-position="176">
+              <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -88,7 +89,7 @@
         <entry file="file://$PROJECT_DIR$/include/array3D.h">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="132">
-              <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
+              <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -97,7 +98,7 @@
       <file leaf-file-name="Pano.hpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/include/Pano.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="148">
+            <state relative-caret-position="223">
               <caret line="98" column="20" lean-forward="false" selection-start-line="98" selection-start-column="20" selection-end-line="98" selection-end-column="20" />
               <folding />
             </state>
@@ -117,8 +118,18 @@
       <file leaf-file-name="PanoImage.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/PanoImage.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="175" column="5" lean-forward="false" selection-start-line="175" selection-start-column="5" selection-end-line="175" selection-end-column="5" />
+            <state relative-caret-position="139">
+              <caret line="63" column="38" lean-forward="false" selection-start-line="63" selection-start-column="38" selection-end-line="63" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DenseCoeffsBase.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ext/eigen/Eigen/src/Core/DenseCoeffsBase.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="132">
+              <caret line="424" column="0" lean-forward="false" selection-start-line="424" selection-start-column="0" selection-end-line="424" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -127,8 +138,8 @@
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="70">
-              <caret line="156" column="59" lean-forward="false" selection-start-line="156" selection-start-column="59" selection-end-line="156" selection-end-column="59" />
+            <state relative-caret-position="89">
+              <caret line="192" column="0" lean-forward="false" selection-start-line="192" selection-start-column="2" selection-end-line="192" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -138,14 +149,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>offset</find>
-      <find>calculatecanvas</find>
-      <find>cat2image</find>
-      <find>transed_pos</find>
-      <find>calculateCanvas</find>
-      <find>auto</find>
-      <find>catn</find>
-      <find>autocat</find>
       <find>ims[0]</find>
       <find>c</find>
       <find>canvas</find>
@@ -159,15 +162,23 @@
       <find>calcula</find>
       <find>cout</find>
       <find>cout &lt;&lt;</find>
-      <find>calculate</find>
       <find>two</find>
       <find>pos_f</find>
       <find>catnimage</find>
-      <find>gaussian</find>
       <find>if(lin</find>
       <find>calwei</find>
       <find>nhome</find>
+      <find>calculateP</find>
+      <find>calcu</find>
       <find>viz</find>
+      <find>calculatep</find>
+      <find>0.736805</find>
+      <find>gaussian</find>
+      <find>vizP</find>
+      <find>calculate</find>
+      <find>testH</find>
+      <find>testHome</find>
+      <find>yosemite</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -177,7 +188,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/include/PanoImage.hpp" />
         <option value="$PROJECT_DIR$/include/floatimage.h" />
         <option value="$PROJECT_DIR$/src/floatimage.cpp" />
         <option value="$PROJECT_DIR$/include/stitches.hpp" />
@@ -187,6 +197,7 @@
         <option value="$PROJECT_DIR$/include/common.h" />
         <option value="$PROJECT_DIR$/include/Pano.hpp" />
         <option value="$PROJECT_DIR$/src/Pano.cpp" />
+        <option value="$PROJECT_DIR$/include/PanoImage.hpp" />
         <option value="$PROJECT_DIR$/src/PanoImage.cpp" />
         <option value="$PROJECT_DIR$/src/main.cpp" />
       </list>
@@ -245,7 +256,7 @@
   <component name="PropertiesComponent">
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="calw&#9;null&#9;null&#10;gauss&#9;null&#9;null&#10;calwe&#9;null&#9;null" />
+    <property name="SearchEverywhereHistoryKey" value="viz&#9;null&#9;null&#10;vizP&#9;FILE&#9;file:///Users/zhenliwu/Desktop/Yangtze_AutoImageStitch/data/output/testVizPatch.png&#10;calw&#9;null&#9;null&#10;gauss&#9;null&#9;null&#10;calwe&#9;null&#9;null" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -296,12 +307,12 @@
       <workItem from="1520411334904" duration="5300000" />
       <workItem from="1520448345447" duration="140000" />
       <workItem from="1520453118417" duration="62892000" />
-      <workItem from="1520556489712" duration="6318000" />
+      <workItem from="1520556489712" duration="10899000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="108263000" />
+    <option name="totallyTimeSpent" value="112844000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="797" extended-state="0" />
@@ -343,14 +354,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="6" lean-forward="false" selection-start-line="21" selection-start-column="6" selection-end-line="22" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/include/array3D.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1290">
@@ -564,13 +567,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ext/eigen/Eigen/src/Core/DenseCoeffsBase.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="424" column="0" lean-forward="false" selection-start-line="424" selection-start-column="0" selection-end-line="424" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/floatimage.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-61">
@@ -620,30 +616,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/filtering.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/Pano.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="98" column="20" lean-forward="false" selection-start-line="98" selection-start-column="20" selection-end-line="98" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/common.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="158" column="32" lean-forward="false" selection-start-line="158" selection-start-column="32" selection-end-line="158" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/common.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1906">
@@ -654,16 +626,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Pano.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="518" column="87" lean-forward="false" selection-start-line="518" selection-start-column="87" selection-end-line="518" selection-end-column="87" />
+        <state relative-caret-position="139">
+          <caret line="106" column="28" lean-forward="false" selection-start-line="106" selection-start-column="28" selection-end-line="106" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/PanoImage.hpp">
+    <entry file="file://$PROJECT_DIR$/data/output/testVizPatch.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/common.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="69" column="18" lean-forward="false" selection-start-line="69" selection-start-column="18" selection-end-line="69" selection-end-column="18" />
+        <state relative-caret-position="281">
+          <caret line="158" column="32" lean-forward="false" selection-start-line="158" selection-start-column="32" selection-end-line="158" selection-end-column="32" />
           <folding />
         </state>
       </provider>
@@ -671,23 +648,55 @@
     <entry file="file://$PROJECT_DIR$/include/array3D.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
-          <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
+          <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/Pano.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="98" column="20" lean-forward="false" selection-start-line="98" selection-start-column="20" selection-end-line="98" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/filtering.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ext/eigen/Eigen/src/Core/DenseCoeffsBase.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="424" column="0" lean-forward="false" selection-start-line="424" selection-start-column="0" selection-end-line="424" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/PanoImage.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/PanoImage.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="175" column="5" lean-forward="false" selection-start-line="175" selection-start-column="5" selection-end-line="175" selection-end-column="5" />
+        <state relative-caret-position="139">
+          <caret line="63" column="38" lean-forward="false" selection-start-line="63" selection-start-column="38" selection-end-line="63" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="70">
-          <caret line="156" column="59" lean-forward="false" selection-start-line="156" selection-start-column="59" selection-end-line="156" selection-end-column="59" />
+        <state relative-caret-position="89">
+          <caret line="192" column="0" lean-forward="false" selection-start-line="192" selection-start-column="2" selection-end-line="192" selection-end-column="25" />
           <folding />
         </state>
       </provider>

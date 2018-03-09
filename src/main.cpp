@@ -24,7 +24,7 @@ void testCatTable(){
     pano.setMatchTh(0.7f);
     pano.setHarrisTh(0.2f);
     pano.setSigma(3.f);
-    pano.setNorm(false);
+    pano.setNorm(true);
     pano.setPortion(0.1f);
     PanoImage pim1(FloatImage(DATA_DIR "/input/table1.jpg"));
     PanoImage pim2(FloatImage(DATA_DIR "/input/table2.jpg"));
@@ -124,7 +124,7 @@ void testNHome(int start, int end){
     }
 
     FloatImage autocat = pano.autocatnimages(pims);
-    autocat.write(DATA_DIR "/output/auto_home_snow_lin.png");
+    autocat.write(DATA_DIR "/output/auto_home_lego_lin.png");
 
 }
 
@@ -156,9 +156,9 @@ void testWeightMap(){
 void testVizPatch(){
     PanoImage pim1(FloatImage(DATA_DIR "/input/building.png"));
 
-    FloatImage detected = pim1.harrisCornerDetector(9, 0.3);
-    detected.write(DATA_DIR "/output/testFeature.png");
-    pim1.calculatePatches(3.f, 21);
+    FloatImage detected = pim1.harrisCornerDetector(9, 0.6);
+    //detected.write(DATA_DIR "/output/testFeature.png");
+    pim1.calculatePatches(3.f, 15, false);
     FloatImage desp = pim1.vizPatches();
     desp.write(DATA_DIR "/output/testVizPatch.png");
 
@@ -190,7 +190,7 @@ int main(){
 
 
     //testCatYosemite();
-    //testCatNYosemite();
+//    testCatNYosemite();
     //testCatTable();
     //testCatNPan();
     //
@@ -199,7 +199,9 @@ int main(){
 
 //    testNHome(5180, 5186);
 //    testWeightMap();
-    testVizPatch();
+//    testVizPatch();
+//    testCatTable();
+    testNHome(5163, 5165);
 
     return 0;
 
