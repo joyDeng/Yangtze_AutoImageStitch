@@ -59,11 +59,13 @@ add_executable(yangtze
   # Header files
   include/stitches.hpp
   include/PanoImage.hpp
+  include/SpherePano.h
 
   # Source code files
   src/main.cpp
   src/stitches.cpp
   src/PanoImage.cpp
+  src/SpherePano.cpp
 )
 
 
