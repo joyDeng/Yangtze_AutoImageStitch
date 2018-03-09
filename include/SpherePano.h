@@ -26,6 +26,7 @@ struct cameraRay{
 struct itersection{
     Vec3f p;
     Vec2f uv;
+    Vec3f t;
 };
 
 typedef cameraRay Ray;

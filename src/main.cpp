@@ -32,7 +32,7 @@ void testNSphere(int start, int end);
 int main(){
 
 //    testNHome(5181, 5186);
-    testNSphere(5181, 5186);
+    testNSphere(5254, 5263);
 
     return 0;
 
@@ -190,7 +190,7 @@ void testHome(){
 
 
 void testSphere(){
-    SpherePano pano(400);
+    SpherePano pano(2);
     pano.setWindow(9);
     pano.setPatchWindow(31);
     pano.setMatchTh(0.7f);
@@ -222,12 +222,12 @@ void testNSphere(int start, int end){
     std::vector<PanoImage> pims;
     for (int n = start; n <= end; n++) {
         char buffer[255];
-        sprintf(buffer, DATA_DIR "/input/home/IMG_%d.jpg", n);
+        sprintf(buffer, DATA_DIR "/input/greendata/IMG_%d.JPG", n);
         pims.push_back(PanoImage(FloatImage(buffer)));
     }
     
     FloatImage autocat = pano.autocatnimagesSphere(pims, true, false);
-    autocat.write(DATA_DIR "/output/auto_home_sphere_lego_lin.png");
+    autocat.write(DATA_DIR "/output/auto_green_sphere.png");
     
 }
 

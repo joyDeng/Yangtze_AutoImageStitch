@@ -337,7 +337,7 @@ Vec3f square2UniformSphere(const Vec2f sample){
     float y = 2 * sample[1];
     float r = sqrt(fmaxf(0.f, 1 - y * y));
     float phi = 2 * M_PI * sample[0] + M_PI / 2.0;
-    return Vec3f(cosf(phi)*r, y, sin(phi)*r);
+    return Vec3f(cosf(phi) * r, y, sin(phi) * r);
 }
 
 // from Assignment 6

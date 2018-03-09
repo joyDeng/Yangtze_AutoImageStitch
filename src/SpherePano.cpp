@@ -41,7 +41,7 @@ bool PlaneBound::inbound(Vec3f point){
 
 bool Plane::intersect(Ray &ray, Intersect &it){
     float t = -(ray.o - _base).dot(normal) / ray.dir.dot(normal);
-    if(t < ray.mint || t - __FLT_EPSILON__ > ray.maxt) return false;
+    if(t < ray.mint || t - __FLT_EPSILON__ * 100 > ray.maxt) return false;
     else{
         it.p = ray.o + t * ray.dir;
         //caluv on the imageplane
@@ -64,7 +64,7 @@ Plane::plane(Vec3f pos0, Vec3f pos1, Vec3f pos2){
 //SPHEREPANO FUNCTIONS
 
 SpherePano::SpherePano():Pano(){
-    m_f = 400;//focal length
+    m_f = 1;//focal length
 }
 
 SpherePano::SpherePano(float f):Pano(){
@@ -89,7 +89,6 @@ FloatImage SpherePano::autocat2imagesInSphere(PanoImage pim1, PanoImage pim2){
 FloatImage SpherePano::cat2imagesInSphere(FloatImage fref, FloatImage fim, Mat3f homo){
     Mat3f homo_i = homo.inverse();
     Mat3f S,K;
-    m_f = 0.4;
     float size = std::max(fref.sizeX(), fref.sizeY());
     K.row(0) << m_f,0,0;
     K.row(1) << 0, m_f,0;
@@ -117,9 +116,9 @@ FloatImage SpherePano::cat2imagesInSphere(FloatImage fref, FloatImage fim, Mat3f
     ip0 =  homo * Vec3f(0,0,1);
     ip1 =  homo * Vec3f(fim.sizeX(),0,1);
     ip2 =  homo * Vec3f(0,fim.sizeY(),1);
-    ip0 = SK_i * (ip0 / ip0.z());
-    ip1 = SK_i * (ip1 / ip1.z());
-    ip2 = SK_i * (ip2 / ip2.z());
+    ip0 = SK_i * (ip0);// / ip0.z());
+    ip1 = SK_i * (ip1);// / ip1.z());
+    ip2 = SK_i * (ip2);// / ip2.z());
 //    ip0 = (ip0 / ip0.z());
 //    ip1 = (ip1 / ip1.z());
 //    ip2 = (ip2 / ip2.z());
@@ -176,7 +175,7 @@ FloatImage SpherePano::catnimagesInSphere(FloatImage fref, vector<FloatImage> fi
         homos_i.push_back(homos[i].inverse());
                           
     Mat3f S,K;
-    m_f = 0.4;
+    m_f = 1;
     float size = std::max(fref.sizeX(), fref.sizeY());
     K.row(0) << m_f,0,0;
     K.row(1) << 0, m_f,0;
@@ -206,9 +205,9 @@ FloatImage SpherePano::catnimagesInSphere(FloatImage fref, vector<FloatImage> fi
         ip0 =  homos[i] * Vec3f(0,0,1);
         ip1 =  homos[i] * Vec3f(fims[i].sizeX(),0,1);
         ip2 =  homos[i] * Vec3f(0,fims[i].sizeY(),1);
-        ip0 = SK_i * (ip0 / ip0.z());
-        ip1 = SK_i * (ip1 / ip1.z());
-        ip2 = SK_i * (ip2 / ip2.z());
+        ip0 = SK_i * ((ip0) / abs(ip0.z()));
+        ip1 = SK_i * ((ip1) / abs(ip1.z()));
+        ip2 = SK_i * ((ip2) / abs(ip2.z()));
         //    ip0 = (ip0 / ip0.z());
         //    ip1 = (ip1 / ip1.z());
         //    ip2 = (ip2 / ip2.z());
@@ -219,12 +218,12 @@ FloatImage SpherePano::catnimagesInSphere(FloatImage fref, vector<FloatImage> fi
         cout<<i<<"th iplane"<<ip2<<std::endl;
     }
     
-    Vec2i cansize = Vec2i(fref.sizeX(), fref.sizeY());
+    Vec2i cansize = Vec2i(16 * fref.sizeX(), 16 * fref.sizeY());
     FloatImage output(cansize.x(),cansize.y(),fref.channels());
     
     for( int i = 0 ; i < cansize.x() ; i++){
         //        std::cout<<i<<" out of "<<cansize.x()<<std::endl;
-        float langti = (float)i/(float)cansize.x() - 0.5;
+        float langti = 0.5 - (float)i/(float)cansize.x();
         for(int j = 0 ; j < cansize.y() ; j++){
             Vec3f dir = square2UniformSphere(Vec2f(langti,(float)j/(float)cansize.y() - 0.5));
             
@@ -271,7 +270,6 @@ FloatImage SpherePano::autocatnimagesSphere(std::vector<PanoImage> &pims, bool c
     vector<FloatImage> ims;
     vector<Mat3f> homos;
     FloatImage output;
-    
     
     for (int i = 0; i < pims.size(); ++i) {
         pims[i].harrisCornerDetector(m_window, m_harris_th);
