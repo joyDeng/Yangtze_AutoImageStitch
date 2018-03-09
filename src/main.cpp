@@ -18,27 +18,8 @@
 //using namespace Eigen;
 
 
-<<<<<<< HEAD
-void testCatYosemite();
-void testCatNYosemite();
-void testCatTable();
-void testCatPan();
-void testCatNPan();
-void testHome();
-void testNHome(int start, int end);
-void testSphere();
 
-int main(){
 
-//    testNHome(5181, 5186);
-    testSphere();
-
-    return 0;
-
-}
-
-=======
->>>>>>> f5d8868afd2e44c75fc1eaab69bf9119251823d5
 void testCatTable(){
     Pano pano;
     pano.setWindow(9);
@@ -162,12 +143,12 @@ void testNHome(int start, int end){
     std::vector<PanoImage> pims;
     for (int n = start; n <= end; n++) {
         char buffer[255];
-        sprintf(buffer, DATA_DIR "/input/home/IMG_%d.jpg", n);
+        sprintf(buffer, DATA_DIR "/input/xi/IMG_%d.jpg", n);
         pims.push_back(PanoImage(FloatImage(buffer)));
     }
 
     FloatImage autocat = pano.autocatnimages(pims);
-    autocat.write(DATA_DIR "/output/auto_home_lego_lin.png");
+    autocat.write(DATA_DIR "/output/auto_xi_lin.png");
 
 }
 
@@ -189,7 +170,7 @@ void testHome(){
 
 }
 
-<<<<<<< HEAD
+
 void testSphere(){
     SpherePano pano(400);
     pano.setWindow(9);
@@ -211,7 +192,7 @@ void testSphere(){
 
 }
 
-=======
+
 void testWeightMap(){
     Pano pano;
     FloatImage im(DATA_DIR "/input/yosemite1.jpg");
@@ -228,6 +209,55 @@ void testVizPatch(){
     FloatImage desp = pim1.vizPatches();
     desp.write(DATA_DIR "/output/testVizPatch.png");
 
+}
+
+void testNHomeCropped(int start, int end){
+    Pano pano;
+    pano.setWindow(9);
+    pano.setPatchWindow(31);
+    pano.setMatchTh(0.7f);
+    pano.setHarrisTh(0.2f);
+    pano.setSigma(3.f);
+    pano.setNorm(true);
+    pano.setPortion(0.2f);
+    std::vector<PanoImage> pims;
+    int crop = 120;
+    for (int n = start; n <= end; n++) {
+        char buffer[255];
+        sprintf(buffer, DATA_DIR "/input/greendata/IMG_%d.jpg", n);
+        FloatImage ori = FloatImage(buffer);
+        pims.push_back(PanoImage(cropImage(ori, crop, 0, ori.sizeY(), ori.sizeX() - 2 * crop)));
+    }
+
+    FloatImage autocat = pano.autocatnimages(pims);
+    autocat.write(DATA_DIR "/output/auto_cropped_lin.png");
+}
+
+void testNImage(int start, int end, char* folder, bool c=true, int cropX=50, int cropY=0){
+    Pano pano;
+    pano.setWindow(9);
+    pano.setPatchWindow(31);
+    pano.setMatchTh(0.7f);
+    pano.setHarrisTh(0.2f);
+    pano.setSigma(3.f);
+    pano.setNorm(true);
+    pano.setPortion(0.2f);
+    std::vector<PanoImage> pims;
+    for (int n = start; n <= end; n++) {
+        char buffer[255];
+        sprintf(buffer, DATA_DIR "/input/%s/IMG_%d.jpg", folder, n);
+        FloatImage ori = FloatImage(buffer);
+        if(c){
+            pims.push_back(PanoImage(cropImage(ori, cropX, cropY, ori.sizeX() - 2 * cropX, ori.sizeY() - 2 * cropY)));
+        }else{
+            pims.push_back(ori);
+        }
+
+    }
+    char buffer2[255];
+    sprintf(buffer2, DATA_DIR "/output/auto_%s_result.jpg", folder);
+    FloatImage autocat = pano.autocatnimages(pims);
+    autocat.write(buffer2);
 }
 
 int main(){
@@ -256,7 +286,7 @@ int main(){
 
 
     //testCatYosemite();
-    testCatNYosemite();
+   // testCatNYosemite();
     //testCatTable();
     //testCatNPan();
     //
@@ -268,9 +298,11 @@ int main(){
 //    testVizPatch();
 //    testCatTable();
 //    testCatLily();
-//    testNHome(5163, 5165);
+//    testNHome(5217, 5224);
+//    testNHome(5200, 5204);
+    //testNHomeCropped(5212, 5230);
+    testNImage(5100, 5101, "sxi", false, 0, 0);
 
     return 0;
 
 }
->>>>>>> f5d8868afd2e44c75fc1eaab69bf9119251823d5

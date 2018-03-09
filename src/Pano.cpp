@@ -166,7 +166,8 @@ FloatImage Pano::catnimages(FloatImage ref, std::vector<FloatImage> ims, std::ve
     bounds.push_back(im1bound);
     // calculate canvas of output image
     canv = calculateCanvas(bounds);
-    cout << "image bound"<<endl;
+    cout << "image bound:"<<endl;
+    printf("(%d, %d)", canv.length, canv.height);
 
     //paste image1 onto canvas
     FloatImage output(canv.length, canv.height, ref.channels());
@@ -238,6 +239,7 @@ FloatImage Pano::catnimagesBlend(FloatImage ref, std::vector<FloatImage> ims, st
     // calculate canvas of output image
     canv = calculateCanvas(bounds);
     cout << "image bound"<<endl;
+    printf("(%d, %d)", canv.length, canv.height);
 
     FloatImage canv_w(canv.length, canv.height, 1);
 
@@ -367,6 +369,7 @@ FloatImage Pano::catnimagesTwoScaleBlend(FloatImage ref, std::vector<FloatImage>
 
 
     cout << "image bound"<<endl;
+    printf("(%d, %d)", canv.length, canv.height);
 
     FloatImage canv_w(canv.length, canv.height, 1);
     FloatImage canv_maxw(canv.length, canv.height, 1);
@@ -448,8 +451,8 @@ FloatImage Pano::catnimagesTwoScaleBlend(FloatImage ref, std::vector<FloatImage>
     }
 
 
-    return autocrop(cbounds, canv.offset, outputlow + outputhigh);
-
+    //return autocrop(cbounds, canv.offset, outputlow + outputhigh);
+    return outputlow + outputhigh;
 }
 
 
