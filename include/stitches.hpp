@@ -14,16 +14,7 @@
 #include "common.h"
 #include "PanoImage.hpp"
 
-// smallest box that bound the image
-struct imagebound{
-    Vec2f topleft;
-    Vec2f btnright;
-    
-    imagebound();
-    void grow(Vec3f point);
-    bool inbound(Vec3f point);
-    
-};
+
 
 // canvas that contain two images
 struct canvas{
@@ -33,8 +24,8 @@ struct canvas{
 };
 
 
+
 typedef struct canvas Canvas;
-typedef struct imagebound ImageBound;
 
 class Pano{
     float m_harris_th;

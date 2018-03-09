@@ -30,7 +30,6 @@ Mat3f Pano::computeHomo(std::vector<std::vector<Vec2f>> pairs){
         A.row(i * 2 + 1) << 0, 0, 0, x, y, 1, -x * y1, -y1 * y, -y1;
     }
 
-    
     return solveHomo(A);
 }
 
@@ -115,17 +114,6 @@ FloatImage Pano::autocatnimages(std::vector<PanoImage> &pims, bool center){
     else{
         refn = 0;
     }
-//        FloatImage ref(pims[0].getImage());
-//        Mat3f lhomo = Mat3f::Identity();
-//        for (int i = 0; i < pims.size() - 1; ++i) {
-//            Mat3f nhomo = lhomo * RANSAC(pims[i], pims[i+1], m_match_th, m_portion);
-//            ims.push_back(pims[i+1].getImage());
-//            homos.push_back(nhomo);
-//            lhomo << nhomo;
-//        }
-//
-//    }else{
-        // choose the middle one as reference
 
     FloatImage ref(pims[refn].getImage());
 
@@ -185,8 +173,6 @@ FloatImage Pano::catnimages(FloatImage ref, std::vector<FloatImage> ims, std::ve
         }
     }
     cout << "image ref done"<<endl;
-
-
 
     for (int n = 0; n < homos.size(); ++n) {
         Vec2i offsetImage = Vec2i(floor(bounds[n].topleft.x()), floor(bounds[n].topleft.y())) - canv.offset;
@@ -267,7 +253,6 @@ FloatImage Pano::catnimagesBlend(FloatImage ref, std::vector<FloatImage> ims, st
     }
     cout << "image ref done"<<endl;
 
-    canv_w.debugWrite();
 
     for (int n = 0; n < homos.size(); ++n) {
         Vec2i offsetImage = Vec2i(floor(bounds[n].topleft.x()), floor(bounds[n].topleft.y())) - canv.offset;
@@ -388,9 +373,6 @@ FloatImage Pano::cat2imageBlend(const FloatImage &im1, const FloatImage &im2, Ma
     return output;
 }
 
-float lerp(float x, float min, float max){
-    return (1 - x) * max + x * min;
-}
 
 FloatImage Pano::calweight(int sizex, int sizey){
     FloatImage weightmap(sizex,sizey,1);
@@ -516,18 +498,12 @@ Canvas Pano::calculateCanvas(vector<ImageBound> bs){
 
 
     ImageBound b;
-//    b.grow(Vec3f(bs[0].topleft.x(), bs[0].topleft.y(), 1));
-//    b.grow(Vec3f(bs[0].btnright.x(), bs[0].btnright.y(),1));
     for (int i = 0; i < bs.size(); ++i) {
         b.grow(Vec3f(bs[i].topleft.x(), bs[i].topleft.y(), 1));
         b.grow(Vec3f(bs[i].btnright.x(), bs[i].btnright.y(),1));
 
     }
-
-
     Canvas canv;
-
-    // calculate offset of image canvas and the size of canvas
     Vec2i can;
     can << floor(b.topleft.x()), floor(b.topleft.y());
     canv.offset = can;
@@ -536,28 +512,6 @@ Canvas Pano::calculateCanvas(vector<ImageBound> bs){
     return canv;
 
 }
-
-ImageBound::imagebound(){
-    Vec2f v1, v2;
-    v1 << INFINITY,INFINITY;
-    v2 << -INFINITY,-INFINITY;
-    topleft = v1;
-    btnright = v2;
-}
-
-void ImageBound::grow(Vec3f point){
-    Vec2f v1, v2;
-    v1 << std::min(topleft.x(), point.x()), std::min(topleft.y(), point.y());
-    v2 << std::max(btnright.x(),point.x()), std::max(btnright.y(), point.y());
-    topleft = v1;
-    btnright = v2;
-}
-
-bool imagebound::inbound(Vec3f point){
-    if(point.x() < topleft.x() || point.x() > btnright.x() || point.y() < topleft.y() || point.y() > btnright.y()) return false;
-    else return true;
-}
-
 
 std::vector<std::vector<Vec2i>> Pano::matchDescriptors(PanoImage &pim1, PanoImage &pim2, float threshold){
     std::vector<std::vector<Vec2i>> output;
@@ -617,7 +571,6 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
     FloatImage matchesImage = vizMatches(pim1, pim2, pairs);
     matchesImage.write(DATA_DIR "/output/matchesImage.png");
 
-
     vector<vector<Vec2f>> Largest_inliers;
     Mat3f Homo;
     float Prob = 1;
@@ -629,12 +582,7 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
     vector<vector<Vec2f>> bestPairs;
     //Ransac loop: stop when the failure probability
     //of finding the correct H is low
-//    int itsbound = (int) (log(accuBound) / log(failProb));
 
-////<<<<<<< HEAD
-//    for(int its = 0 ; its < itsbound ; its++){
-//        std::cout<<"prob: "<<its<<std::endl;
-////=======
     int iter = (int)(logf(0.05) / logf(1 - powf(portion, 4)));
     int iterx = 0;
     cout << iter << endl;
@@ -642,7 +590,6 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
 
     while(Prob > accuBound && iterx < iter){
         std::cout<<"iter: "<<iterx<<" of"<<iter<<std::endl;
-////>>>>>>> 1ee3aa648ddd3351f211fba1948a04f08c01ca4c
         vector<vector<Vec2f>> inliers;
         //select four feature pairs(at random)
         vector<vector<Vec2f>> ranPairs;
@@ -700,15 +647,12 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
         printf("Best Match: (%d, %d) to (%d, %d)\n", (int)bestPairs[i][0].x(), (int)bestPairs[i][0].y(),
                (int)bestPairs[i][1].x(), (int)bestPairs[i][1].y());
     }
-//<<<<<<< HEAD
+
     cout << Homo << endl;
     //Homo = computeHomo(Largest_inliers);
     viz = vizMatches(pim1, pim2, Largest_inliers);
     viz.debugWrite();
 
-//=======
-////    Homo = computeHomo(Largest_inliers);
-//>>>>>>> 08e37563e0839e0d1818936dd328d70dad80605c
     return Homo;
 }
 
@@ -719,21 +663,17 @@ FloatImage Pano::vizMatches(PanoImage &pim1, PanoImage &pim2, std::vector<std::v
                       im1.channels());
     int offsetX = im1.sizeX();
 
-    for (int i = 0; i < im1.sizeX(); ++i) {
-        for (int j = 0; j < im1.sizeY(); ++j) {
-            for (int k = 0; k < im1.channels(); ++k) {
+    for (int i = 0; i < im1.sizeX(); ++i)
+        for (int j = 0; j < im1.sizeY(); ++j)
+            for (int k = 0; k < im1.channels(); ++k)
                 output(i, j, k) = im1(i, j, k);
-            }
-        }
-    }
 
-    for (int i = 0; i < im2.sizeX(); ++i) {
-        for (int j = 0; j < im2.sizeY(); ++j) {
-            for (int k = 0; k < im2.channels(); ++k) {
+
+    for (int i = 0; i < im2.sizeX(); ++i)
+        for (int j = 0; j < im2.sizeY(); ++j)
+            for (int k = 0; k < im2.channels(); ++k)
                 output(i + offsetX, j, k) = im2(i, j, k);
-            }
-        }
-    }
+
 
     for (int i = 0; i < matches.size(); ++i)
         output.drawLine(matches[i][0].x(), matches[i][0].y(), matches[i][1].x() + offsetX, matches[i][1].y());

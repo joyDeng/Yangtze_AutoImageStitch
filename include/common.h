@@ -151,6 +151,8 @@ FloatImage visualizeRGBHistogram(const Histogram & histR,
                                  const Histogram & histG,
                                  const Histogram & histB);
 
+float lerp(float x, float min, float max);
+
 FloatImage equalizeRGBHistograms(const FloatImage &im);
 FloatImage matchRGBHistograms(const FloatImage & F1, const FloatImage & F2);
 
