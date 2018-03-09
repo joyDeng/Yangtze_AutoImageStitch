@@ -18,8 +18,6 @@
 //using namespace Eigen;
 
 
-
-
 void testCatTable(){
     Pano pano;
     pano.setWindow(9);
@@ -188,8 +186,29 @@ void testSphere(){
     
 //    FloatImage autonos = pano.autocat2images(pim1, pim2);
 //    autonos.write(DATA_DIR "/output/auto_normal_left_right.png");
+}
 
-
+void testNSphere(int start, int end){
+    SpherePano pano;
+    pano.setWindow(9);
+    pano.setPatchWindow(31);
+    pano.setMatchTh(0.7f);
+    pano.setHarrisTh(0.2f);
+    pano.setSigma(3.f);
+    pano.setNorm(true);
+    pano.setPortion(0.2f);
+    
+    
+    std::vector<PanoImage> pims;
+    for (int n = start; n <= end; n++) {
+        char buffer[255];
+        sprintf(buffer, DATA_DIR "/input/home/IMG_%d.jpg", n);
+        pims.push_back(PanoImage(FloatImage(buffer)));
+    }
+    
+    FloatImage autocat = pano.autocatnimagesSphere(pims, true, false);
+    autocat.write(DATA_DIR "/output/auto_home_sphere_lego_lin.png");
+    
 }
 
 
@@ -210,6 +229,7 @@ void testVizPatch(){
     desp.write(DATA_DIR "/output/testVizPatch.png");
 
 }
+
 
 void testNHomeCropped(int start, int end){
     Pano pano;
@@ -302,6 +322,8 @@ int main(){
 //    testNHome(5200, 5204);
     //testNHomeCropped(5212, 5230);
     testNImage(5100, 5101, "sxi", false, 0, 0);
+    testNSphere(5181, 5186);
+
 
     return 0;
 

@@ -92,7 +92,6 @@ FloatImage Pano::cat2images(const FloatImage &im1, const FloatImage &im2, Mat3f 
     return output;
 }
 
-//<<<<<<< HEAD
 FloatImage Pano::autocatnimages(std::vector<PanoImage> &pims, bool center, bool blend, bool twoscale){
     // make sure pims is not empty and pims size is not 1
 
@@ -137,13 +136,10 @@ FloatImage Pano::autocatnimages(std::vector<PanoImage> &pims, bool center, bool 
         else
             output = catnimagesBlend(ref, ims, homos);
 
-    } else{
+    }else{
         output = catnimages(ref, ims, homos);
     }
-
-
-//    }
-
+    
     return output;
 }
 
