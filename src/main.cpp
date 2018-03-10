@@ -40,18 +40,6 @@ void testCatNYosemite(){
 }
 
 
-void testMatch(){
-    PlanePano pano;
-
-    PanoImage pim1(FloatImage(DATA_DIR "/input/home/IMG_5142.jpg"));
-    PanoImage pim2(FloatImage(DATA_DIR "/input/home/IMG_5143.jpg"));
-    FloatImage matches = pano.vizMatches(pim1, pim2, pano.matchDescriptors(pim1, pim1, pano.m_match_th));
-
-    matches.write(DATA_DIR "/output/viz_matches.png");
-
-}
-
-
 void testSphere(){
     SpherePano pano(0.1,4);
     pano.setWindow(9);
@@ -221,24 +209,24 @@ int main(){
 
 
     // auto panorama for snow images
-    // results:
+    // results: auto_snow_result.jpg
     testNImage(5180, 5186, "snow", false);
 
     // auto panorama for the Green images
     // to reduce the effects of distortion
     // we cropped 150 pixels on both the left and right side of each image
-    // results:
+    // results: auto_green_result.jpg
     testNImage(5001, 5006, "green", true, 150, 0);
 
 
     // auto panorama for baker tower (vertical in sequence)
-    // results:
+    // results: auto_vertical_result.jpg
     testNImage(5332, 5335, "vertical", true, 0, 0);
 
 
     // auto panorama for baker tower (vertical and horizontal, but in sequence)
     // the result might not be very ideal due to the image quality
-    // results:
+    // results: auto_multi_result.jpg
     testXYImage({5306, 5314, 5321},{5308, 5316, 5323},"multi", true, 20);
 
 
@@ -262,10 +250,9 @@ int main(){
 
 
     // validation functions
-    // results:
+    // results: viz_hcd_features.png, viz_patches.png, viz_weight_map.png
     testVizPatch();
     testWeightMap();
-    testMatch();
 
 
 
