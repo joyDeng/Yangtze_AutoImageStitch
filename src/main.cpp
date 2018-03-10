@@ -36,6 +36,22 @@ void testCatTable(){
 
 }
 
+void testCatNB(){
+    Pano pano;
+    pano.setWindow(9);
+    pano.setPatchWindow(31);
+    pano.setMatchTh(0.7f);
+    pano.setHarrisTh(0.2f);
+    pano.setSigma(3.f);
+    pano.setNorm(true);
+    pano.setPortion(0.1f);
+    PanoImage pim1(FloatImage(DATA_DIR "/input/left.png"));
+    PanoImage pim2(FloatImage(DATA_DIR "/input/right.png"));
+    FloatImage autocat = pano.autocat2images(pim1, pim2, false);
+    autocat.write(DATA_DIR "/output/auto_pano_no_blending.png");
+
+}
+
 void testCatLily(){
     Pano pano;
     pano.setWindow(9);
@@ -221,11 +237,12 @@ void testWeightMap(){
 }
 
 void testVizPatch(){
-    PanoImage pim1(FloatImage(DATA_DIR "/input/building.png"));
-
+    FloatImage im(DATA_DIR "/input/building.png");
+//    PanoImage pim1(cropImage(im, 0, 150, im.sizeX() - 300, im.sizeY()));
+    PanoImage pim1(im);
     FloatImage detected = pim1.harrisCornerDetector(9, 0.6);
     //detected.write(DATA_DIR "/output/testFeature.png");
-    pim1.calculatePatches(3.f, 15, false);
+    pim1.calculatePatches(3.f, 15, true);
     FloatImage desp = pim1.vizPatches();
     desp.write(DATA_DIR "/output/testVizPatch.png");
 
@@ -281,6 +298,8 @@ void testNImage(int start, int end, char* folder, bool c=true, int cropX=50, int
     autocat.write(buffer2);
 }
 
+
+
 int main(){
 
 
@@ -324,9 +343,21 @@ int main(){
     //testNHomeCropped(5212, 5230);
 //    testNImage(5100, 5101, "sxi", false, 0, 0);
 //    testNSphere(5181, 5186);
-    testNSphere(5254, 5263);
+    //testNSphere(5254, 5263);
+
+
+
+    // code for title image
+//    testNImage(5000, 5006, "green", true, 150, 0);
+
+    // code for auto
+    //testCatNB();
+    testVizPatch();
+
 
 
     return 0;
 
 }
+
+
