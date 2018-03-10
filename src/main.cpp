@@ -40,18 +40,6 @@ void testCatNYosemite(){
 }
 
 
-void testMatch(){
-    PlanePano pano;
-
-    PanoImage pim1(FloatImage(DATA_DIR "/input/home/IMG_5142.jpg"));
-    PanoImage pim2(FloatImage(DATA_DIR "/input/home/IMG_5143.jpg"));
-    FloatImage matches = pano.vizMatches(pim1, pim2, pano.matchDescriptors(pim1, pim1, pano.m_match_th));
-
-    matches.write(DATA_DIR "/output/viz_matches.png");
-
-}
-
-
 void testSphere(){
     SpherePano pano(0.1,4);
     pano.setWindow(9);
@@ -224,8 +212,6 @@ void testXYImage(std::vector<int> start, std::vector<int> end, char* folder, boo
 
 void testNTower(int start, int end){
     SpherePano pano(0.7,4);
-
-    
     std::vector<PanoImage> pims;
     for (int n = start; n <= end; n++) {
         char buffer[255];
@@ -246,28 +232,28 @@ int main(){
     // auto_yosemite_two_scale_blending.png
     // auto_yosemite_smooth_blending.png
     // auto_yosemite_smooth_blending.png
-//    testCatNYosemite();
+    testCatNYosemite();
 
 
     // auto panorama for snow images
-    // results:
+    // results: auto_snow_result.jpg
     testNImage(5180, 5186, "snow", false);
 
     // auto panorama for the Green images
     // to reduce the effects of distortion
     // we cropped 150 pixels on both the left and right side of each image
-    // results:
+    // results: auto_green_result.jpg
     testNImage(5001, 5006, "green", true, 150, 0);
 
 
     // auto panorama for baker tower (vertical in sequence)
-    // results:
+    // results: auto_vertical_result.jpg
     testNImage(5332, 5335, "vertical", true, 0, 0);
 
 
     // auto panorama for baker tower (vertical and horizontal, but in order)
     // the result might not be very ideal due to the image quality
-    // results:
+    // results: auto_multi_result.jpg
     testXYImage({5306, 5314, 5321},{5308, 5316, 5323},"multi", true, 20);
 
     
@@ -279,28 +265,14 @@ int main(){
     testNSphereHouse(5337,5359);
 
 
-    // results:
-    //testNTower(5313, 5319);
-
-
-
-
-    //    testNSphere(5181, 5186);
-
-//     testNSphere(5000, 5017);
-//     testNSphereGreen(5253, 5277);
-
-//    testSphere();
-
-    //testNSphere(5254, 5263);
-
 
 
     // validation functions
-    // results:
-//    testVizPatch();
-//    testWeightMap();
-//    testMatch();
+
+    // results: viz_hcd_features.png, viz_patches.png, viz_weight_map.png
+    testVizPatch();
+    testWeightMap();
+
 
 
     return 0;

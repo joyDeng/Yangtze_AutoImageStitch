@@ -598,6 +598,8 @@ FloatImage Pano::vizMatches(PanoImage &pim1, PanoImage &pim2, std::vector<std::v
         output.drawSquare(matches[i][1].x() + offsetX, matches[i][1].y());
     }
 
+
+
     return output;
 }
 
