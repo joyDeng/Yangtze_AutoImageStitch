@@ -91,7 +91,7 @@ FloatImage Pano::autocatnimages(std::vector<PanoImage> &pims, bool center, bool 
 
     if(blend){
         if(twoscale)
-            output = catnimagesTwoScaleBlend(ref, ims, homos);
+            output = catnimagesBlend(ref, ims, homos);//catnimageswith2scale insphere not implemented yet
         else
             output = catnimagesBlend(ref, ims, homos);
     }else{

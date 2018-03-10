@@ -66,11 +66,13 @@ Plane::plane(Vec3f pos0, Vec3f pos1, Vec3f pos2){
 SpherePano::SpherePano():Pano(){
     m_f = 1;//focal length
     m_res = 4;
+    m_straight = false;
 }
 
-SpherePano::SpherePano(float f, int res):Pano(){
+SpherePano::SpherePano(float f, int res, bool s):Pano(){
     m_f = f;
     m_res = res;
+    m_straight = s;
 }
 
 
@@ -144,20 +146,31 @@ FloatImage SpherePano::cat2images(const FloatImage &fref, const FloatImage &fim,
 Vec3f SpherePano::computeY(vector<Mat3f> homos){
     Mat3f X;
     X << 1,0,0,0,1,0,0,0,1;
-
+    
+    MatrixXf A;
+    A.resize(homos.size() + 1, 3);
+    A.row(0) << 1,0,0;
+    
     for(int i = 0 ; i < (int) homos.size() ; i++){
         Vec3f xi = homos[i] * Vec3f(1,0,0);
         xi = xi.normalized();
         X += xi * xi.transpose();
+        A.row(i + 1) << xi.x(),xi.y(),xi.z();
     }
 //    Eigen::ColPivHouseholderQR<Mat3f> dec(X);
 //    std::cout<<"X: "<<X<<" "<<std::endl;
     SvdXf svd(X, Eigen::ComputeFullU | Eigen::ComputeFullV);
-    Vec3f u = svd.matrixV().col(1).normalized();
+//    SvdXf svdA(A, Eigen::ComputeFullU | Eigen::ComputeFullV);
+//    int index = svdA.matrixV().cols();
+//    Vec3f u = svdA.matrixV().col(index-1).normalized();
 //    std::cout<<"world normal: "<<u<<" "<<std::endl;
-//    Vec3f ret;
-//    ret << u.y(), u.z(), u.x();
-    return u;
+    Vec3f ret;
+    ret = svd.matrixV().col(1).normalized();
+    if(m_straight) return ret;
+    else return Vec3f(0,1,0);
+}
+void SpherePano::setStraight(bool x){
+    m_straight = x;
 }
 
 Mat3f SpherePano::computeRotationMatrix(Vec3f y, Vec3f u){

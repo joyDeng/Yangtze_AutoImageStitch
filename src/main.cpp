@@ -97,7 +97,7 @@ void testNSphere(int start, int end){
 }
 
 void testNSphereGreen(int start, int end){
-    SpherePano pano(1, 4);
+    SpherePano pano(1, 4, true);// third parameter refer to straight or not
     pano.setWindow(9);
     pano.setPatchWindow(31);
     pano.setMatchTh(0.7f);
@@ -114,10 +114,39 @@ void testNSphereGreen(int start, int end){
         pims.push_back(PanoImage(FloatImage(buffer)));
     }
     
-    FloatImage autocat = pano.autocatnimages(pims, true, true);
-    autocat.write(DATA_DIR "/output/auto_tree_sphere_b.png");
+    FloatImage autocat = pano.autocatnimages(pims, true, true, false);
+    autocat.write(DATA_DIR "/output/auto_green_sphere_b.png");
     FloatImage autocat_s = pano.autocatnimages(pims, true, false);
-    autocat_s.write(DATA_DIR "/output/auto_greendata_straight_sphere_nb.png");
+    autocat_s.write(DATA_DIR "/output/auto_green_sphere_straight_nb.png");
+    
+    pano.setStraight(false);
+    autocat = pano.autocatnimages(pims, true, true, false);
+    autocat.write(DATA_DIR "/output/auto_green_nostraight_sphere_b.png");
+    
+}
+
+void testNSphereHouse(int start, int end){
+    SpherePano pano(0.9, 4);
+    pano.setWindow(9);
+    pano.setPatchWindow(31);
+    pano.setMatchTh(0.7f);
+    pano.setHarrisTh(0.2f);
+    pano.setSigma(3.f);
+    pano.setNorm(true);
+    pano.setPortion(0.2f);
+    
+    
+    std::vector<PanoImage> pims;
+    for (int n = start; n <= end; n++) {
+        char buffer[255];
+        sprintf(buffer, DATA_DIR "/input/house/IMG_%d.JPG", n);
+        pims.push_back(PanoImage(FloatImage(buffer)));
+    }
+    
+    FloatImage autocat = pano.autocatnimages(pims, true, true, false);
+    autocat.write(DATA_DIR "/output/auto_house_straight_sphere_b.png");
+    FloatImage autocat_s = pano.autocatnimages(pims, true, false);
+    autocat_s.write(DATA_DIR "/output/auto_house_straight_sphere_nb.png");
     
 }
 
@@ -217,7 +246,7 @@ int main(){
     // auto_yosemite_two_scale_blending.png
     // auto_yosemite_smooth_blending.png
     // auto_yosemite_smooth_blending.png
-    testCatNYosemite();
+//    testCatNYosemite();
 
 
     // auto panorama for snow images
@@ -236,12 +265,18 @@ int main(){
     testNImage(5332, 5335, "vertical", true, 0, 0);
 
 
-    // auto panorama for baker tower (vertical and horizontal, but in sequence)
+    // auto panorama for baker tower (vertical and horizontal, but in order)
     // the result might not be very ideal due to the image quality
     // results:
     testXYImage({5306, 5314, 5321},{5308, 5316, 5323},"multi", true, 20);
 
-
+    
+    // auto panorama for 360 degree of shot on the green.(Sphere Projection)
+    // we set the focal length to 1 and size of output to be 4 * original images width
+    // and hight. The result image would be a blend and a no blend version with straightening.
+    // results:
+    testNSphereGreen(5254, 5277);
+    testNSphereHouse(5337,5359);
 
 
     // results:
@@ -263,15 +298,9 @@ int main(){
 
     // validation functions
     // results:
-    testVizPatch();
-    testWeightMap();
-    testMatch();
-
-
-
-
-
-
+//    testVizPatch();
+//    testWeightMap();
+//    testMatch();
 
 
     return 0;

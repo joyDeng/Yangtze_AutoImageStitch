@@ -59,12 +59,14 @@ typedef plane Plane;
 class SpherePano : public Pano{
     float m_f;
     float m_res;
+    bool m_straight;
     
 public:
     
     //initialize parameters
     SpherePano();
-    SpherePano(float f, int m_res);
+    SpherePano(float f, int m_res, bool strait = false);
+    void setStraight(bool x);
     
     // cat two images in spherecoordinates
     virtual FloatImage cat2images(const FloatImage &re1, const FloatImage &im, Mat3f homo);
