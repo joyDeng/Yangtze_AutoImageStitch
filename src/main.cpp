@@ -12,6 +12,7 @@
 #include "Pano.hpp"
 #include "PanoImage.hpp"
 #include "SpherePano.h"
+#include "PlanePano.h"
 #include "utils.h"
 
 //using namespace std;
@@ -20,7 +21,7 @@
 
 
 void testCatTable(){
-    Pano pano;
+    PlanePano pano;
     pano.setWindow(9);
     pano.setPatchWindow(31);
     pano.setMatchTh(0.7f);
@@ -53,7 +54,7 @@ void testCatNB(){
 }
 
 void testCatLily(){
-    Pano pano;
+    PlanePano pano;
     pano.setWindow(9);
     pano.setPatchWindow(31);
     pano.setMatchTh(0.7f);
@@ -74,7 +75,7 @@ void testCatLily(){
 }
 
 void testCatPan(){
-    Pano pano;
+    PlanePano pano;
     pano.setWindow(9);
     pano.setPatchWindow(31);
     pano.setMatchTh(0.7f);
@@ -90,7 +91,7 @@ void testCatPan(){
 }
 
 void testCatNPan(){
-    Pano pano;
+    PlanePano pano;
     pano.setWindow(9);
     pano.setPatchWindow(31);
     pano.setMatchTh(0.7f);
@@ -109,7 +110,7 @@ void testCatNPan(){
 
 
 void testCatYosemite(){
-    Pano pano;
+    PlanePano pano;
     pano.setWindow(9);
     pano.setPatchWindow(21);
     pano.setMatchTh(0.6f);
@@ -125,7 +126,7 @@ void testCatYosemite(){
 }
 
 void testCatNYosemite(){
-    Pano pano;
+    PlanePano pano;
     pano.setWindow(9);
     pano.setPatchWindow(31);
     pano.setMatchTh(0.5f);
@@ -145,7 +146,7 @@ void testCatNYosemite(){
 }
 
 void testNHome(int start, int end){
-    Pano pano;
+    PlanePano pano;
     pano.setWindow(9);
     pano.setPatchWindow(31);
     pano.setMatchTh(0.7f);
@@ -168,7 +169,7 @@ void testNHome(int start, int end){
 }
 
 void testHome(){
-    Pano pano;
+    PlanePano pano;
     pano.setWindow(9);
     pano.setPatchWindow(31);
     pano.setMatchTh(0.7f);
@@ -230,7 +231,7 @@ void testNSphere(int start, int end){
 
 
 void testWeightMap(){
-    Pano pano;
+    PlanePano pano;
     FloatImage im(DATA_DIR "/input/yosemite1.jpg");
     FloatImage weight = pano.calweight(im.sizeX(), im.sizeY());
     weight.write(DATA_DIR "/output/new_weight_map.png");
@@ -250,7 +251,7 @@ void testVizPatch(){
 
 
 void testNHomeCropped(int start, int end){
-    Pano pano;
+    PlanePano pano;
     pano.setWindow(9);
     pano.setPatchWindow(31);
     pano.setMatchTh(0.7f);
@@ -272,7 +273,7 @@ void testNHomeCropped(int start, int end){
 }
 
 void testNImage(int start, int end, char* folder, bool c=true, int cropX=50, int cropY=0){
-    Pano pano;
+    PlanePano pano;
     pano.setWindow(9);
     pano.setPatchWindow(31);
     pano.setMatchTh(0.7f);

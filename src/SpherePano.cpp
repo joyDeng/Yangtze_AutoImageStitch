@@ -82,11 +82,11 @@ FloatImage SpherePano::autocat2imagesInSphere(PanoImage pim1, PanoImage pim2){
     
     cout << "ransac done"<<endl;
     
-    return cat2imagesInSphere(im1, im2, homo);
+    return cat2images(im1, im2, homo);
 
 }
 
-FloatImage SpherePano::cat2imagesInSphere(FloatImage fref, FloatImage fim, Mat3f homo){
+FloatImage SpherePano::cat2images(const FloatImage &fref, const FloatImage &fim, Mat3f homo){
     Mat3f homo_i = homo.inverse();
     Mat3f S,K;
     float size = std::max(fref.sizeX(), fref.sizeY());
@@ -169,7 +169,7 @@ FloatImage SpherePano::cat2imagesInSphere(FloatImage fref, FloatImage fim, Mat3f
     return output;
 }
 
-FloatImage SpherePano::catnimagesInSphere(FloatImage fref, vector<FloatImage> fims, vector<Mat3f> homos){
+FloatImage SpherePano::catnimages(FloatImage fref, vector<FloatImage> fims, vector<Mat3f> homos){
     vector<Mat3f> homos_i;
     for(int i = 0 ; i < homos.size() ; i++)
         homos_i.push_back(homos[i].inverse());
@@ -307,10 +307,21 @@ FloatImage SpherePano::autocatnimagesSphere(std::vector<PanoImage> &pims, bool c
             output = catnimagesBlend(ref, ims, homos);
         
     }else{
-        output = catnimagesInSphere(ref, ims, homos);
+        output = catnimages(ref, ims, homos);
     }
     
     return output;
+}
+
+FloatImage SpherePano::cat2imageBlend(const FloatImage &im1, const FloatImage &im2, Mat3f homo){
+    return FloatImage(im1);
+}
+
+FloatImage SpherePano::catnimagesBlend(FloatImage ref, std::vector<FloatImage> ims, std::vector<Mat3f> homos){
+    return FloatImage(ref);
+}
+FloatImage SpherePano::catnimagesTwoScaleBlend(FloatImage ref, std::vector<FloatImage> ims, std::vector<Mat3f> homos, float sigma, bool lin){
+    return FloatImage(ref);
 }
 
 
