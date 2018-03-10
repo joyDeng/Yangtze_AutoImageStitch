@@ -24,8 +24,6 @@ Mat3f Pano::computeHomo(std::vector<std::vector<Vec2f>> pairs){
         float y1 = pairs[i][0].y();
         float x = pairs[i][1].x();
         float y = pairs[i][1].y();
-//        printf("Best Match: (%d, %d) to (%d, %d)\n", (int)pairs[i][0].x(), (int)pairs[i][0].y(),
-//               (int)pairs[i][1].x(), (int)pairs[i][1].y());
         A.row(i * 2) << x, y, 1, 0, 0, 0, -x * x1, -y * x1, -x1;
         A.row(i * 2 + 1) << 0, 0, 0, x, y, 1, -x * y1, -y1 * y, -y1;
     }
@@ -44,7 +42,7 @@ FloatImage Pano::autocat2images(PanoImage &pim1, PanoImage &pim2, bool blend){
 
     Mat3f homo = RANSAC(pim1, pim2, m_match_th, m_portion);
 
-    cout << "ransac done"<<endl;
+    cout << "Ransac Done"<<endl;
     
     if(blend) return cat2imageBlend(im1, im2, homo);
     return cat2images(im1, im2, homo);
@@ -54,12 +52,12 @@ FloatImage Pano::autocat2images(PanoImage &pim1, PanoImage &pim2, bool blend){
 
 FloatImage Pano::autocatnimages(std::vector<PanoImage> &pims, bool center, bool blend, bool twoscale){
     // make sure pims is not empty and pims size is not 1
+    assert(pims.size() > 1);
 
     // initImages (calculate features and patches)
     vector<FloatImage> ims;
     vector<Mat3f> homos;
     FloatImage output;
-
 
     for (int i = 0; i < pims.size(); ++i) {
         pims[i].harrisCornerDetector(m_window, m_harris_th);
@@ -74,6 +72,7 @@ FloatImage Pano::autocatnimages(std::vector<PanoImage> &pims, bool center, bool 
 
     FloatImage ref(pims[refn].getImage());
 
+    // compute matrices based on reference image
     Mat3f lhomo = Mat3f::Identity();
     for (int i = refn; i < pims.size() - 1; ++i) {
         Mat3f nhomo = lhomo * RANSAC(pims[i], pims[i+1], m_match_th, m_portion);
@@ -95,7 +94,6 @@ FloatImage Pano::autocatnimages(std::vector<PanoImage> &pims, bool center, bool 
             output = catnimagesTwoScaleBlend(ref, ims, homos);
         else
             output = catnimagesBlend(ref, ims, homos);
-
     }else{
         output = catnimages(ref, ims, homos);
     }
@@ -103,6 +101,7 @@ FloatImage Pano::autocatnimages(std::vector<PanoImage> &pims, bool center, bool 
     return output;
 }
 
+// auto cat n images in x and y direction
 FloatImage Pano::autocatnimages(std::vector<std::vector<PanoImage>> &pims, bool center, bool blend, bool twoscale){
     // make sure pims is not empty and pims size is not 1
     assert(pims.size() > 0 && pims[0].size() > 0);
@@ -148,7 +147,6 @@ FloatImage Pano::autocatnimages(std::vector<std::vector<PanoImage>> &pims, bool 
 
         lhomo = Mat3f::Identity();
         for (int i = refx; i > 0; --i) {
-            printf("now running (%d, %d) \n", j, i);
             Mat3f nhomo = lhomo * RANSAC(pims[j][i], pims[j][i-1], m_match_th, m_portion);
             imsx.push_back(pims[j][i-1].getImage());
             homos.push_back(nhomo);
@@ -159,6 +157,7 @@ FloatImage Pano::autocatnimages(std::vector<std::vector<PanoImage>> &pims, bool 
         ims.push_back(imsx);
     }
 
+    // get homos on y direction
     Mat3f lhomo = Mat3f::Identity();
     for (int j = refy; j < pims.size() - 1; ++j) {
         vector<Mat3f> nhomosx;
@@ -167,7 +166,6 @@ FloatImage Pano::autocatnimages(std::vector<std::vector<PanoImage>> &pims, bool 
         Mat3f nhomos = homosx[j+1][0] * nhomo;
         nhomosx.push_back(nhomos);
         for (int i = 1; i < pims[0].size() - refx - 1; ++i) {
-            printf("after x, now running (%d, %d) \n", j, i);
             Mat3f update = homosx[j+1][i] * nhomosx[i - 1];
             nhomosx.push_back(update);
         }
@@ -176,7 +174,6 @@ FloatImage Pano::autocatnimages(std::vector<std::vector<PanoImage>> &pims, bool 
         nhomosx.push_back(nhomos2);
 
         for (int i = pims[0].size() - refx; i < homosx[j+1].size(); ++i) {
-            printf("after x, now running (%d, %d) \n", j, i);
             Mat3f update = homosx[j+1][i] * nhomosx[i - 1];
             nhomosx.push_back(update);
         }
@@ -197,7 +194,6 @@ FloatImage Pano::autocatnimages(std::vector<std::vector<PanoImage>> &pims, bool 
         Mat3f nhomos = homosx[j-1][0] * nhomo;
         nhomosx.push_back(nhomos);
         for (int i = 1; i < pims[0].size() - refx - 1; ++i) {
-            printf("after x, now running (%d, %d) \n", j, i);
             Mat3f update = homosx[j-1][i] * nhomosx[i - 1];
             nhomosx.push_back(update);
         }
@@ -206,7 +202,6 @@ FloatImage Pano::autocatnimages(std::vector<std::vector<PanoImage>> &pims, bool 
         nhomosx.push_back(nhomos2);
 
         for (int i = pims[0].size() - refx; i < homosx[j-1].size(); ++i) {
-            printf("after x, now running (%d, %d) \n", j, i);
             Mat3f update = homosx[j-1][i] * nhomosx[i - 1];
             nhomosx.push_back(update);
         }
@@ -242,7 +237,8 @@ FloatImage Pano::autocatnimages(std::vector<std::vector<PanoImage>> &pims, bool 
 
 
 
-
+// calculate weight map
+// can return a gaussian or lerp weight map
 FloatImage Pano::calweight(int sizex, int sizey, bool gau, float ratio){
     FloatImage weightmap(sizex,sizey,1);
     float cx = sizex / 2;
@@ -271,7 +267,7 @@ FloatImage Pano::calweight(int sizex, int sizey, bool gau, float ratio){
             }
         }
     }
-//Debug write: weightmap.write(DATA_DIR "/output/test_weightmap.png");
+
     return weightmap;
 }
 
@@ -389,6 +385,7 @@ ImageBound Pano::boundBoxCrop(const FloatImage &im, Mat3f homo){
 
 }
 
+// calculate canvas size and offset of output images
 Canvas Pano::calculateCanvas(ImageBound a, ImageBound b){
     
     ImageBound ab;
@@ -409,6 +406,7 @@ Canvas Pano::calculateCanvas(ImageBound a, ImageBound b){
     
 }
 
+// calculate canvas size and offset of output images
 Canvas Pano::calculateCanvas(vector<ImageBound> bs){
 
 
@@ -430,7 +428,7 @@ Canvas Pano::calculateCanvas(vector<ImageBound> bs){
 
 std::vector<std::vector<Vec2i>> Pano::matchDescriptors(PanoImage &pim1, PanoImage &pim2, float threshold){
     std::vector<std::vector<Vec2i>> output;
-    // how to init these min?
+
     float min, smin, dist = 0, ratio = 0;
     Vecxf d;
     int min_index = -1, smin_index = -1;
@@ -465,8 +463,8 @@ std::vector<std::vector<Vec2i>> Pano::matchDescriptors(PanoImage &pim1, PanoImag
             Vec2i ref1, ref2;
             ref1 << pim1.getFeaturePoint(i).x(), pim1.getFeaturePoint(i).y();
             ref2 << pim2.getFeaturePoint(min_index).x(), pim2.getFeaturePoint(min_index).y();
-            printf("Match: (%d, %d) to (%d, %d)\n", ref1.x(), ref1.y(), ref2.x(), ref2.y());
-            printf("min_index is: %d, min_index y is: %d\n", min_index, pim2.getFeaturePoint(min_index).y());
+//            printf("Match: (%d, %d) to (%d, %d)\n", ref1.x(), ref1.y(), ref2.x(), ref2.y());
+//            printf("min_index is: %d, min_index y is: %d\n", min_index, pim2.getFeaturePoint(min_index).y());
 
 
             refs.push_back(ref1);
@@ -477,15 +475,17 @@ std::vector<std::vector<Vec2i>> Pano::matchDescriptors(PanoImage &pim1, PanoImag
     return output;
 }
 
-//RANSAC for estimatimating homography
+//RANSAC for estimating homography
 Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float portion, float accuBound, float threshold){
     Mat3f H;
-    // need to make sure pairs > 4s
-    vector<vector<Vec2i>> pairs = matchDescriptors(pim1, pim2, match_th);
 
-    FloatImage matchesImage = vizMatches(pim1, pim2, pairs);
+    vector<vector<Vec2i>> pairs = matchDescriptors(pim1, pim2, match_th);
+    assert(pairs.size() >= 4);
+
+    // visualize matches for debugging
+    //FloatImage matchesImage = vizMatches(pim1, pim2, pairs);
     //matchesImage.write(DATA_DIR "/output/matchesImage.png");
-    matchesImage.debugWrite();
+    //matchesImage.debugWrite();
 
     vector<vector<Vec2f>> Largest_inliers;
     Mat3f Homo;
@@ -498,14 +498,15 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
     vector<vector<Vec2f>> bestPairs;
     //Ransac loop: stop when the failure probability
     //of finding the correct H is low
+    //or when it reach the max iteration number
 
     int iter = (int)(logf(0.05) / logf(1 - powf(portion, 4)));
     int iterx = 0;
-    cout << iter << endl;
-    cout << "number of pairs: "<<rndBound<<endl;
+//    cout << iter << endl;
+    cout << "Number of pairs in RANSAC: "<<rndBound<<endl;
 
     while(Prob > accuBound && iterx < iter){
-        std::cout<<"iter: "<<iterx<<" of"<<iter<<std::endl;
+        //std::cout<<"iter: "<<iterx<<" of"<<iter<<std::endl;
         vector<vector<Vec2f>> inliers;
         //select four feature pairs(at random)
         vector<vector<Vec2f>> ranPairs;
@@ -546,17 +547,15 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
         if(inliers.size() > maxInlinerSize){
             maxInlinerSize = inliers.size();
             Homo = H;
-            //Largest_inliers.clear();
             Largest_inliers = inliers;
             bestPairs = ranPairs;
-
         }
         iterx++;
     }
 
-    // visualize
-    FloatImage viz = vizMatches(pim1, pim2, bestPairs);
-    viz.debugWrite();
+//    // visualization for debugging
+//    FloatImage viz = vizMatches(pim1, pim2, bestPairs);
+//    viz.debugWrite();
 
     // output best
     for (int i = 0; i < 4; ++i) {
@@ -564,14 +563,16 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
                (int)bestPairs[i][1].x(), (int)bestPairs[i][1].y());
     }
 
-    //Homo = computeHomo(Largest_inliers);
-    viz = vizMatches(pim1, pim2, Largest_inliers);
-    viz.debugWrite();
+    //Homo = computeHomo(Largest_inliers)
+    //   // visualization for debugging
+//    viz = vizMatches(pim1, pim2, Largest_inliers);
+//    viz.debugWrite();
 
     return Homo;
 }
 
 
+// Visualize matches
 FloatImage Pano::vizMatches(PanoImage &pim1, PanoImage &pim2, std::vector<std::vector<Vec2i>> matches){
     FloatImage im1 = pim1.getImage(), im2 = pim2.getImage();
     FloatImage output(im1.sizeX() + im2.sizeX(), std::max(im1.sizeY(), im2.sizeY()),
@@ -589,18 +590,14 @@ FloatImage Pano::vizMatches(PanoImage &pim1, PanoImage &pim2, std::vector<std::v
             for (int k = 0; k < im2.channels(); ++k)
                 output(i + offsetX, j, k) = im2(i, j, k);
 
-
+    // draw features and lines to match
     for (int i = 0; i < matches.size(); ++i) {
         output.drawLine(matches[i][0].x(), matches[i][0].y(), matches[i][1].x() + offsetX, matches[i][1].y());
         output.drawSquare(matches[i][0].x(), matches[i][0].y());
         output.drawSquare(matches[i][1].x() + offsetX, matches[i][1].y());
     }
 
-
-
     return output;
-
-
 }
 
 FloatImage Pano::vizMatches(PanoImage &pim1, PanoImage &pim2, std::vector<std::vector<Vec2f>> matches){
@@ -612,10 +609,9 @@ FloatImage Pano::vizMatches(PanoImage &pim1, PanoImage &pim2, std::vector<std::v
         matchesi.push_back(match);
     }
     return vizMatches(pim1, pim2, matchesi);
-
-
 }
 
+// auto cropping the stitched image
 FloatImage Pano::autocrop(std::vector<ImageBound> bs, Vec2i offset, const FloatImage &im){
     Vec2f topleft, btmright;
     topleft << bs[0].topleft;
@@ -626,11 +622,6 @@ FloatImage Pano::autocrop(std::vector<ImageBound> bs, Vec2i offset, const FloatI
         btmright.x() = std::fmax(btmright.x(), bs[i].btnright.x());
         btmright.y() = std::fmin(btmright.y(), bs[i].btnright.y());
     }
-    cout << topleft << endl;
-    cout << btmright << endl;
-    printf("(%d, %d) to (%d, %d)", (int)topleft.x() - offset.x(), (int)topleft.y() - offset.y(),
-           (int)btmright.x() - offset.x(), (int)btmright.y() - offset.y());
-    printf("dimension is (%d, %d)", im.sizeX(), im.sizeY());
     return cropImage(im, topleft.x() - offset.x(), topleft.y() - offset.y(),
                      btmright.x() - offset.x(), btmright.y() - offset.y());
 
@@ -640,7 +631,7 @@ FloatImage Pano::devidebyWeight(FloatImage im, FloatImage weight_sum){
     FloatImage output(im);
     for(int i = 0 ; i < im.sizeX() ; i++)
         for(int j = 0 ; j < im.sizeY() ; j++){
-            float w = weight_sum(i,j,0);
+            float w = weight_sum(i,j,0);//    // visualization for debugging
             for(int c = 0 ; c < im.channels() ; c++)
                 output(i,j,c) = im(i,j,c) / w;
         }
