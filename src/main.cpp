@@ -118,10 +118,12 @@ void testCatYosemite(){
     pano.setSigma(3.f);
     pano.setNorm(true);
     pano.setPortion(0.1f);
-    PanoImage pim1(FloatImage(DATA_DIR "/input/yosemite1.jpg"));
-    PanoImage pim2(FloatImage(DATA_DIR "/input/yosemite2.jpg"));
+    PanoImage pim1(FloatImage(DATA_DIR "/input/yosemite3.jpg"));
+    PanoImage pim2(FloatImage(DATA_DIR "/input/yosemite4.jpg"));
     FloatImage autocat = pano.autocat2images(pim1, pim2);
     autocat.write(DATA_DIR "/output/auto_yosemite_left_right.png");
+    pim1.vizPatches().debugWrite();
+    pim2.vizPatches().debugWrite();
 
 }
 
@@ -359,8 +361,8 @@ int main(){
 //    matchesImage.write(DATA_DIR "/output/matchesImage.png");
 
 
-
-    //testCatYosemite();
+//
+    testCatYosemite();
    // testCatNYosemite();
     //testCatTable();
     //testCatNPan();
@@ -389,9 +391,11 @@ int main(){
     //testCatNB();
 //    testVizPatch();
 //    testXYImage({5306, 5314},{5308, 5316},"multi", false);
-    testXYImage({5306, 5314, 5321},{5308, 5316, 5323},"multi", true, 20);
+//    testXYImage({5306, 5314, 5321},{5308, 5316, 5323},"multi", true, 20);
+//    testXYImage({5305, 5313, 5320},{5309, 5317, 5324},"multi", false);
 //
 //    testNImage(5314, 5316, "multi", false);
+//    testNImage(5000, 5004, "tree", false);
 
 
 
