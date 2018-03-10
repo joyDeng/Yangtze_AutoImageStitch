@@ -495,6 +495,7 @@ void FloatImage::drawLine(int a, int b, int c, int d){
             operator()(i, (int)res , j) = 0.f;
             operator()(i, (int)res , 1) = 1.f;
         }
+		operator()(i, (int)res , 1) = 1.f;
     }
 }
 

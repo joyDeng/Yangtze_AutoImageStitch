@@ -37,6 +37,22 @@ void testCatTable(){
 
 }
 
+void testCatNB(){
+    PlanePano pano;
+    pano.setWindow(9);
+    pano.setPatchWindow(31);
+    pano.setMatchTh(0.7f);
+    pano.setHarrisTh(0.2f);
+    pano.setSigma(3.f);
+    pano.setNorm(true);
+    pano.setPortion(0.1f);
+    PanoImage pim1(FloatImage(DATA_DIR "/input/left.png"));
+    PanoImage pim2(FloatImage(DATA_DIR "/input/right.png"));
+    FloatImage autocat = pano.autocat2images(pim1, pim2, false);
+    autocat.write(DATA_DIR "/output/auto_pano_no_blending.png");
+
+}
+
 void testCatLily(){
     PlanePano pano;
     pano.setWindow(9);
@@ -106,10 +122,12 @@ void testCatYosemite(){
     pano.setSigma(3.f);
     pano.setNorm(true);
     pano.setPortion(0.1f);
-    PanoImage pim1(FloatImage(DATA_DIR "/input/yosemite1.jpg"));
-    PanoImage pim2(FloatImage(DATA_DIR "/input/yosemite2.jpg"));
+    PanoImage pim1(FloatImage(DATA_DIR "/input/yosemite3.jpg"));
+    PanoImage pim2(FloatImage(DATA_DIR "/input/yosemite4.jpg"));
     FloatImage autocat = pano.autocat2images(pim1, pim2);
     autocat.write(DATA_DIR "/output/auto_yosemite_left_right.png");
+    pim1.vizPatches().debugWrite();
+    pim2.vizPatches().debugWrite();
 
 }
 
@@ -257,11 +275,12 @@ void testWeightMap(){
 }
 
 void testVizPatch(){
-    PanoImage pim1(FloatImage(DATA_DIR "/input/building.png"));
-
+    FloatImage im(DATA_DIR "/input/building.png");
+//    PanoImage pim1(cropImage(im, 0, 150, im.sizeX() - 300, im.sizeY()));
+    PanoImage pim1(im);
     FloatImage detected = pim1.harrisCornerDetector(9, 0.6);
     //detected.write(DATA_DIR "/output/testFeature.png");
-    pim1.calculatePatches(3.f, 15, false);
+    pim1.calculatePatches(3.f, 15, true);
     FloatImage desp = pim1.vizPatches();
     desp.write(DATA_DIR "/output/testVizPatch.png");
 
@@ -307,7 +326,7 @@ void testNImage(int start, int end, char* folder, bool c=true, int cropX=50, int
         if(c){
             pims.push_back(PanoImage(cropImage(ori, cropX, cropY, ori.sizeX() - 2 * cropX, ori.sizeY() - 2 * cropY)));
         }else{
-            pims.push_back(ori);
+            pims.push_back(PanoImage(ori));
         }
 
     }
@@ -317,8 +336,10 @@ void testNImage(int start, int end, char* folder, bool c=true, int cropX=50, int
     autocat.write(buffer2);
 }
 
-void testNTower(int start, int end){
-    SpherePano pano(0.7,4);
+void testXYImage(std::vector<int> start, std::vector<int> end, char* folder, bool c=true, int cropX=50, int cropY=0){
+    assert(start.size() == end.size());
+
+    PlanePano pano;
     pano.setWindow(9);
     pano.setPatchWindow(31);
     pano.setMatchTh(0.7f);
@@ -326,7 +347,32 @@ void testNTower(int start, int end){
     pano.setSigma(3.f);
     pano.setNorm(true);
     pano.setPortion(0.2f);
+    std::vector<std::vector<PanoImage>> pimsxy;
+    for (int i = 0; i < start.size(); ++i) {
+        std::vector<PanoImage> pims;
+        for (int n = start[i]; n <= end[i]; n++) {
+            char buffer[255];
+            sprintf(buffer, DATA_DIR "/input/%s/IMG_%d.jpg", folder, n);
+            FloatImage ori = FloatImage(buffer);
+            if(c){
+                pims.push_back(PanoImage(cropImage(ori, cropX, cropY, ori.sizeX() - 2 * cropX, ori.sizeY() - 2 * cropY)));
+            }else{
+                pims.push_back(PanoImage(ori));
+            }
+            
+        }
+        pimsxy.push_back(pims);
+    }
     
+    char buffer2[255];
+    sprintf(buffer2, DATA_DIR "/output/auto_%s_result.jpg", folder);
+    FloatImage autocat = pano.autocatnimages(pimsxy);
+    autocat.write(buffer2);
+}
+
+void testNTower(int start, int end){
+    SpherePano pano(0.7,4);
+
     
     std::vector<PanoImage> pims;
     for (int n = start; n <= end; n++) {
@@ -363,8 +409,8 @@ int main(){
 //    matchesImage.write(DATA_DIR "/output/matchesImage.png");
 
 
-
-    //testCatYosemite();
+//
+    testCatYosemite();
    // testCatNYosemite();
     //testCatTable();
 //    testCatNPan();
@@ -382,12 +428,34 @@ int main(){
     //testNHomeCropped(5212, 5230);
 //    testNImage(5100, 5101, "sxi", false, 0, 0);
 //    testNSphere(5181, 5186);
+
 //     testNSphere(5000, 5017);
 //     testNSphereGreen(5253, 5277);
     testNTower(5313, 5319);
 //    testSphere();
 
+    //testNSphere(5254, 5263);
+
+
+
+    // code for title image
+//    testNImage(5000, 5006, "green", true, 150, 0);
+
+    // code for auto
+    //testCatNB();
+//    testVizPatch();
+//    testXYImage({5306, 5314},{5308, 5316},"multi", false);
+//    testXYImage({5306, 5314, 5321},{5308, 5316, 5323},"multi", true, 20);
+//    testXYImage({5305, 5313, 5320},{5309, 5317, 5324},"multi", false);
+//
+//    testNImage(5314, 5316, "multi", false);
+//    testNImage(5000, 5004, "tree", false);
+
+
+
 
     return 0;
 
 }
+
+

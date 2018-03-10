@@ -38,6 +38,8 @@ public:
     int getPointCount(){return m_pointCount;}
     Vecxf getPatches(int i){return m_patches[i];}
     Vec2i getFeaturePoint(int i){return m_featurePoints[i];}
+
+    void clear(){ m_patches.clear();m_featurePoints.clear();}
     
     // corner detector
     FloatImage harrisCornerDetector(int window, float threshold);
