@@ -58,14 +58,13 @@ typedef plane Plane;
 
 class SpherePano : public Pano{
     float m_f;
-    Mat3f m_S;
-    Mat3f m_K;
+    float m_res;
     
 public:
     
     //initialize parameters
     SpherePano();
-    SpherePano(float f);
+    SpherePano(float f, int m_res);
     
     // cat two images in spherecoordinates
     virtual FloatImage cat2images(const FloatImage &re1, const FloatImage &im, Mat3f homo);
@@ -76,9 +75,11 @@ public:
     
 ;
     
-    FloatImage autocat2imagesInSphere(PanoImage ref, PanoImage im);
-
-    FloatImage autocatnimagesSphere(std::vector<PanoImage> &pims, bool center, bool blend, bool twoscale = false);
+//    FloatImage autocat2imagesInSphere(PanoImage ref, PanoImage im);
+//    FloatImage autocatnimagesSphere(std::vector<PanoImage> &pims, bool center, bool blend, bool twoscale = false);
+    
+    Vec3f computeY(vector<Mat3f> homos);
+    Mat3f computeRotationMatrix(Vec3f y, Vec3f u);
     
 };
 

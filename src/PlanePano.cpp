@@ -191,10 +191,11 @@ FloatImage PlanePano::catnimagesBlend(FloatImage ref, std::vector<FloatImage> im
     // 0 is the reference image
     
     // init weight maps
-    FloatImage refWeight = calweight(ref.sizeX(), ref.sizeY());
+    FloatImage refWeight = calweight(ref.sizeX(), ref.sizeY(),false);
     vector<FloatImage> weights;
     for (int n = 0; n < ims.size(); ++n) {
-        weights.push_back(calweight(ims[n].sizeX(), ims[n].sizeY()));
+        weights.push_back(calweight(ims[n].sizeX(), ims[n].sizeY(),false));
+        weights[n].debugWrite();
     }
     
     // init inv homos
@@ -315,10 +316,10 @@ FloatImage PlanePano::catnimagesTwoScaleBlend(FloatImage ref, std::vector<FloatI
     }
     
     // init weight maps
-    FloatImage refWeight = calweight(ref.sizeX(), ref.sizeY());
+    FloatImage refWeight = calweight(ref.sizeX(), ref.sizeY(),false);
     vector<FloatImage> weights;
     for (int n = 0; n < ims.size(); ++n) {
-        weights.push_back(calweight(ims[n].sizeX(), ims[n].sizeY()));
+        weights.push_back(calweight(ims[n].sizeX(), ims[n].sizeY(),false));
     }
     
     // init inv homos

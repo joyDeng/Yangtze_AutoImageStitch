@@ -15,6 +15,7 @@
 #include <vector>
 #include <floatimage.h>
 #include <pcg32/pcg32.h>
+#include <Eigen/Dense>
 
 ///* Import some common Eigen types */
 //using Eigen::Vector2f;

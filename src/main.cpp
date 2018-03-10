@@ -87,8 +87,12 @@ void testCatNPan(){
     pims.push_back(PanoImage(FloatImage(DATA_DIR "/input/pan11.jpg")));
     pims.push_back(PanoImage(FloatImage(DATA_DIR "/input/pan12.jpg")));
     pims.push_back(PanoImage(FloatImage(DATA_DIR "/input/pan13.jpg")));
-    FloatImage autocat = pano.autocatnimages(pims);
+    FloatImage autocat = pano.autocatnimages(pims,true,false);
     autocat.write(DATA_DIR "/output/auto_pan.png");
+    autocat = pano.autocatnimages(pims,true,true,false);
+    autocat.write(DATA_DIR "/output/auto_pan_broteb.png");
+    FloatImage autocatb = pano.autocatnimages(pims);
+    autocatb.write(DATA_DIR "/output/auto_pan_twoscaleb.png");
 
 }
 
@@ -126,6 +130,7 @@ void testCatNYosemite(){
 
     FloatImage autocat = pano.autocatnimages(pims);
     autocat.write(DATA_DIR "/output/auto_yosemite.png");
+    
 
 }
 
@@ -133,9 +138,9 @@ void testNHome(int start, int end){
     PlanePano pano;
     pano.setWindow(9);
     pano.setPatchWindow(31);
-    pano.setMatchTh(0.7f);
-    pano.setHarrisTh(0.2f);
-    pano.setSigma(3.f);
+    pano.setMatchTh(0.5f);
+    pano.setHarrisTh(0.3f);
+    pano.setSigma(2.f);
     pano.setNorm(true);
     pano.setPortion(0.2f);
 
@@ -143,13 +148,16 @@ void testNHome(int start, int end){
     std::vector<PanoImage> pims;
     for (int n = start; n <= end; n++) {
         char buffer[255];
-        sprintf(buffer, DATA_DIR "/input/xi/IMG_%d.jpg", n);
+        sprintf(buffer, DATA_DIR "/input/home/IMG_%d.jpg", n);
         pims.push_back(PanoImage(FloatImage(buffer)));
     }
 
-    FloatImage autocat = pano.autocatnimages(pims);
-    autocat.write(DATA_DIR "/output/auto_xi_lin.png");
-
+    FloatImage autocat = pano.autocatnimages(pims,true,false);
+    autocat.write(DATA_DIR "/output/auto_home_lin.png");
+    autocat = pano.autocatnimages(pims,true,true,false);
+    autocat.write(DATA_DIR "/output/auto_home_b.png");
+    FloatImage autocatb = pano.autocatnimages(pims);
+    autocatb.write(DATA_DIR "/output/auto_home_twoscaleb.png");
 }
 
 void testHome(){
@@ -172,7 +180,7 @@ void testHome(){
 
 
 void testSphere(){
-    SpherePano pano(2);
+    SpherePano pano(0.1,4);
     pano.setWindow(9);
     pano.setPatchWindow(31);
     pano.setMatchTh(0.7f);
@@ -181,9 +189,9 @@ void testSphere(){
     pano.setNorm(true);
     pano.setPortion(0.2f);
     
-    PanoImage pim1(FloatImage(DATA_DIR "/input/left.png"));
-    PanoImage pim2(FloatImage(DATA_DIR "/input/right.png"));
-    FloatImage autocat = pano.autocat2imagesInSphere(pim1, pim2);
+    PanoImage pim1(FloatImage(DATA_DIR "/input/checker.jpg"));
+    PanoImage pim2(FloatImage(DATA_DIR "/input/checker.jpg"));
+    FloatImage autocat = pano.autocat2images(pim1, pim2);
     autocat.write(DATA_DIR "/output/auto_sphere_left_right.png");
     
 //    FloatImage autonos = pano.autocat2images(pim1, pim2);
@@ -191,7 +199,32 @@ void testSphere(){
 }
 
 void testNSphere(int start, int end){
-    SpherePano pano;
+    SpherePano pano(1, 4);
+    pano.setWindow(9);
+    pano.setPatchWindow(31);
+    pano.setMatchTh(0.7f);
+    pano.setHarrisTh(0.2f);
+    pano.setSigma(3.f);
+    pano.setNorm(true);
+    pano.setPortion(0.2f);
+    
+    
+    std::vector<PanoImage> pims;
+    for (int n = start; n <= end; n++) {
+        char buffer[255];
+        sprintf(buffer, DATA_DIR "/input/tree/IMG_%d.JPG", n);
+        pims.push_back(PanoImage(FloatImage(buffer)));
+    }
+    
+//    FloatImage autocat = pano.autocatnimagesSphere(pims, true, true);
+//    autocat.write(DATA_DIR "/output/auto_tree_sphere_b.png");
+    FloatImage autocat_s = pano.autocatnimages(pims, true, false);
+    autocat_s.write(DATA_DIR "/output/auto_tree_straight_sphere_nb.png");
+    
+}
+
+void testNSphereGreen(int start, int end){
+    SpherePano pano(1, 4);
     pano.setWindow(9);
     pano.setPatchWindow(31);
     pano.setMatchTh(0.7f);
@@ -208,8 +241,10 @@ void testNSphere(int start, int end){
         pims.push_back(PanoImage(FloatImage(buffer)));
     }
     
-    FloatImage autocat = pano.autocatnimagesSphere(pims, true, false);
-    autocat.write(DATA_DIR "/output/auto_green_sphere.png");
+    FloatImage autocat = pano.autocatnimages(pims, true, true);
+    autocat.write(DATA_DIR "/output/auto_tree_sphere_b.png");
+    FloatImage autocat_s = pano.autocatnimages(pims, true, false);
+    autocat_s.write(DATA_DIR "/output/auto_greendata_straight_sphere_nb.png");
     
 }
 
@@ -282,6 +317,28 @@ void testNImage(int start, int end, char* folder, bool c=true, int cropX=50, int
     autocat.write(buffer2);
 }
 
+void testNTower(int start, int end){
+    SpherePano pano(0.7,4);
+    pano.setWindow(9);
+    pano.setPatchWindow(31);
+    pano.setMatchTh(0.7f);
+    pano.setHarrisTh(0.2f);
+    pano.setSigma(3.f);
+    pano.setNorm(true);
+    pano.setPortion(0.2f);
+    
+    
+    std::vector<PanoImage> pims;
+    for (int n = start; n <= end; n++) {
+        char buffer[255];
+        sprintf(buffer, DATA_DIR "/input/tower/IMG_%d.jpg", n);
+        pims.push_back(PanoImage(FloatImage(buffer)));
+    }
+    
+    FloatImage autocat = pano.autocatnimages(pims,true, true,false);
+    autocat.write(DATA_DIR "/output/auto_tower_plane_lin.png");
+}
+
 int main(){
 
 
@@ -310,7 +367,7 @@ int main(){
     //testCatYosemite();
    // testCatNYosemite();
     //testCatTable();
-    //testCatNPan();
+//    testCatNPan();
     //
     //testCatPan();
 //    testHome();
@@ -321,11 +378,14 @@ int main(){
 //    testCatTable();
 //    testCatLily();
 //    testNHome(5217, 5224);
-//    testNHome(5200, 5204);
+//    testNHome(5142, 5144);
     //testNHomeCropped(5212, 5230);
 //    testNImage(5100, 5101, "sxi", false, 0, 0);
 //    testNSphere(5181, 5186);
-    testNSphere(5254, 5263);
+//     testNSphere(5000, 5017);
+//     testNSphereGreen(5253, 5277);
+    testNTower(5313, 5319);
+//    testSphere();
 
 
     return 0;

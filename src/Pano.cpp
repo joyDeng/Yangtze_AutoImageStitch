@@ -1,5 +1,5 @@
 //
-//  stiches.cpp
+//  Pano.cpp
 //  Yangtze
 //
 //  Created by DENG XI on 3/4/18.
@@ -498,6 +498,16 @@ FloatImage Pano::autocrop(std::vector<ImageBound> bs, Vec2i offset, const FloatI
 
 }
 
+FloatImage Pano::devidebyWeight(FloatImage im, FloatImage weight_sum){
+    FloatImage output(im);
+    for(int i = 0 ; i < im.sizeX() ; i++)
+        for(int j = 0 ; j < im.sizeY() ; j++){
+            float w = weight_sum(i,j,0);
+            for(int c = 0 ; c < im.channels() ; c++)
+                output(i,j,c) = im(i,j,c) / w;
+        }
+    return output;
+}
 
 
 

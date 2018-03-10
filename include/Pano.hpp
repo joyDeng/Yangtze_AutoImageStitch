@@ -1,5 +1,5 @@
 //
-//  stiches.hpp
+//  Pano.hpp
 //  Yangtze
 //
 //  Created by DENG XI on 3/4/18.
@@ -85,8 +85,7 @@ public:
 
 
     
-    // solve Ax = 0 with svd
-    Mat3f solveHomo(MatrixXf);
+
     
     // calculate new canvas given image and homo
     ImageBound boundBox(const FloatImage &im);
@@ -95,15 +94,19 @@ public:
     
     // calculate the shift offset when conbining two images
     Canvas calculateCanvas(ImageBound a, ImageBound b);
+    
     // calculate canvas of n images
     Canvas calculateCanvas(std::vector<ImageBound> bs);
     
     // calculate weight map of a image of sizex * sizey
     FloatImage calweight(int sizex, int sizey, bool gau = true, float ratio = 0.2);
+    FloatImage devidebyWeight(FloatImage im, FloatImage w);
 
 
     Mat3f RANSAC( PanoImage &pim1, PanoImage &pim2, float match_th = 0.5, float portion = 0.5, float accuracy = 0.1,
                   float threshold = 1);
+    // solve Ax = 0 with svd
+    Mat3f solveHomo(MatrixXf);
     Mat3f computeHomo(std::vector<std::vector<Vec2f>> pairs);
 
     std::vector<std::vector<Vec2i>> matchDescriptors(PanoImage &pim1, PanoImage &pim2, float threshold=0.5);
