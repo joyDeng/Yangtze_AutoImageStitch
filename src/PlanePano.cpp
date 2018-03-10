@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <PlanePano.h>
 
-// cat 2 image given corresponding poin sets
+// cat 2 image given corresponding point sets
 FloatImage PlanePano::cat2images(const FloatImage &im1, const FloatImage &im2, Mat3f homo){
     Mat3f homo_inverse = homo.inverse();
     // calculate canvas of output image
@@ -17,7 +17,7 @@ FloatImage PlanePano::cat2images(const FloatImage &im1, const FloatImage &im2, M
     ImageBound im2bound = boundBoxHomo(im2, homo);
     Canvas canv = calculateCanvas(im1bound, im2bound);
     
-    cout << "image bound"<<endl;
+    cout << "Image bound is: "<< canv.length << ", " << canv.height<<endl;
     
     //paste image1 onto canvas
     FloatImage output(canv.length, canv.height, im1.channels());
@@ -29,7 +29,7 @@ FloatImage PlanePano::cat2images(const FloatImage &im1, const FloatImage &im2, M
                 for(int c = 0 ; c < im1.channels() ; c++)
                     output(nx, ny, c) = im1(i, j, c);
         }
-    cout << "image 1 done"<<endl;
+    cout << "Image 1 done"<<endl;
     //query image2 and map onto canvas
     Vec2i offsetImage2 = Vec2i(floor(im2bound.topleft.x()), floor(im2bound.topleft.y())) - canv.offset;
     Vec2f sizeTransedImage2 = im2bound.btnright - im2bound.topleft;
@@ -47,13 +47,13 @@ FloatImage PlanePano::cat2images(const FloatImage &im1, const FloatImage &im2, M
             }
         }
     }
-    cout << "cat 2 image done"<<endl;
+    cout << "Image 2 done"<<endl;
     return output;
 }
 
 FloatImage PlanePano::catnimages(FloatImage ref, std::vector<FloatImage> ims, std::vector<Mat3f> homos){
-    // ims are FloatImages from 0 to n
-    // 0 is the reference image
+    // ref is the reference image
+    // all other images are in ims
     
     vector<Mat3f> invHomos;
     for (int n = 0; n < homos.size(); ++n) {
@@ -70,8 +70,7 @@ FloatImage PlanePano::catnimages(FloatImage ref, std::vector<FloatImage> ims, st
     bounds.push_back(im1bound);
     // calculate canvas of output image
     canv = calculateCanvas(bounds);
-    cout << "image bound:"<<endl;
-    printf("(%d, %d)", canv.length, canv.height);
+    cout << "Image bound is: "<< canv.length << ", " << canv.height<<endl;
     
     //paste image1 onto canvas
     FloatImage output(canv.length, canv.height, ref.channels());
@@ -85,7 +84,7 @@ FloatImage PlanePano::catnimages(FloatImage ref, std::vector<FloatImage> ims, st
                     output(nx, ny, c) = ref(i, j, c);
         }
     }
-    cout << "image ref done"<<endl;
+    cout << "Reference image done"<<endl;
     
     for (int n = 0; n < homos.size(); ++n) {
         Vec2i offsetImage = Vec2i(floor(bounds[n].topleft.x()), floor(bounds[n].topleft.y())) - canv.offset;
@@ -106,14 +105,12 @@ FloatImage PlanePano::catnimages(FloatImage ref, std::vector<FloatImage> ims, st
                 }
             }
         }
-        cout << "image " << n + 1<< " done"<<endl;
-        output.debugWrite();
+        cout << "Image " << n + 1<< " done"<<endl;
     }
-    
-    
     return output;
 }
 
+// stitch 2 images with smooth blending
 FloatImage PlanePano::cat2imageBlend(const FloatImage &im1, const FloatImage &im2, Mat3f homo){
     //calculate weight map for both image
     FloatImage w1 = calweight(im1.sizeX(), im1.sizeY());
@@ -124,13 +121,14 @@ FloatImage PlanePano::cat2imageBlend(const FloatImage &im1, const FloatImage &im
     ImageBound im1bound = boundBox(im1);
     ImageBound im2bound = boundBoxHomo(im2, homo);
     Canvas canv = calculateCanvas(im1bound, im2bound);
+    cout << "Image bound is: "<< canv.length << ", " << canv.height<<endl;
     FloatImage output(canv.length, canv.height, im1.channels());
     
-    //write area of image1
+    // write area of image1
     Vec2f im1area = im1bound.btnright - im1bound.topleft;
     int area1x = (int)im1area.x();
     int area1y = (int)im1area.y();
-    //attach image1
+    // Attach image1
     for(int i = 0 ; i < area1x ; i++){
         for(int j = 0 ; j < area1y ; j++){
             Vec2i pos = Vec2i(i,j) - canv.offset;
@@ -158,7 +156,7 @@ FloatImage PlanePano::cat2imageBlend(const FloatImage &im1, const FloatImage &im
         }
     }
     //Debug: output
-    cout << "image 1 done"<<endl;
+    cout << "Image 1 done"<<endl;
     //query image2 and map onto canvas
     Vec2i offsetImage2 = Vec2i(floor(im2bound.topleft.x()), floor(im2bound.topleft.y())) - canv.offset;
     Vec2f sizeTransedImage2 = im2bound.btnright - im2bound.topleft;
@@ -183,20 +181,20 @@ FloatImage PlanePano::cat2imageBlend(const FloatImage &im1, const FloatImage &im
             }
         }
     }
-    cout << "cat 2 image done"<<endl;
+    cout << "Image 2 done"<<endl;
     return output;
 }
 
 FloatImage PlanePano::catnimagesBlend(FloatImage ref, std::vector<FloatImage> ims, std::vector<Mat3f> homos){
-    // ims are FloatImages from 0 to n
-    // 0 is the reference image
+    // ref is the reference image
+    // all other images are in ims
     
     // init weight maps
     FloatImage refWeight = calweight(ref.sizeX(), ref.sizeY(),false);
     vector<FloatImage> weights;
     for (int n = 0; n < ims.size(); ++n) {
         weights.push_back(calweight(ims[n].sizeX(), ims[n].sizeY(),false));
-        weights[n].debugWrite();
+        //weights[n].debugWrite();
     }
     
     // init inv homos
@@ -216,16 +214,14 @@ FloatImage PlanePano::catnimagesBlend(FloatImage ref, std::vector<FloatImage> im
     bounds.push_back(im1bound);
     // calculate canvas of output image
     canv = calculateCanvas(bounds);
-    cout << "image bound"<<endl;
-    printf("(%d, %d)", canv.length, canv.height);
+    cout << "Image bound is: "<< canv.length << ", " << canv.height<<endl;
     
     FloatImage canv_w(canv.length, canv.height, 1);
     
     //paste image1 onto canvas
     FloatImage output(canv.length, canv.height, ref.channels());
-    
-    canv_w.debugWrite();
-    
+
+    // register reference image with weight map
     for(int i = 0 ; i < ref.sizeX() ; i++) {
         for (int j = 0; j < ref.sizeY(); j++) {
             int nx = i - canv.offset.x();
@@ -239,9 +235,9 @@ FloatImage PlanePano::catnimagesBlend(FloatImage ref, std::vector<FloatImage> im
             }
         }
     }
-    cout << "image ref done"<<endl;
+    cout << "Reference image done"<<endl;
     
-    
+    // register other images with weight map
     for (int n = 0; n < homos.size(); ++n) {
         Vec2i offsetImage = Vec2i(floor(bounds[n].topleft.x()), floor(bounds[n].topleft.y())) - canv.offset;
         Vec2f sizeTransedImage = bounds[n].btnright - bounds[n].topleft;
@@ -266,16 +262,14 @@ FloatImage PlanePano::catnimagesBlend(FloatImage ref, std::vector<FloatImage> im
                 }
             }
         }
-        cout << "image " << n + 1<< " done"<<endl;
+        cout << "Image " << n + 1<< " done"<<endl;
     }
     
-    
-    canv_w.debugWrite();
+    // normalize the weight
     for (int i = 0; i < canv.length; ++i) {
         for (int j = 0; j < canv.height; ++j) {
             if(canv_w(i, j, 0) > 0){
                 for (int c = 0; c < output.channels(); ++c) {
-                    cout << canv_w(i, j, 0) <<endl;
                     output(i, j, c) = output(i, j, c) / canv_w(i, j, 0);
                 }
             }
@@ -284,6 +278,7 @@ FloatImage PlanePano::catnimagesBlend(FloatImage ref, std::vector<FloatImage> im
     return output;
 }
 
+// manually stitch two images with user input pairs
 FloatImage PlanePano::mancat2images(const FloatImage &im1, const FloatImage &im2, std::vector<std::vector<Vec2f>> pairs){
     
     // construct Ax = b homogenous equation systems
@@ -291,9 +286,10 @@ FloatImage PlanePano::mancat2images(const FloatImage &im1, const FloatImage &im2
     return cat2images(im1, im2, homo);
 }
 
+// stitch n images with two scale blending
 FloatImage PlanePano::catnimagesTwoScaleBlend(FloatImage ref, std::vector<FloatImage> ims, std::vector<Mat3f> homos, float sigma, bool lin){
-    // ims are FloatImages from 0 to n
-    // 0 is the reference image
+    // ref is the reference image
+    // all other images are in ims
     
     // two-scale separation
     // using separable gaussian
@@ -332,34 +328,31 @@ FloatImage PlanePano::catnimagesTwoScaleBlend(FloatImage ref, std::vector<FloatI
     // init imagebounds
     ImageBound im1bound = boundBox(ref);
     vector<ImageBound> bounds;
-    
-    vector<ImageBound> cbounds;
+    //vector<ImageBound> cbounds;
     
     Canvas canv;
     
     for (int n = 0; n < homos.size(); ++n) {
         bounds.push_back(boundBoxHomo(ims[n], homos[n]));
-        cbounds.push_back(boundBoxCrop(ims[n], homos[n]));
+        //cbounds.push_back(boundBoxCrop(ims[n], homos[n]));
     }
     bounds.push_back(im1bound);
     
-    cbounds.push_back(im1bound);
+    //cbounds.push_back(im1bound);
     
     // calculate canvas of output image
     canv = calculateCanvas(bounds);
-    
-    cout << "image bound"<<endl;
-    printf("(%d, %d)", canv.length, canv.height);
+
+    cout << "Image bound is: "<< canv.length << ", " << canv.height<<endl;
     
     FloatImage canv_w(canv.length, canv.height, 1);
     FloatImage canv_maxw(canv.length, canv.height, 1);
     
-    //paste image1 onto canvas
+    //register image1 onto canvas
     FloatImage outputlow(canv.length, canv.height, ref.channels());
     FloatImage outputhigh(canv.length, canv.height, ref.channels());
     
-    //canv_w.debugWrite();
-    
+
     bool ismax;
     for(int i = 0 ; i < ref.sizeX() ; i++) {
         for (int j = 0; j < ref.sizeY(); j++) {
@@ -376,7 +369,7 @@ FloatImage PlanePano::catnimagesTwoScaleBlend(FloatImage ref, std::vector<FloatI
             }
         }
     }
-    cout << "image ref done"<<endl;
+    cout << "Referene image done"<<endl;
     
     
     for (int n = 0; n < homos.size(); ++n) {
@@ -415,10 +408,10 @@ FloatImage PlanePano::catnimagesTwoScaleBlend(FloatImage ref, std::vector<FloatI
                 }
             }
         }
-        cout << "image " << n + 1<< " done"<<endl;
+        cout << "Image " << n + 1<< " done"<<endl;
     }
 
-    canv_w.debugWrite();
+    //canv_w.debugWrite();
     for (int i = 0; i < canv.length; ++i) {
         for (int j = 0; j < canv.height; ++j) {
             if(canv_w(i, j, 0) > 0){
@@ -445,11 +438,6 @@ FloatImage PlanePano::autocrop(std::vector<ImageBound> bs, Vec2i offset, const F
         btmright.x() = std::fmax(btmright.x(), bs[i].btnright.x());
         btmright.y() = std::fmin(btmright.y(), bs[i].btnright.y());
     }
-    cout << topleft << endl;
-    cout << btmright << endl;
-    printf("(%d, %d) to (%d, %d)", (int)topleft.x() - offset.x(), (int)topleft.y() - offset.y(),
-           (int)btmright.x() - offset.x(), (int)btmright.y() - offset.y());
-    printf("dimension is (%d, %d)", im.sizeX(), im.sizeY());
     return cropImage(im, topleft.x() - offset.x(), topleft.y() - offset.y(),
                      btmright.x() - offset.x(), btmright.y() - offset.y());
 }

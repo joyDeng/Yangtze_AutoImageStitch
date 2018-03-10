@@ -1,4 +1,5 @@
-ReadMe
+CS189 Computational Photography Final Project
+Group 6: Xi Deng, Zhenli WU
 
 Yangtze is a Auto Panorama Image Stitch Project developed by Deng,Xi  and Wu, Zhenli.
 
@@ -61,6 +62,22 @@ We also implemented some wraped functionalities in Pano Class:
 
 PlanePano:
 	This is the class that operate plane space projection stitching.
+		Functions to stitch two images with and without smooth blending:
+		FloatImage PlanePano::cat2images(const FloatImage &im1, const FloatImage &im2, Mat3f homo);
+		FloatImage PlanePano::cat2imageBlend(const FloatImage &im1, const FloatImage &im2, Mat3f homo);
+
+		Functions to stitch n images without blending/ with smooth blending/ with two-scale blending:
+		FloatImage PlanePano::catnimages(FloatImage ref, std::vector<FloatImage> ims, std::vector<Mat3f> homos);
+		FloatImage PlanePano::catnimagesBlend(FloatImage ref, std::vector<FloatImage> ims, std::vector<Mat3f> homos);
+		FloatImage PlanePano::catnimagesTwoScaleBlend(FloatImage ref, std::vector<FloatImage> ims, std::vector<Mat3f> homos, float sigma, bool lin);
+
+		Function to stitch two images based on user inputs
+		FloatImage PlanePano::mancat2images(const FloatImage &im1, const FloatImage &im2, std::vector<std::vector<Vec2f>> pairs);
+		
+		Functions to calculate canvas size for auto panorama
+		Canvas PlanePano::calculateCanvas(ImageBound a, ImageBound b);
+		Canvas PlanePano::calculateCanvas(std::vector<ImageBound> bs);
+
 
 
 

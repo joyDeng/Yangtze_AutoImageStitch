@@ -44,27 +44,21 @@ PanoImage::PanoImage(const FloatImage &other, const int patchsize){
 }
 
 void PanoImage::calculatePatches(float sigma, int size, bool blur, bool norm) {
-    // 0. clear patches
-    // 1. use luminance value
-    // 2. blur image a little bit
-    // 3. calculate base on patch size
-    // and correct for brightness/contrast
+    // clear patches
     m_patchSize = size;
     m_patches.clear();
     int s = size/2;
 
-
     FloatImage image;
+    // use luminance value
     std::vector<FloatImage> lc = lumiChromi(m_image);
     image = lc[0];
     if(blur){
+        // blur image
         image = gaussianBlur_seperable(image, sigma);
     }
 
-
-    image.write(DATA_DIR "/output/testBlurPatch.png");
-
-
+    // calculate base on patch size
     for (int p = 0; p < m_featurePoints.size(); ++p) {
         Vecxf patch(m_patchSize * m_patchSize);
         for (int i = -s; i <= s; ++i) {
@@ -73,7 +67,7 @@ void PanoImage::calculatePatches(float sigma, int size, bool blur, bool norm) {
                                                                  m_featurePoints[p].y() + j, 0, true);
             }
         }
-
+        // and correct for brightness/contrast
         if(norm){
             float sd = 0, mean = patch.mean();
             for (int n = 0; n < patch.size(); ++n) {
@@ -130,8 +124,6 @@ FloatImage PanoImage::harrisCornerDetector(int k, float threshold){
         }
     }
 
-
-    
     // Find points with large corner response function R
     // Take the points of locally maximum R as the detected feature points
     for(int i = offset ; i < m_image.sizeX() ; i++)
@@ -148,7 +140,6 @@ FloatImage PanoImage::harrisCornerDetector(int k, float threshold){
                     }
                 if(max){
                     m_featurePoints.push_back(Vec2i(i,j));
-                    
                     //Debug: mark points for debug
                     int offx = i - 1;
                     int offy = j - 1;
@@ -166,11 +157,14 @@ FloatImage PanoImage::harrisCornerDetector(int k, float threshold){
 
     m_pointCount = m_featurePoints.size();
 
-    output.debugWrite();
+    // visualize feature for debugging
+//    output.debugWrite();
 
     return output;
 }
 
+// visualize patches
+// red is negative and green is positive
 FloatImage PanoImage::vizPatches(){
     FloatImage output(m_image);
     int s = m_patchSize / 2;

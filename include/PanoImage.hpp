@@ -39,13 +39,13 @@ public:
     Vecxf getPatches(int i){return m_patches[i];}
     Vec2i getFeaturePoint(int i){return m_featurePoints[i];}
 
-    void clear(){ m_patches.clear();m_featurePoints.clear();}
-    
     // corner detector
     FloatImage harrisCornerDetector(int window, float threshold);
     
     // feature descriptor
     void calculatePatches(float sigma = 2.f, int size = 9, bool blur = true, bool norm = true);
+
+    // descriptor visualization
     FloatImage vizPatches();
     
     ~PanoImage(){
