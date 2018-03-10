@@ -73,10 +73,6 @@ public:
     virtual FloatImage catnimagesBlend(FloatImage ref, std::vector<FloatImage> ims, std::vector<Mat3f> homos);
     virtual FloatImage catnimagesTwoScaleBlend(FloatImage ref, std::vector<FloatImage> ims, std::vector<Mat3f> homos, float sigma = 3.f, bool lin=true);
     
-;
-    
-//    FloatImage autocat2imagesInSphere(PanoImage ref, PanoImage im);
-//    FloatImage autocatnimagesSphere(std::vector<PanoImage> &pims, bool center, bool blend, bool twoscale = false);
     
     Vec3f computeY(vector<Mat3f> homos);
     Mat3f computeRotationMatrix(Vec3f y, Vec3f u);
