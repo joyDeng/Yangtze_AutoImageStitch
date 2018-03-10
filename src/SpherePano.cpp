@@ -73,20 +73,6 @@ SpherePano::SpherePano(float f, int res):Pano(){
     m_res = res;
 }
 
-//FloatImage SpherePano::autocat2imagesInSphere(PanoImage pim1, PanoImage pim2){
-//    FloatImage im1 = pim1.getImage(), im2 = pim2.getImage();
-//    pim1.harrisCornerDetector(m_window, m_harris_th);
-//    pim2.harrisCornerDetector(m_window, m_harris_th);
-//    pim1.calculatePatches(m_sigma, m_pwindow, m_blur, m_norm);
-//    pim2.calculatePatches(m_sigma, m_pwindow, m_blur, m_norm);
-//    
-//    Mat3f homo = RANSAC(pim1, pim2, m_match_th, m_portion);
-//    
-//    cout << "ransac done"<<endl;
-//    
-//    return cat2images(im1, im2, homo);
-//
-//}
 
 FloatImage SpherePano::cat2images(const FloatImage &fref, const FloatImage &fim, Mat3f homo){
     Mat3f homo_i = homo.inverse();
@@ -150,38 +136,25 @@ FloatImage SpherePano::cat2images(const FloatImage &fref, const FloatImage &fim,
                         output(i,j,c) = fim(indexp.x(), indexp.y(), c);
                 }
             }
-//
-//            if(rplane.intersect(ray, itr)){
-//                Vec3f p2d =  SK * itr.p;
-//                Vec2i indexp = Vec2i(floor(p2d.x()), floor(p2d.y()));
-////                cout<<"intersect "<<p2d<<endl;
-//                if(indexp.x() >= 0 && indexp.x() < fref.sizeX() && indexp.y() >= 0 && indexp.y() < fref.sizeY()){
-//                    for(int c = 0 ; c < output.channels() ; c++)
-//                        output(i,j,c) = fref(indexp.x(), indexp.y(),c);
-//                }
-//            }
         }
     }
     return output;
 }
 
 Vec3f SpherePano::computeY(vector<Mat3f> homos){
-//    MatrixXf X;
-//    X.resize(homos.size() + 1,3);
     Mat3f X;
     X << 1,0,0,0,1,0,0,0,1;
-//    Vec3f b;
-//    b << 0,0,0;
+
     for(int i = 0 ; i < (int) homos.size() ; i++){
         Vec3f xi = homos[i] * Vec3f(1,0,0);
         xi = xi.normalized();
         X += xi * xi.transpose();
     }
 //    Eigen::ColPivHouseholderQR<Mat3f> dec(X);
-    std::cout<<"X: "<<X<<" "<<std::endl;
+//    std::cout<<"X: "<<X<<" "<<std::endl;
     SvdXf svd(X, Eigen::ComputeFullU | Eigen::ComputeFullV);
     Vec3f u = svd.matrixV().col(1).normalized();
-    std::cout<<"world normal: "<<u<<" "<<std::endl;
+//    std::cout<<"world normal: "<<u<<" "<<std::endl;
 //    Vec3f ret;
 //    ret << u.y(), u.z(), u.x();
     return u;
@@ -249,12 +222,6 @@ FloatImage SpherePano::catnimages(FloatImage fref, vector<FloatImage> fims, vect
         ip2 = SK_i * ((ip2) / abs(ip2.z()));
         Plane iplane(ip0, ip1, ip2);
         planes.push_back(iplane);
-//        std::cout<<"Rotation matrix of "<<i<<" "<<std::endl;
-//        std::cout<<"y is "<<yi<<" "<<std::endl;
-//        std::cout<<R<<endl;
-//        cout<<i<<"th iplane"<<iplane._base<<std::endl;
-//        cout<<i<<"th iplane"<<ip1<<std::endl;
-//        cout<<i<<"th iplane"<<ip2<<std::endl;
     }
     
     Vec2i cansize = Vec2i(m_res * fref.sizeX(), m_res * fref.sizeY());
@@ -299,56 +266,6 @@ FloatImage SpherePano::catnimages(FloatImage fref, vector<FloatImage> fims, vect
     return output;
 }
 
-
-//FloatImage SpherePano::autocatnimagesSphere(std::vector<PanoImage> &pims, bool center, bool blend, bool twoscale){
-//    // make sure pims is not empty and pims size is not 1
-//    
-//    // initImages (calculate features and patches)
-//    vector<FloatImage> ims;
-//    vector<Mat3f> homos;
-//    FloatImage output;
-//    
-//    for (int i = 0; i < pims.size(); ++i) {
-//        pims[i].harrisCornerDetector(m_window, m_harris_th);
-//        pims[i].calculatePatches(m_sigma, m_pwindow, m_blur, m_norm);
-//    }
-//    int refn;
-//    if(center){
-//        refn = pims.size()/2;}
-//    else{
-//        refn = 0;
-//    }
-//    
-//    FloatImage ref(pims[refn].getImage());
-//    
-//    Mat3f lhomo = Mat3f::Identity();
-//    for (int i = refn; i < pims.size() - 1; ++i) {
-//        Mat3f nhomo = lhomo * RANSAC(pims[i], pims[i+1], m_match_th, m_portion);
-//        ims.push_back(pims[i+1].getImage());
-//        homos.push_back(nhomo);
-//        lhomo << nhomo;
-//    }
-//    
-//    lhomo = Mat3f::Identity();
-//    for (int i = refn; i > 0; --i) {
-//        Mat3f nhomo = lhomo * RANSAC(pims[i], pims[i-1], m_match_th, m_portion);
-//        ims.push_back(pims[i-1].getImage());
-//        homos.push_back(nhomo);
-//        lhomo << nhomo;
-//    }
-//    
-//    if(blend){
-//        if(twoscale)
-//            output = catnimagesTwoScaleBlend(ref, ims, homos);
-//        else
-//            output = catnimagesBlend(ref, ims, homos);
-//        
-//    }else{
-//        output = catnimages(ref, ims, homos);
-//    }
-//    
-//    return output;
-//}
 
 FloatImage SpherePano::cat2imageBlend(const FloatImage &im1, const FloatImage &im2, Mat3f homo){
     return FloatImage(im1);
