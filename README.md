@@ -1,5 +1,5 @@
 # CS189 Computational Photography Final Project
-# Group 6: Xi Deng, Zhenli WU
+## Group 6: Xi Deng, Zhenli WU
 
 Yangtze is a Auto Panorama Image Stitch Project developed by Deng,Xi  and Wu, Zhenli.
 
@@ -28,32 +28,38 @@ Some basic image processing code from our previous assignment are merged into th
 10. Use SVD to solve Homography.
 
 ### Details:
-To store images with their feature points and descriptor patches, and to operate feature detection and discription individually within each image,
-we defined a PanoImage class:
-It should be initialized as follow
-		PanoImage(FloatImage x)
+To store images with their feature points and descriptor patches, and to operate feature detection and discription individually within each image, we defined a `PanoImage` class:
+It should be initialized as follow:
+		`PanoImage(FloatImage x)`
 
-Pano is an abstract class who has two children class which are PlanePano and ### SpherePano:
+Pano is an abstract class who has two children class which are `PlanePano` and `SpherePano`:
+#### PanoImage Class:
 PanoImage Class contain two main functionalities:
- 	1.  Feature detector:
- 		This function implemented harrisconnerdector algorithm to detect points that located at corner content.
- 		FloatImage harrisCornerDetector(int window, float threshold);
-
- 	2.  Feature discriptor:
- 		This function calculates and stores local patches of feature points.
+1. Feature detector:
+This function implemented harris corner detector algorithm to detect points that located at corner content.
+`FloatImage harrisCornerDetector(int window, float threshold);`
+ 2. Feature descriptor:
+ This function calculates and stores local patches of feature points.
+ 		```c++
  		void calculatePatches(float sigma = 2.f, int size = 9, bool blur = true, bool norm = true);
-
+ 		```
 We mainly implemented Pano class which express a type of panorama image projection.
 Pano has following functionalities(APIs) that could be call directly in main:
-	1. manually cat 2 images: 
+1. manually cat 2 images: 
+	```c++
 		FloatImage mancat2images(const FloatImage &im1, const FloatImage &im2, std::vector<std::vector<Vec2f>> pairs); 
+	```
 		takes two images and user selected feature point as input and output stitched version of im1 and im2;
-	2. automatically cat 2 images: 
-		FloatImage autocat2images(PanoImage &pim1, PanoImage &pim2, bool blend=true); 
+2. automatically cat 2 images:
+	```c++
+	FloatImage autocat2images(PanoImage &pim1, PanoImage &pim2, bool blend=true);
+	``` 
 		takes two images as input automatically detect the feature, match the feather points, calculate homography and output stitched version of im1 and im2
-	3. automatically cat n images:
+3. automatically cat n images
+		```c++
 		FloatImage autocatnimages(std::vector<PanoImage> &pims, bool center=true, bool blend=true, bool twoscale=true);
-		takes n ordered images as input, the reference image could be either the first one or the centered one which dicided by the paramater center. This function calculate the homographies that transform each image to the space of reference image, and stitches them as one image. The parameter blend could control tells whether it blend the color at image bounds, and the parameter twoscale refer to the type of blending that it use.
+		```
+		takes n ordered images as input, the reference image could be either the first one or the centered one which decided by the parameter center. This function calculate the homographies that transform each image to the space of reference image, and stitches them as one image. The parameter blend could control tells whether it blend the color at image bounds, and the parameter two-scale refer to the type of blending that it use.
 
 We also implemented some wraped functionalities in Pano Class:
 	1. Match feature points from of images:
