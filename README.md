@@ -1,39 +1,39 @@
-### CS189 Computational Photography Final Project
-### Group 6: Xi Deng, Zhenli WU
+# CS189 Computational Photography Final Project
+# Group 6: Xi Deng, Zhenli WU
 
 Yangtze is a Auto Panorama Image Stitch Project developed by Deng,Xi  and Wu, Zhenli.
 
 ## What we have:
 We used Eigen for linear algebra computations. We also adapted the FloatImage Class  from computational photography assignment base code to read and write images.
 Some basic image processing code from our previous assignment are merged into this project, including computing gradient, separate intensity from colors, gaussian blur and some methods in common.cpp.
-# References:
-MIT slides: http://stellar.mit.edu/S/course/6/sp15/6.815/materials.html?showKind=lectureNotes
-Papers: ”Recognising Panoramas” and ”Automatic Panoramic Image Stitching using Invariant Features” by M. Brown and D. G. Lowe. 
+### References:
+1. MIT slides: http://stellar.mit.edu/S/course/6/sp15/6.815/materials.html?showKind=lectureNotes
+2. Papers: ”Recognising Panoramas” and ”Automatic Panoramic Image Stitching using Invariant Features” by M. Brown and D. G. Lowe. 
 
 
 
 ## What we implemented:
 
-# Main Functionalities:
-1. Stitch two images with manual inputs.
+### Main Functionalities:
+1. Stitch two images with user inputs.
 2. Auto Stitch two images.
 3. Auto Stitch n images both within Plane Projection Space and Sphere Projection Space.
 4. 360 degree Panorama.
 // details methods.
-5. Add Smooth Blend for stitching both within Plane Projection Space and Sphere Projection Space.
+5. Add Smooth Blending for stitching both within Plane Projection Space and Sphere Projection Space.
 6. Add Two Scale Blending for stitching in Plane Projection Space.
-7. Implemented Harris Corner method to detect and describe feature points.
-8. Implemetned RANSAC method to select best Homography.
-9. Allowd Straightening of Sphere surface projection image.
+7. Implemented Harris Corner detector and patch descriptor to detect and describe feature points.
+8. Implemented RANSAC method to select best Homography.
+9. Allowed Straightening of Sphere surface projection image.
 10. Use SVD to solve Homography.
 
-
+### Details:
 To store images with their feature points and descriptor patches, and to operate feature detection and discription individually within each image,
 we defined a PanoImage class:
 It should be initialized as follow
 		PanoImage(FloatImage x)
 
-Pano is an abstract class who has two children class which are PlanePano and SpherePano:
+Pano is an abstract class who has two children class which are PlanePano and ### SpherePano:
 PanoImage Class contain two main functionalities:
  	1.  Feature detector:
  		This function implemented harrisconnerdector algorithm to detect points that located at corner content.
