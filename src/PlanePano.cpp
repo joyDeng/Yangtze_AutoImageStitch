@@ -107,6 +107,7 @@ FloatImage PlanePano::catnimages(FloatImage ref, std::vector<FloatImage> ims, st
             }
         }
         cout << "image " << n + 1<< " done"<<endl;
+        output.debugWrite();
     }
     
     

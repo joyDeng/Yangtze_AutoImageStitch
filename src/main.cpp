@@ -38,7 +38,7 @@ void testCatTable(){
 }
 
 void testCatNB(){
-    Pano pano;
+    PlanePano pano;
     pano.setWindow(9);
     pano.setPatchWindow(31);
     pano.setMatchTh(0.7f);
@@ -289,13 +289,47 @@ void testNImage(int start, int end, char* folder, bool c=true, int cropX=50, int
         if(c){
             pims.push_back(PanoImage(cropImage(ori, cropX, cropY, ori.sizeX() - 2 * cropX, ori.sizeY() - 2 * cropY)));
         }else{
-            pims.push_back(ori);
+            pims.push_back(PanoImage(ori));
         }
 
     }
     char buffer2[255];
     sprintf(buffer2, DATA_DIR "/output/auto_%s_result.jpg", folder);
     FloatImage autocat = pano.autocatnimages(pims);
+    autocat.write(buffer2);
+}
+
+void testXYImage(std::vector<int> start, std::vector<int> end, char* folder, bool c=true, int cropX=50, int cropY=0){
+    assert(start.size() == end.size());
+
+    PlanePano pano;
+    pano.setWindow(9);
+    pano.setPatchWindow(31);
+    pano.setMatchTh(0.7f);
+    pano.setHarrisTh(0.2f);
+    pano.setSigma(3.f);
+    pano.setNorm(true);
+    pano.setPortion(0.2f);
+    std::vector<std::vector<PanoImage>> pimsxy;
+    for (int i = 0; i < start.size(); ++i) {
+        std::vector<PanoImage> pims;
+        for (int n = start[i]; n <= end[i]; n++) {
+            char buffer[255];
+            sprintf(buffer, DATA_DIR "/input/%s/IMG_%d.jpg", folder, n);
+            FloatImage ori = FloatImage(buffer);
+            if(c){
+                pims.push_back(PanoImage(cropImage(ori, cropX, cropY, ori.sizeX() - 2 * cropX, ori.sizeY() - 2 * cropY)));
+            }else{
+                pims.push_back(PanoImage(ori));
+            }
+
+        }
+        pimsxy.push_back(pims);
+    }
+
+    char buffer2[255];
+    sprintf(buffer2, DATA_DIR "/output/auto_%s_result.jpg", folder);
+    FloatImage autocat = pano.autocatnimages(pimsxy);
     autocat.write(buffer2);
 }
 
@@ -353,7 +387,11 @@ int main(){
 
     // code for auto
     //testCatNB();
-    testVizPatch();
+//    testVizPatch();
+//    testXYImage({5306, 5314},{5308, 5316},"multi", false);
+    testXYImage({5306, 5314, 5321},{5308, 5316, 5323},"multi", true, 20);
+//
+//    testNImage(5314, 5316, "multi", false);
 
 
 

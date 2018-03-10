@@ -79,6 +79,7 @@ public:
 
     FloatImage autocat2images(PanoImage &pim1, PanoImage &pim2, bool blend=true);
     FloatImage autocatnimages(std::vector<PanoImage> &pims, bool center=true, bool blend=true, bool twoscale=true);
+    FloatImage autocatnimages(std::vector<std::vector<PanoImage>> &pims, bool center=true, bool blend=true, bool twoscale=true);
 
     FloatImage autocrop(std::vector<ImageBound> bs, Vec2i offset, const FloatImage &im);
 

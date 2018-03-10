@@ -103,6 +103,143 @@ FloatImage Pano::autocatnimages(std::vector<PanoImage> &pims, bool center, bool 
     return output;
 }
 
+FloatImage Pano::autocatnimages(std::vector<std::vector<PanoImage>> &pims, bool center, bool blend, bool twoscale){
+    // make sure pims is not empty and pims size is not 1
+    assert(pims.size() > 0 && pims[0].size() > 0);
+    for (int i = 0; i < pims.size() - 1; ++i) {
+        assert(pims[i].size() == pims[i].size());
+    }
+
+    // initImages (calculate features and patches)
+
+    FloatImage output;
+    vector<vector<Mat3f>> homosx;
+    vector<vector<FloatImage>> ims;
+
+    for (int j = 0; j < pims.size(); ++j) {
+        for (int i = 0; i < pims[0].size(); ++i) {
+            pims[j][i].harrisCornerDetector(m_window, m_harris_th);
+            pims[j][i].calculatePatches(m_sigma, m_pwindow, m_blur, m_norm);
+        }
+    }
+    int refx, refy;
+    if(center){
+        refy = pims.size()/2;
+        refx = pims[0].size()/2;
+    }
+    else{
+        refy = 0;
+        refx = 0;
+    }
+
+    FloatImage ref(pims[refy][refx].getImage());
+
+    // get homos on x direction
+    for (int j = 0; j < pims.size(); ++j) {
+        vector<FloatImage> imsx;
+        vector<Mat3f> homos;
+        Mat3f lhomo = Mat3f::Identity();
+        for (int i = refx; i < pims[0].size() - 1; ++i) {
+            Mat3f nhomo = lhomo * RANSAC(pims[j][i], pims[j][i+1], m_match_th, m_portion);
+            imsx.push_back(pims[j][i+1].getImage());
+            homos.push_back(nhomo);
+            lhomo << nhomo;
+        }
+
+        lhomo = Mat3f::Identity();
+        for (int i = refx; i > 0; --i) {
+            printf("now running (%d, %d) \n", j, i);
+            Mat3f nhomo = lhomo * RANSAC(pims[j][i], pims[j][i-1], m_match_th, m_portion);
+            imsx.push_back(pims[j][i-1].getImage());
+            homos.push_back(nhomo);
+            lhomo << nhomo;
+        }
+
+        homosx.push_back(homos);
+        ims.push_back(imsx);
+    }
+
+    Mat3f lhomo = Mat3f::Identity();
+    for (int j = refy; j < pims.size() - 1; ++j) {
+        vector<Mat3f> nhomosx;
+        Mat3f nhomo = lhomo * RANSAC(pims[j][refx], pims[j + 1][refx], m_match_th, m_portion);
+
+        Mat3f nhomos = homosx[j+1][0] * nhomo;
+        nhomosx.push_back(nhomos);
+        for (int i = 1; i < pims[0].size() - refx - 1; ++i) {
+            printf("after x, now running (%d, %d) \n", j, i);
+            Mat3f update = homosx[j+1][i] * nhomosx[i - 1];
+            nhomosx.push_back(update);
+        }
+
+        Mat3f nhomos2 = homosx[j+1][pims[0].size() - refx - 1] * nhomo;
+        nhomosx.push_back(nhomos2);
+
+        for (int i = pims[0].size() - refx; i < homosx[j+1].size(); ++i) {
+            printf("after x, now running (%d, %d) \n", j, i);
+            Mat3f update = homosx[j+1][i] * nhomosx[i - 1];
+            nhomosx.push_back(update);
+        }
+        nhomosx.push_back(nhomo);
+        homosx[j+1] = nhomosx;
+        vector<FloatImage> newims(ims[j + 1]);
+        newims.push_back(pims[j+1][refx].getImage());
+        ims[j + 1] = newims;
+        lhomo << nhomo;
+    }
+
+    lhomo = Mat3f::Identity();
+    for (int j = refy; j > 0; --j) {
+        vector<Mat3f> nhomosx;
+
+        Mat3f nhomo = lhomo * RANSAC(pims[j][refx], pims[j - 1][refx], m_match_th, m_portion);
+
+        Mat3f nhomos = homosx[j-1][0] * nhomo;
+        nhomosx.push_back(nhomos);
+        for (int i = 1; i < pims[0].size() - refx - 1; ++i) {
+            printf("after x, now running (%d, %d) \n", j, i);
+            Mat3f update = homosx[j-1][i] * nhomosx[i - 1];
+            nhomosx.push_back(update);
+        }
+
+        Mat3f nhomos2 = homosx[j-1][pims[0].size() - refx - 1] * nhomo;
+        nhomosx.push_back(nhomos2);
+
+        for (int i = pims[0].size() - refx; i < homosx[j-1].size(); ++i) {
+            printf("after x, now running (%d, %d) \n", j, i);
+            Mat3f update = homosx[j-1][i] * nhomosx[i - 1];
+            nhomosx.push_back(update);
+        }
+        nhomosx.push_back(nhomo);
+        homosx[j-1] = nhomosx;
+        vector<FloatImage> newims(ims[j - 1]);
+        newims.push_back(pims[j-1][refx].getImage());
+        ims[j - 1] = newims;
+        lhomo << nhomo;
+    }
+
+    vector<FloatImage> imsxy;
+    vector<Mat3f> homosxy;
+    for (int j = 0; j < ims.size(); ++j) {
+        for (int i = 0; i < ims[j].size(); ++i) {
+            imsxy.push_back(ims[j][i]);
+            homosxy.push_back(homosx[j][i]);
+        }
+    }
+
+    if(blend){
+        if(twoscale)
+            output = catnimagesTwoScaleBlend(ref, imsxy, homosxy);
+        else
+            output = catnimagesBlend(ref, imsxy, homosxy);
+
+    }else{
+        output = catnimages(ref, imsxy, homosxy);
+    }
+
+    return output;
+}
+
 
 
 
@@ -347,7 +484,8 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
     vector<vector<Vec2i>> pairs = matchDescriptors(pim1, pim2, match_th);
 
     FloatImage matchesImage = vizMatches(pim1, pim2, pairs);
-    matchesImage.write(DATA_DIR "/output/matchesImage.png");
+    //matchesImage.write(DATA_DIR "/output/matchesImage.png");
+    matchesImage.debugWrite();
 
     vector<vector<Vec2f>> Largest_inliers;
     Mat3f Homo;
