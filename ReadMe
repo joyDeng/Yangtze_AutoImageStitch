@@ -10,7 +10,7 @@ We also imported some basic image processing code from previous assignment, incl
 
 What we inplemented:
 
-Main Functionality:
+Main Functionalities:
 1. Stitch two images with manual inputs.
 2. Auto Stitch two images.
 3. Auto Stitch n images both within Plane Projection Space and Sphere Projection Space.
