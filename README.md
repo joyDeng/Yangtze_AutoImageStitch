@@ -113,18 +113,18 @@ This function basicly took reference image, ordered image sequence and coorispon
 
 #### Math:
 
-```
+```c++
 Mat3f solveHomo(MatrixXf);
 ```
 Solve Ax = 0 least square regression with SVD. called by computeHomo. Return Homography.
 
 
-```
+```c++
 Mat3f computeHomo(std::vector<std::vector<Vec2f>> pairs);
 ```
 Compute homography based on 2D position of pixel points. Return Homography.
 
-```
+```c++
 bool Plane::intersect(Ray &ray, Intersect &it);
 ```
 Return true if the ray vector intersect with plane, and update intersect point info to Intersect &it.
@@ -133,7 +133,7 @@ Ray line: p = ray.o + t * ray.dir;
 Plane: _base, _normal
 Intersection:
 t = -(ray.o - _base).dot(_normal) / ray.dir.dot(_normal);
-```
+```c++
 Vec3f computeY(vector<Mat3f> homos);
 ```
 Return estimated Y axis that perpendicular to all the homos x plane.
