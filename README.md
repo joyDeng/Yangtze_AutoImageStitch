@@ -1,20 +1,20 @@
-###CS189 Computational Photography Final Project
-###Group 6: Xi Deng, Zhenli WU
+### CS189 Computational Photography Final Project
+### Group 6: Xi Deng, Zhenli WU
 
 Yangtze is a Auto Panorama Image Stitch Project developed by Deng,Xi  and Wu, Zhenli.
 
-##What we have:
+## What we have:
 We used Eigen for linear algebra computations. We also adapted the FloatImage Class  from computational photography assignment base code to read and write images.
 Some basic image processing code from our previous assignment are merged into this project, including computing gradient, separate intensity from colors, gaussian blur and some methods in common.cpp.
-#References:
+# References:
 MIT slides: http://stellar.mit.edu/S/course/6/sp15/6.815/materials.html?showKind=lectureNotes
 Papers: ”Recognising Panoramas” and ”Automatic Panoramic Image Stitching using Invariant Features” by M. Brown and D. G. Lowe. 
 
 
 
-##What we implemented:
+## What we implemented:
 
-#Main Functionalities:
+# Main Functionalities:
 1. Stitch two images with manual inputs.
 2. Auto Stitch two images.
 3. Auto Stitch n images both within Plane Projection Space and Sphere Projection Space.
