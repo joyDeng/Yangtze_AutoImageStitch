@@ -40,10 +40,10 @@ public:
     
     Pano(){
         m_harris_th = 0.3;
-        m_match_th = 0.6;
-        m_sigma = 2;
+        m_match_th = 0.7;
+        m_sigma = 3.f;
         m_window = 9;
-        m_pwindow = 21;
+        m_pwindow = 31;
         m_portion = 0.2;
         m_blur = true;
         m_norm = true;

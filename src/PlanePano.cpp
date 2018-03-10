@@ -194,7 +194,7 @@ FloatImage PlanePano::catnimagesBlend(FloatImage ref, std::vector<FloatImage> im
     vector<FloatImage> weights;
     for (int n = 0; n < ims.size(); ++n) {
         weights.push_back(calweight(ims[n].sizeX(), ims[n].sizeY(),false));
-        weights[n].debugWrite();
+        //weights[n].debugWrite();
     }
     
     // init inv homos
@@ -270,7 +270,6 @@ FloatImage PlanePano::catnimagesBlend(FloatImage ref, std::vector<FloatImage> im
         for (int j = 0; j < canv.height; ++j) {
             if(canv_w(i, j, 0) > 0){
                 for (int c = 0; c < output.channels(); ++c) {
-                    cout << canv_w(i, j, 0) <<endl;
                     output(i, j, c) = output(i, j, c) / canv_w(i, j, 0);
                 }
             }
@@ -412,7 +411,7 @@ FloatImage PlanePano::catnimagesTwoScaleBlend(FloatImage ref, std::vector<FloatI
         cout << "Image " << n + 1<< " done"<<endl;
     }
 
-    canv_w.debugWrite();
+    //canv_w.debugWrite();
     for (int i = 0; i < canv.length; ++i) {
         for (int j = 0; j < canv.height; ++j) {
             if(canv_w(i, j, 0) > 0){

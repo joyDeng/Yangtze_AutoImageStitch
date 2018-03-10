@@ -97,6 +97,7 @@ FloatImage Pano::autocatnimages(std::vector<PanoImage> &pims, bool center, bool 
     }else{
         output = catnimages(ref, ims, homos);
     }
+    cout << "Output done" << endl;
     
     return output;
 }

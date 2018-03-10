@@ -94,7 +94,7 @@ FloatImage SpherePano::cat2images(const FloatImage &fref, const FloatImage &fim,
     rp1 = SK_i * Vec3f(fref.sizeX(),0, 1);
     rp2 = SK_i * Vec3f(0,fref.sizeY(), 1);
     Plane rplane(rp0,rp1,rp2);
-    cout<<"rplane: "<<rplane._base<<std::endl;
+//    cout<<"rplane: "<<rplane._base<<std::endl;
     
     //image:
     Vec3f ip0, ip1, ip2;
@@ -105,9 +105,9 @@ FloatImage SpherePano::cat2images(const FloatImage &fref, const FloatImage &fim,
     ip1 = SK_i * (ip1 / abs(ip1.z()));
     ip2 = SK_i * (ip2 / abs(ip2.z()));
     Plane iplane(ip0, ip1, ip2);
-    cout<<"iplane"<<iplane._base<<std::endl;
-    cout<<"iplane"<<ip1<<std::endl;
-    cout<<"iplane"<<ip2<<std::endl;
+//    cout<<"iplane"<<iplane._base<<std::endl;
+//    cout<<"iplane"<<ip1<<std::endl;
+//    cout<<"iplane"<<ip2<<std::endl;
     
     Vec2i cansize = Vec2i(m_res * fref.sizeX(), m_res * fref.sizeY());
     FloatImage output(cansize.x(),cansize.y(),fref.channels());
@@ -202,8 +202,8 @@ FloatImage SpherePano::catnimages(FloatImage fref, vector<FloatImage> fims, vect
     rp1 = SK_i * Vec3f(fref.sizeX(),0, 1);
     rp2 = SK_i * Vec3f(0,fref.sizeY(), 1);
     Plane rplane(rp0,rp1,rp2);
-    cout<<"rplane: "<<rplane._base<<std::endl;
-    
+//    cout<<"rplane: "<<rplane._base<<std::endl;
+
 
     //image:
     vector<Plane> planes;
@@ -305,7 +305,7 @@ FloatImage SpherePano::catnimagesBlend(FloatImage fref, vector<FloatImage> fims,
     rp1 = SK_i * Vec3f(fref.sizeX(),0, 1);
     rp2 = SK_i * Vec3f(0,fref.sizeY(), 1);
     Plane rplane(rp0,rp1,rp2);
-    cout<<"rplane: "<<rplane._base<<std::endl;
+//    cout<<"rplane: "<<rplane._base<<std::endl;
     
     //image:
     vector<Plane> planes;
@@ -319,9 +319,9 @@ FloatImage SpherePano::catnimagesBlend(FloatImage fref, vector<FloatImage> fims,
         ip2 = SK_i * ((ip2) / abs(ip2.z()));
         Plane iplane(ip0, ip1, ip2);
         planes.push_back(iplane);
-        cout<<i<<"th iplane"<<iplane._base<<std::endl;
-        cout<<i<<"th iplane"<<ip1<<std::endl;
-        cout<<i<<"th iplane"<<ip2<<std::endl;
+//        cout<<i<<"th iplane"<<iplane._base<<std::endl;
+//        cout<<i<<"th iplane"<<ip1<<std::endl;
+//        cout<<i<<"th iplane"<<ip2<<std::endl;
     }
     
     Vec2i cansize = Vec2i(m_res * fref.sizeX(), m_res * fref.sizeY());
@@ -379,8 +379,8 @@ FloatImage SpherePano::catnimagesBlend(FloatImage fref, vector<FloatImage> fims,
             
         }
     
-    weight_sum.debugWrite();
-    rw.debugWrite();
+    //weight_sum.debugWrite();
+    //rw.debugWrite();
     
     return output;
 
