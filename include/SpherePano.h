@@ -72,8 +72,6 @@ public:
     virtual FloatImage cat2imageBlend(const FloatImage &im1, const FloatImage &im2, Mat3f homo);
     virtual FloatImage catnimagesBlend(FloatImage ref, std::vector<FloatImage> ims, std::vector<Mat3f> homos);
     virtual FloatImage catnimagesTwoScaleBlend(FloatImage ref, std::vector<FloatImage> ims, std::vector<Mat3f> homos, float sigma = 3.f, bool lin=true);
-    
-;
 
     
     Vec3f computeY(vector<Mat3f> homos);
