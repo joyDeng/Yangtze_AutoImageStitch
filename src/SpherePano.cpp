@@ -7,7 +7,7 @@
 //
 
 
-#include "spherePano.h"
+#include "SpherePano.h"
 
 
 //PLANEBOUND FUNCTIONS

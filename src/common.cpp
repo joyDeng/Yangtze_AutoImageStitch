@@ -319,9 +319,9 @@ FloatImage normalizeBySD(const FloatImage &lumi){
     }
     mean = sum / lumi.size();
     for (int i = 0; i < lumi.size(); ++i) {
-        sd += std::powf((lumi(i) - mean), 2);
+        sd += powf((lumi(i) - mean), 2.0);
     }
-    sd = std::sqrtf(sd / lumi.size());
+    sd = sqrtf(sd / lumi.size());
     for (int i = 0; i < lumi.size(); ++i) {
         output(i) = (lumi(i) - mean) / sd;
     }

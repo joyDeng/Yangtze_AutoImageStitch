@@ -491,7 +491,7 @@ Mat3f Pano::RANSAC( PanoImage &pim1,PanoImage &pim2, float match_th, float porti
     vector<vector<Vec2f>> Largest_inliers;
     Mat3f Homo;
     float Prob = 1;
-    float failProb = 1 - std::powf(portion,4);
+    float failProb = 1 - powf(portion,4);
     uint32_t maxInlinerSize = 0;
     
     pcg32 rng;

@@ -98,7 +98,7 @@ void testNSphereGreen(int start, int end){
     std::vector<PanoImage> pims;
     for (int n = start; n <= end; n++) {
         char buffer[255];
-        sprintf(buffer, DATA_DIR "/input/greendata/IMG_%d.JPG", n);
+        sprintf(buffer, DATA_DIR "/input/greendata/IMG_%d.jpg", n);
         pims.push_back(PanoImage(FloatImage(buffer)));
     }
     
@@ -127,7 +127,7 @@ void testNSphereHouse(int start, int end){
     std::vector<PanoImage> pims;
     for (int n = start; n <= end; n++) {
         char buffer[255];
-        sprintf(buffer, DATA_DIR "/input/house/IMG_%d.JPG", n);
+        sprintf(buffer, DATA_DIR "/input/house/IMG_%d.jpg", n);
         pims.push_back(PanoImage(FloatImage(buffer)));
     }
     
@@ -232,29 +232,29 @@ int main(){
     // auto_yosemite_two_scale_blending.png
     // auto_yosemite_smooth_blending.png
     // auto_yosemite_smooth_blending.png
-    testCatNYosemite();
+    // testCatNYosemite();
 
 
     // auto panorama for snow images
     // results: auto_snow_result.jpg
-    testNImage(5180, 5186, "snow", false);
+    // testNImage(5180, 5185, "snow", false);
 
     // auto panorama for the Green images
     // to reduce the effects of distortion
     // we cropped 150 pixels on both the left and right side of each image
     // results: auto_green_result.jpg
-    testNImage(5001, 5006, "green", true, 150, 0);
+    // testNImage(5001, 5006, "green", true, 150, 0);
 
 
     // auto panorama for baker tower (vertical in sequence)
     // results: auto_vertical_result.jpg
-    testNImage(5332, 5335, "vertical", true, 0, 0);
+    // testNImage(5332, 5335, "vertical", true, 0, 0);
 
 
     // auto panorama for baker tower (vertical and horizontal, but in order)
     // the result might not be very ideal due to the image quality
     // results: auto_multi_result.jpg
-    testXYImage({5306, 5314, 5321},{5308, 5316, 5323},"multi", true, 20);
+    // testXYImage({5306, 5314, 5321},{5308, 5316, 5323},"multi", true, 20);
 
     
     // auto panorama for 360 degree of shot on the green.(Sphere Projection)
@@ -264,19 +264,12 @@ int main(){
     testNSphereGreen(5254, 5277);
     testNSphereHouse(5337,5359);
 
-
-
-
     // validation functions
 
     // results: viz_hcd_features.png, viz_patches.png, viz_weight_map.png
     testVizPatch();
     testWeightMap();
-
-
-
     return 0;
-
 }
 
 

@@ -344,7 +344,6 @@ float FloatImage::max() const
 bool FloatImage::read(const string &filename)
 {
 	int n, w, h;
-
 	try
 	{
 		if (stbi_is_hdr(filename.c_str()))
@@ -369,14 +368,12 @@ bool FloatImage::read(const string &filename)
 		{
 			unsigned char *bytePixels = stbi_load(filename.c_str(), &w, &h, &n, 3);
 			if (bytePixels)
-			{
+			{	
 				resize(w, h, 3);
-
 				for (int x = 0; x < w; x++)
 					for (int y = 0; y < h; y++)
 						for (int c = 0; c < 3; c++)
 							operator()(x, y, c) = byteToFloat(bytePixels[3 * (x + y * w) + c]);
-
 				stbi_image_free(bytePixels);
 				return true;
 			}
@@ -384,6 +381,7 @@ bool FloatImage::read(const string &filename)
 				throw runtime_error("Could not load LDR image.");
 		}
 	}
+
 	catch (const exception &e)
 	{
 		cerr << "Image decoder error in FloatImage::read(...) for file: \"" << filename << "\":\n\t"
